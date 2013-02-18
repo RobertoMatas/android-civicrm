@@ -7,7 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -22,6 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.upsam.civicrm.contact.ContactListActivity"
+            android:label="@string/title_activity_contact_list" 
+            android:parentActivityName="org.upsam.civicrm.MainActivity">
+            <meta-data
+            	android:name="android.support.PARENT_ACTIVITY"
+            	android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
+        
+        <service
+            android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
+            android:exported="false" />
     </application>
 
 </manifest>
