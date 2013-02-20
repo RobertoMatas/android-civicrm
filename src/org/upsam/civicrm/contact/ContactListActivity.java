@@ -14,7 +14,10 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -49,6 +52,9 @@ public class ContactListActivity extends Activity {
 		initUIComponents();
 	}
 
+	
+	
+	
     @Override
     protected void onStart() {
         contentManager.start( this );
@@ -67,8 +73,21 @@ public class ContactListActivity extends Activity {
 		contactsAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1);
 		contactList.setAdapter(contactsAdapter);
+		
+		contactList.setOnItemClickListener(new OnItemClickListener() {
+			  @Override
+			  public void onItemClick(AdapterView<?> parent, View view,
+			    int position, long id) {
+			    Toast.makeText(getApplicationContext(),
+			      "Click ListItem Number " + position, Toast.LENGTH_LONG)
+			      .show();
+			  }
+			});
+		
 		performRequest();
 	}
+	
+
 
 	private void performRequest() {
 		ContactListActivity.this.setProgressBarIndeterminateVisibility(true);

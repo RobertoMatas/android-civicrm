@@ -10,11 +10,11 @@ public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
 	/**
 	 * 
 	 */
-	final String key = "81579f0a8cd7ba2e002267459d100476";
+	final String key = "b57107ccbf4d37a2d19e6c456c027add";
 	/**
 	 * 
 	 */
-	final String baseUri = "http://10.0.2.2:81/drupal/sites/all/modules/civicrm/extern/rest.php?json=1";
+	final String baseUri = "http://192.168.146.142/sites/all/modules/civicrm/extern/rest.php?json=1";
 
 	/**
 	 * 
@@ -29,7 +29,7 @@ public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
 		uriBuilder.appendQueryParameter("entity", "Contact");
 		uriBuilder.appendQueryParameter("action", "get");
 		uriBuilder.appendQueryParameter("key", key);
-		uriBuilder.appendQueryParameter("api_key", key);
+		uriBuilder.appendQueryParameter("api_key", "test");
 
 		String url = uriBuilder.build().toString();
 
