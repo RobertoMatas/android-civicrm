@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +33,9 @@ import com.octo.android.robospice.request.listener.RequestStatus;
 
 public class ContactListActivity extends Activity {
 
-	private SpiceManager contentManager = new SpiceManager(
-			CiviCRMAndroidSpiceService.class);
+	private static final String KEY_LAST_REQUEST_CACHE_KEY = "lastRequestCacheKey";
+
+	private SpiceManager contentManager = new SpiceManager(CiviCRMAndroidSpiceService.class);
 
 	private ArrayAdapter<String> contactsAdapter;
 
@@ -52,49 +54,39 @@ public class ContactListActivity extends Activity {
 		initUIComponents();
 	}
 
-	
-	
-	
-    @Override
-    protected void onStart() {
-        contentManager.start( this );
-        super.onStart();
-    }
+	@Override
+	protected void onStart() {
+		contentManager.start(this);
+		super.onStart();
+	}
 
-    @Override
-    protected void onStop() {
-        contentManager.shouldStop();
-        super.onStop();
-    }
-	
+	@Override
+	protected void onStop() {
+		contentManager.shouldStop();
+		super.onStop();
+	}
+
 	private void initUIComponents() {
 		ListView contactList = (ListView) findViewById(R.id.listView1);
 
-		contactsAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1);
+		contactsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1);
 		contactList.setAdapter(contactsAdapter);
-		
+
 		contactList.setOnItemClickListener(new OnItemClickListener() {
-			  @Override
-			  public void onItemClick(AdapterView<?> parent, View view,
-			    int position, long id) {
-			    Toast.makeText(getApplicationContext(),
-			      "Click ListItem Number " + position, Toast.LENGTH_LONG)
-			      .show();
-			  }
-			});
-		
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Toast.makeText(getApplicationContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+			}
+		});
+
 		performRequest();
 	}
-	
-
 
 	private void performRequest() {
 		ContactListActivity.this.setProgressBarIndeterminateVisibility(true);
 		ContactsRequest request = new ContactsRequest();
 		lastRequestCacheKey = request.createCacheKey();
-		contentManager.execute(request, lastRequestCacheKey,
-				DurationInMillis.ONE_HOUR, new ListContactsRequestListener());
+		contentManager.execute(request, lastRequestCacheKey, DurationInMillis.ONE_MINUTE, new ListContactsRequestListener());
 	}
 
 	@Override
@@ -114,14 +106,29 @@ public class ContactListActivity extends Activity {
 		return true;
 	}
 
-	private class ListContactsRequestListener implements
-			RequestListener<ListContacts>, RequestProgressListener {
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		if (!TextUtils.isEmpty(lastRequestCacheKey)) {
+			outState.putString(KEY_LAST_REQUEST_CACHE_KEY, lastRequestCacheKey);
+		}
+		super.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		if (savedInstanceState.containsKey(KEY_LAST_REQUEST_CACHE_KEY)) {
+			lastRequestCacheKey = savedInstanceState.getString(KEY_LAST_REQUEST_CACHE_KEY);
+			contentManager.addListenerIfPending(ListContacts.class, lastRequestCacheKey, new ListContactsRequestListener());
+			contentManager.getFromCache(ListContacts.class, lastRequestCacheKey, DurationInMillis.ONE_MINUTE, new ListContactsRequestListener());
+		}
+	}
+
+	private class ListContactsRequestListener implements RequestListener<ListContacts>, RequestProgressListener {
 
 		@Override
 		public void onRequestFailure(SpiceException e) {
-			Toast.makeText(ContactListActivity.this,
-					"Error during request: " + e.getMessage(),
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(ContactListActivity.this, "Error during request: " + e.getMessage(), Toast.LENGTH_LONG).show();
 
 		}
 
@@ -134,13 +141,12 @@ public class ContactListActivity extends Activity {
 			}
 
 			contactsAdapter.clear();
-			final Collection<Contact> contacts = listContacts.getValues();
+			final Collection<Contact> contacts = listContacts.getValues().values();
 			for (Contact contact : contacts) {
 				contactsAdapter.add(contact.getName());
 			}
 			contactsAdapter.notifyDataSetChanged();
-			ContactListActivity.this
-					.setProgressBarIndeterminateVisibility(false);
+			ContactListActivity.this.setProgressBarIndeterminateVisibility(false);
 
 		}
 
@@ -154,7 +160,7 @@ public class ContactListActivity extends Activity {
 			} else if (RequestStatus.WRITING_TO_CACHE.equals(status)) {
 				Log.e("ContactListActivity", "Writing from cache");
 			}
-			
+
 		}
 
 	}

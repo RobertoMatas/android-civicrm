@@ -10,11 +10,15 @@ public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
 	/**
 	 * 
 	 */
-	final String key = "b57107ccbf4d37a2d19e6c456c027add";
+	final String key = "96783019a4bef4dd8541b176c828ff5f";
 	/**
 	 * 
 	 */
-	final String baseUri = "http://192.168.146.142/sites/all/modules/civicrm/extern/rest.php?json=1";
+	final String api_key = "81579f0a8cd7ba2e002267459d100476";
+	/**
+	 * 
+	 */
+	final String baseUri = "http://civicrm-upsam.btnhost.net/drupal/sites/all/modules/civicrm/extern/rest.php?json=1";
 
 	/**
 	 * 
@@ -29,16 +33,16 @@ public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
 		uriBuilder.appendQueryParameter("entity", "Contact");
 		uriBuilder.appendQueryParameter("action", "get");
 		uriBuilder.appendQueryParameter("key", key);
-		uriBuilder.appendQueryParameter("api_key", "test");
+		uriBuilder.appendQueryParameter("api_key", api_key);
 
 		String url = uriBuilder.build().toString();
 
-		ListContacts contacts = getRestTemplate().getForObject(url, ListContacts.class);
+		ListContacts contacts = getRestTemplate().getForObject(url,
+				ListContacts.class);
 		return contacts;
 	}
 
 	public String createCacheKey() {
 		return "org.upsam.civicrm.contact.model.cache";
 	}
-
 }
