@@ -1,12 +1,16 @@
-package org.upsam.civicrm.contact;
+package org.upsam.civicrm.contact.detail;
 
-import org.upsam.civicrm.contact.model.ListContacts;
+import org.upsam.civicrm.contact.model.email.ListEmails;
 
 import android.net.Uri;
 
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
-public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
+public class ContactEmailsRequest extends SpringAndroidSpiceRequest<ListEmails> {
+	/**
+	 * ID del contacto a solicitar
+	 */
+	private final String contactId;
 	/**
 	 * 
 	 */
@@ -19,33 +23,27 @@ public class ContactsRequest extends SpringAndroidSpiceRequest<ListContacts> {
 	 * 
 	 */
 	final String baseUri = "http://civicrm-upsam.btnhost.net/drupal/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=1";
-
-	/**
-	 * 
-	 */
-	public ContactsRequest() {
-		super(ListContacts.class);
+	
+	public ContactEmailsRequest(long contactId) {
+		super(ListEmails.class);
+		this.contactId = Long.toString(contactId);
 	}
 
 	@Override
-	public ListContacts loadDataFromNetwork() throws Exception {
+	public ListEmails loadDataFromNetwork() throws Exception {
 		Uri.Builder uriBuilder = Uri.parse(baseUri).buildUpon();
-		uriBuilder.appendQueryParameter("entity", "Contact");
+		uriBuilder.appendQueryParameter("entity", "Email");
 		uriBuilder.appendQueryParameter("action", "get");
 		uriBuilder.appendQueryParameter("key", key);
 		uriBuilder.appendQueryParameter("api_key", api_key);
-		uriBuilder.appendQueryParameter("return[display_name]", "1");
-		uriBuilder.appendQueryParameter("return[contact_type]", "1");
-		uriBuilder.appendQueryParameter("return[contact_sub_type]", "1");
+		uriBuilder.appendQueryParameter("contact_id", contactId);
 
 		String url = uriBuilder.build().toString();
-
-		ListContacts contacts = getRestTemplate().getForObject(url,
-				ListContacts.class);
-		return contacts;
+		ListEmails emails = getRestTemplate().getForObject(url, ListEmails.class);
+		return emails;
 	}
 
 	public String createCacheKey() {
-		return "org.upsam.civicrm.contact.model.cache";
+		return "ContactEmailsRequest.get_" + contactId;
 	}
 }

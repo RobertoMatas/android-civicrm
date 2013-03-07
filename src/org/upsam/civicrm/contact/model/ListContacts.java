@@ -1,25 +1,45 @@
 package org.upsam.civicrm.contact.model;
 
-import java.util.Map;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ListContacts {
+	/**
+	 * Lista de contactos
+	 */
+	private List<ContactSummary> values;
+	/**
+	 * Número de elementos
+	 */
+	private int count;
+	/**
+	 * @return the count
+	 */
+	public int getCount() {
+		return count;
+	}
 
-	private Map<String, Contact> values;
+	/**
+	 * @param count the count to set
+	 */
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	/**
 	 * @return the values
 	 */
-	public Map<String, Contact> getValues() {
+	public List<ContactSummary> getValues() {
 		return values;
 	}
 
 	/**
-	 * @param values the values to set
+	 * @param values
+	 *            the values to set
 	 */
-	public void setValues(Map<String, Contact> values) {
+	public void setValues(List<ContactSummary> values) {
 		this.values = values;
 	}
 

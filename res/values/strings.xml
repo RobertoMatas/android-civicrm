@@ -9,5 +9,7 @@
     <string name="activity_button">Actividades</string>
     <string name="cases_button">Casos</string>
     <string name="title_textview">Open Mobile CRM</string>
+    <string name="title_activity_contact_details">ContactDetails</string>
+    <string name="contact_image">Contacto</string>
 
 </resources>

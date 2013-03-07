@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+id/emails"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignLeft="@+id/contac_img"
+        android:layout_alignRight="@+id/contact_type"
+        android:layout_below="@+id/contact_type"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="19dp"
+        android:paddingLeft="0dp" >
+
+    </ListView>
+
+    <QuickContactBadge
+        android:id="@+id/contac_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="22dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/social_person" />
+
+    <TextView
+        android:id="@+id/display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/contac_img"
+        android:ems="10"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/contact_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/display_name"
+        android:layout_below="@+id/display_name"
+        android:ems="10"
+        android:inputType="none" />
+
+    <ListView
+        android:id="@+id/phones"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignLeft="@+id/emails"
+        android:layout_below="@+id/emails"
+        android:layout_marginTop="25dp" >
+    </ListView>
+
+</RelativeLayout>
