@@ -11,5 +11,10 @@
     <string name="title_textview">Open Mobile CRM</string>
     <string name="title_activity_contact_details">ContactDetails</string>
     <string name="contact_image">Contacto</string>
+    <string name="address">Direcciones</string>
+    <string name="communication_preferences">Comunicación</string>
+    <string name="demographics">Demografía</string>
+    <string name="constituent_information">Otra Información</string>
+    <string name="tags_and_groups">Etiquetas y grupos</string>
 
 </resources>

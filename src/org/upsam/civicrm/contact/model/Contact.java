@@ -1,23 +1,18 @@
 package org.upsam.civicrm.contact.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonSubTypes;
 import org.codehaus.jackson.annotate.JsonSubTypes.Type;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
-import org.upsam.civicrm.contact.model.email.ListEmails;
-import org.upsam.civicrm.contact.model.telephone.ListPhones;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "contact_type")
-@JsonSubTypes(
-		{ 
-			@Type(value = Individual.class, name = "Individual"), 
-			@Type(value = Organization.class, name = "Organization"), 
-			@Type(value = Household.class, name = "Household") 
-		})
-public abstract class Contact {
+@JsonSubTypes({ @Type(value = Individual.class, name = "Individual"), @Type(value = Organization.class, name = "Organization"), @Type(value = Household.class, name = "Household") })
+public abstract class Contact implements Parcelable {
 	/**
 	 * Contact ID
 	 */
@@ -44,15 +39,49 @@ public abstract class Contact {
 	@JsonProperty("contact_sub_type")
 	private String subType;
 	/**
-	 * Lista de emails del contacto
+	 * Email primario del contacto
 	 */
-	@JsonIgnore
-	private ListEmails emails;
+	private String email;
 	/**
-	 * Lista de teléfonos del contacto
+	 * Teléfono primario del contacto
 	 */
-	@JsonIgnore
-	private ListPhones phones;
+	private String phone;
+	/*
+	 * Preferencias de comunicación 
+	 */
+	@JsonProperty("do_not_email")
+	private String doNotEmail;
+	@JsonProperty("do_not_phone")
+	private String doNotPhone;
+	@JsonProperty("do_not_mail")
+	private String doNotMail;
+	@JsonProperty("do_not_sms")
+	private String doNotSms;
+	@JsonProperty("do_not_trade")
+	private String doNotTrade;
+
+	/**
+	 * 
+	 */
+	public Contact() {
+		super();
+	}
+
+	/**
+	 * 
+	 */
+	public Contact(Parcel in) {
+		this.id = in.readInt();
+		String[] data = new String[6];
+		in.readStringArray(data);
+		this.name = data[0];
+		this.image = data[1];
+		this.nick = data[2];
+		this.phone = data[3];
+		this.email = data[4];		
+		this.subType = data[5];
+	}
+
 	/**
 	 * @param name
 	 *            the name to set
@@ -136,31 +165,114 @@ public abstract class Contact {
 	}
 
 	/**
-	 * @return the emails
+	 * @return the email
 	 */
-	public ListEmails getEmails() {
-		return emails;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
-	 * @param emails the emails to set
+	 * @param email
+	 *            the email to set
 	 */
-	public void setEmails(ListEmails emails) {
-		this.emails = emails;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**
-	 * @return the phones
+	 * @return the phone
 	 */
-	public ListPhones getPhones() {
-		return phones;
+	public String getPhone() {
+		return phone;
 	}
 
 	/**
-	 * @param phones the phones to set
+	 * @param phone
+	 *            the phone to set
 	 */
-	public void setPhones(ListPhones phones) {
-		this.phones = phones;
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	/**
+	 * @return the doNotEmail
+	 */
+	public String getDoNotEmail() {
+		return doNotEmail;
+	}
+
+	/**
+	 * @param doNotEmail the doNotEmail to set
+	 */
+	public void setDoNotEmail(String doNotEmail) {
+		this.doNotEmail = doNotEmail;
+	}
+
+	/**
+	 * @return the doNotPhone
+	 */
+	public String getDoNotPhone() {
+		return doNotPhone;
+	}
+
+	/**
+	 * @param doNotPhone the doNotPhone to set
+	 */
+	public void setDoNotPhone(String doNotPhone) {
+		this.doNotPhone = doNotPhone;
+	}
+
+	/**
+	 * @return the doNotMail
+	 */
+	public String getDoNotMail() {
+		return doNotMail;
+	}
+
+	/**
+	 * @param doNotMail the doNotMail to set
+	 */
+	public void setDoNotMail(String doNotMail) {
+		this.doNotMail = doNotMail;
+	}
+
+	/**
+	 * @return the doNotSms
+	 */
+	public String getDoNotSms() {
+		return doNotSms;
+	}
+
+	/**
+	 * @param doNotSms the doNotSms to set
+	 */
+	public void setDoNotSms(String doNotSms) {
+		this.doNotSms = doNotSms;
+	}
+
+	/**
+	 * @return the doNotTrade
+	 */
+	public String getDoNotTrade() {
+		return doNotTrade;
+	}
+
+	/**
+	 * @param doNotTrade the doNotTrade to set
+	 */
+	public void setDoNotTrade(String doNotTrade) {
+		this.doNotTrade = doNotTrade;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeInt(this.id);
+		dest.writeStringArray(new String[] { this.name, this.image, this.nick, this.phone, this.email, this.subType });
 	}
 
 }

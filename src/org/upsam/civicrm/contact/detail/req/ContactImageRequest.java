@@ -1,4 +1,4 @@
-package org.upsam.civicrm.contact.detail;
+package org.upsam.civicrm.contact.detail.req;
 
 import java.io.ByteArrayInputStream;
 

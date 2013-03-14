@@ -1,8 +1,15 @@
 package org.upsam.civicrm.contact;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.upsam.civicrm.CiviCRMAsyncRequest;
+import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
+import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.SpiceAwareActivity;
 import org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity;
+import org.upsam.civicrm.contact.model.ContactSummary;
 import org.upsam.civicrm.contact.model.ListContacts;
 
 import android.content.Intent;
@@ -54,7 +61,7 @@ public class ContactListActivity extends SpiceAwareActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getApplicationContext(), ContactDetailFragmentActivity.class);
-				intent.putExtra("contactId", contactsAdapter.getItemId(position));
+				intent.putExtra("contact", (ContactSummary) contactsAdapter.getItem(position));
 				startActivity(intent);
 			}
 		});
@@ -66,9 +73,17 @@ public class ContactListActivity extends SpiceAwareActivity {
 		ContactListActivity.this.setProgressBarIndeterminateVisibility(true);
 		showLoadingProgressDialog();
 		//contentManager.removeAllDataFromCache();
-		ContactsRequest request = new ContactsRequest();
+		CiviCRMAsyncRequest<ListContacts> request = buildReq();
 		lastRequestCacheKey = request.createCacheKey();
 		contentManager.execute(request, lastRequestCacheKey, DurationInMillis.ONE_MINUTE, new ListContactsRequestListener());
+	}
+
+	private CiviCRMAsyncRequest<ListContacts> buildReq() {
+		Map<String, String> params = new HashMap<String, String>(3);
+		params.put("return[display_name]", "1");
+		params.put("return[contact_type]", "1");
+		params.put("return[contact_sub_type]", "1");
+		return new CiviCRMAsyncRequest<ListContacts>(ListContacts.class, ACTION.get, ENTITY.Contact);
 	}
 
 	@Override

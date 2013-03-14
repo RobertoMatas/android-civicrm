@@ -1,16 +1,23 @@
 package org.upsam.civicrm;
 
+import com.octo.android.robospice.SpiceManager;
+
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 
 public abstract class AbstractAsyncFragment extends Fragment {
 
 	private ProgressDialog progressDialog;
+	/**
+	 * 
+	 */
+	protected final SpiceManager contentManager;
 
 	private boolean destroyed = false;
 
-	public AbstractAsyncFragment() {
+	public AbstractAsyncFragment(SpiceManager contentManager) {
 		super();
+		this.contentManager = contentManager;
 	}
 
 
