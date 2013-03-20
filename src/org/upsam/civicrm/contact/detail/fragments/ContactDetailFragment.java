@@ -12,11 +12,11 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.detail.req.ContactImageRequest;
-import org.upsam.civicrm.contact.model.Contact;
-import org.upsam.civicrm.contact.model.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.Contact;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.email.Email;
 import org.upsam.civicrm.contact.model.email.ListEmails;
-import org.upsam.civicrm.contact.model.lang.Language;
+import org.upsam.civicrm.contact.model.lang.PreferredLanguage;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.contact.model.telephone.Phone;
 
@@ -61,6 +61,14 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 * Datos detallados de contacto
 	 */
 	private Contact contactDetails;
+	/**
+	 * Indica si hemos mostrado ya las preferencias de comunicación
+	 */
+	private boolean yetUpdatedCommunicationPreferences;
+	/**
+	 * Indica si hemos mostrado ya los datos demográficos
+	 */
+	private boolean yetUpdateDemographics;
 
 	/**
 	 * 
@@ -68,6 +76,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 */
 	public ContactDetailFragment(SpiceManager contentManager) {
 		super(contentManager);
+		this.yetUpdatedCommunicationPreferences = false;
+		this.yetUpdateDemographics = false;
 	}
 
 	/*
@@ -131,10 +141,10 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		Map<String, String> params = new HashMap<String, String>(2);
 		params.put("contact_id", Integer.toString(this.contactSummary.getId()));
 		params.put("return[preferred_language]", "1");
-		CiviCRMAsyncRequest<Language> langReq = new CiviCRMAsyncRequest<Language>(Language.class, ACTION.getsingle, ENTITY.Contact, params);
+		CiviCRMAsyncRequest<PreferredLanguage> langReq = new CiviCRMAsyncRequest<PreferredLanguage>(PreferredLanguage.class, ACTION.getsingle, ENTITY.Contact, params);
 		contentManager.execute(langReq, langReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactLangListener());
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -208,28 +218,70 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		}
 		dismissProgressDialog();
 	}
+	
 
-	private void updateCommunicationPreferences(Language result) {
-		View view = null;
-		TextView text1 = null;
-		TextView text2 = null;
-		String[] props  = {this.contactDetails.getDoNotEmail(), this.contactDetails.getDoNotPhone(), this.contactDetails.getDoNotSms(), this.contactDetails.getDoNotTrade()};
-		String[] values = {"Do not email", "Do not phone", "Do not SMS", "Do not trade"};
-		for (int i = 0; i < props.length; i++) {
-	 		if ("1".equals(props[i])) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_1, contactData, false);
+	public void updateDemographics() {
+		if (! this.yetUpdateDemographics) {
+			View view = null;
+			TextView text1 = null;
+			TextView text2 = null;
+			String gender = this.contactDetails.getGender();
+			String birthDate = this.contactDetails.getBirthDate();
+			char isDeceased = this.contactDetails.getIsDeceased();
+			if (StringUtils.hasText(gender)) {
+				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
-				text1.setText(values[i]);
+				text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setText(gender);
+				text2.setText("Gender");
 				this.contactData.addView(view);
 			}
+			if (StringUtils.hasText(birthDate)) {
+				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				text1 = (TextView) view.findViewById(android.R.id.text1);
+				text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setText(birthDate);
+				text2.setText("Birth Date");
+				this.contactData.addView(view);
+			}
+			if ('1' == isDeceased) {
+				String deceasedDate = this.contactDetails.getDeceasedDate();
+				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				text1 = (TextView) view.findViewById(android.R.id.text1);
+				text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setText("Contact is deceased");
+				text2.setText(StringUtils.hasText(deceasedDate) ? deceasedDate : "");
+				this.contactData.addView(view);
+			}
+			this.yetUpdateDemographics = true;
 		}
-		if (result != null && StringUtils.hasText(result.getPreferredLanguage())) {
-			view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
-			text1 = (TextView) view.findViewById(android.R.id.text1);
-			text2 = (TextView) view.findViewById(android.R.id.text2);
-			text1.setText(new Locale(result.getPreferredLanguage()).getDisplayLanguage());
-			text2.setText("Preferred Language");
-			this.contactData.addView(view);
+		
+	}
+
+	private void updateCommunicationPreferences(PreferredLanguage result) {
+		if (! this.yetUpdatedCommunicationPreferences) {
+			View view = null;
+			TextView text1 = null;
+			TextView text2 = null;
+			char[] props = { this.contactDetails.getDoNotEmail(), this.contactDetails.getDoNotPhone(), this.contactDetails.getDoNotSms(), this.contactDetails.getDoNotTrade() };
+			String[] values = { "Do not email", "Do not phone", "Do not SMS", "Do not trade" };
+			for (int i = 0; i < props.length; i++) {
+				if ('1' == (props[i])) {
+					view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_1, contactData, false);
+					text1 = (TextView) view.findViewById(android.R.id.text1);
+					text1.setText(values[i]);
+					this.contactData.addView(view);
+				}
+			}
+			if (result != null && StringUtils.hasText(result.getPreferredLanguage())) {
+				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				text1 = (TextView) view.findViewById(android.R.id.text1);
+				text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setText(new Locale(result.getPreferredLanguage()).getDisplayLanguage());
+				text2.setText("Preferred Language");
+				this.contactData.addView(view);
+			}
+			this.yetUpdatedCommunicationPreferences = true;
 		}
 		dismissProgressDialog();
 	}
@@ -294,8 +346,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		}
 
 	}
-	
-	public class ContactLangListener implements RequestListener<Language> {
+
+	public class ContactLangListener implements RequestListener<PreferredLanguage> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
@@ -304,12 +356,12 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		}
 
 		@Override
-		public void onRequestSuccess(Language result) {
-			if (result == null) return;
+		public void onRequestSuccess(PreferredLanguage result) {
+			if (result == null)
+				return;
 			updateCommunicationPreferences(result);
 
 		}
 	}
-
 
 }

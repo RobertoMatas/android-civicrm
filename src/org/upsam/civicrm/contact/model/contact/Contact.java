@@ -1,4 +1,4 @@
-package org.upsam.civicrm.contact.model;
+package org.upsam.civicrm.contact.model.contact;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -50,15 +50,26 @@ public abstract class Contact implements Parcelable {
 	 * Preferencias de comunicación 
 	 */
 	@JsonProperty("do_not_email")
-	private String doNotEmail;
+	private char doNotEmail;
 	@JsonProperty("do_not_phone")
-	private String doNotPhone;
+	private char doNotPhone;
 	@JsonProperty("do_not_mail")
-	private String doNotMail;
+	private char doNotMail;
 	@JsonProperty("do_not_sms")
-	private String doNotSms;
+	private char doNotSms;
 	@JsonProperty("do_not_trade")
-	private String doNotTrade;
+	private char doNotTrade;
+	
+	/* 
+	 * Datos demográficos
+	 */
+	private String gender;
+	@JsonProperty("birth_date")
+	private String birthDate;
+	@JsonProperty("is_deceased")
+	private char isDeceased;
+	@JsonProperty("deceased_date")
+	private String deceasedDate;
 
 	/**
 	 * 
@@ -202,71 +213,127 @@ public abstract class Contact implements Parcelable {
 	/**
 	 * @return the doNotEmail
 	 */
-	public String getDoNotEmail() {
+	public char getDoNotEmail() {
 		return doNotEmail;
 	}
 
 	/**
 	 * @param doNotEmail the doNotEmail to set
 	 */
-	public void setDoNotEmail(String doNotEmail) {
+	public void setDoNotEmail(char doNotEmail) {
 		this.doNotEmail = doNotEmail;
 	}
 
 	/**
 	 * @return the doNotPhone
 	 */
-	public String getDoNotPhone() {
+	public char getDoNotPhone() {
 		return doNotPhone;
 	}
 
 	/**
 	 * @param doNotPhone the doNotPhone to set
 	 */
-	public void setDoNotPhone(String doNotPhone) {
+	public void setDoNotPhone(char doNotPhone) {
 		this.doNotPhone = doNotPhone;
 	}
 
 	/**
 	 * @return the doNotMail
 	 */
-	public String getDoNotMail() {
+	public char getDoNotMail() {
 		return doNotMail;
 	}
 
 	/**
 	 * @param doNotMail the doNotMail to set
 	 */
-	public void setDoNotMail(String doNotMail) {
+	public void setDoNotMail(char doNotMail) {
 		this.doNotMail = doNotMail;
 	}
 
 	/**
 	 * @return the doNotSms
 	 */
-	public String getDoNotSms() {
+	public char getDoNotSms() {
 		return doNotSms;
 	}
 
 	/**
 	 * @param doNotSms the doNotSms to set
 	 */
-	public void setDoNotSms(String doNotSms) {
+	public void setDoNotSms(char doNotSms) {
 		this.doNotSms = doNotSms;
 	}
 
 	/**
 	 * @return the doNotTrade
 	 */
-	public String getDoNotTrade() {
+	public char getDoNotTrade() {
 		return doNotTrade;
 	}
 
 	/**
 	 * @param doNotTrade the doNotTrade to set
 	 */
-	public void setDoNotTrade(String doNotTrade) {
+	public void setDoNotTrade(char doNotTrade) {
 		this.doNotTrade = doNotTrade;
+	}
+
+	/**
+	 * @return the gender
+	 */
+	public String getGender() {
+		return gender;
+	}
+
+	/**
+	 * @param gender the gender to set
+	 */
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	/**
+	 * @return the birthDate
+	 */
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	/**
+	 * @param birthDate the birthDate to set
+	 */
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	/**
+	 * @return the isDeceased
+	 */
+	public char getIsDeceased() {
+		return isDeceased;
+	}
+
+	/**
+	 * @param isDeceased the isDeceased to set
+	 */
+	public void setIsDeceased(char isDeceased) {
+		this.isDeceased = isDeceased;
+	}
+
+	/**
+	 * @return the deceasedDate
+	 */
+	public String getDeceasedDate() {
+		return deceasedDate;
+	}
+
+	/**
+	 * @param deceasedDate the deceasedDate to set
+	 */
+	public void setDeceasedDate(String deceasedDate) {
+		this.deceasedDate = deceasedDate;
 	}
 
 	@Override

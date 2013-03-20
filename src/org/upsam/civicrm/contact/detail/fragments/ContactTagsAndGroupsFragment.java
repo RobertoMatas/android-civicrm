@@ -9,7 +9,7 @@ import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
-import org.upsam.civicrm.contact.model.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.groups.Group;
 import org.upsam.civicrm.contact.model.groups.ListGroups;
 import org.upsam.civicrm.contact.model.tags.ListTags;
@@ -40,7 +40,10 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(Tag result) {
-			if (result == null) return;
+			if (result == null) {
+				Log.d("ContactTagsAndGroupsFragment", "Tag es null");
+				return;
+			}			
 			updateTagsView(result);
 		}
 
@@ -56,8 +59,10 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(ListTags result) {
-			if (result == null)
+			if (result == null) {
+				Log.d("ContactTagsAndGroupsFragment", "ListTag es null");
 				return;
+			}	
 			loadTags(result);
 
 		}
@@ -74,8 +79,10 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(ListGroups result) {
-			if (result == null)
+			if (result == null) {
+				Log.d("ContactTagsAndGroupsFragment", "ListGroups es null");
 				return;
+			}	
 			updateGroupsView(result);
 		}
 	}
@@ -118,6 +125,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d("ContactTagsAndGroupsFragment", "onCreate()");
 		executeRequests();
 	}
 
@@ -125,10 +133,11 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
 		final Map<String, String> params = new HashMap<String, String>(1);
 		params.put("contact_id", Long.toString(contactSummary.getId()));
+		Log.d("ContactTagsAndGroupsFragment", "contact_id=" + Long.toString(contactSummary.getId()));
 		CiviCRMAsyncRequest<ListGroups> groupsReq = new CiviCRMAsyncRequest<ListGroups>(ListGroups.class, ACTION.get, ENTITY.GroupContact, params);
 		CiviCRMAsyncRequest<ListTags> tagsReq = new CiviCRMAsyncRequest<ListTags>(ListTags.class, ACTION.get, ENTITY.EntityTag, params);
 		contentManager.execute(groupsReq, groupsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactGroupsListener());
-		contentManager.execute(tagsReq, groupsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactTagsListener());
+		contentManager.execute(tagsReq, tagsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactTagsListener());
 	}
 
 	private void loadTags(ListTags result) {
@@ -139,7 +148,6 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 				params = new HashMap<String, String>(1);
 				params.put("id", Integer.toString(tag.getTagId()));
 				CiviCRMAsyncRequest<Tag> tagsReq = new CiviCRMAsyncRequest<Tag>(Tag.class, ACTION.getsingle, ENTITY.Tag, params);
-				Log.e(this.getClass().getCanonicalName(), tagsReq.createCacheKey());
 				contentManager.execute(tagsReq, tagsReq.createCacheKey(), DurationInMillis.ONE_HOUR, new TagListener());
 			}
 		} else {
@@ -148,10 +156,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		
 	}
 
-	private synchronized void updateTagsView(Tag tag) {
-		if (tag != null) {
-			Log.e(this.getClass().getCanonicalName(), "Algo habrá");
-		}
+	private void updateTagsView(Tag tag) {
 		ViewGroup viewGroup = (ViewGroup) getView();
 		LinearLayout layout = (LinearLayout) viewGroup.getChildAt(0);
 		View view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, layout, false);
@@ -164,9 +169,10 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		
 	}
 
-	private synchronized void updateGroupsView(ListGroups result) {
+	private void updateGroupsView(ListGroups result) {
 		List<Group> groups = result.getValues();
 		if (groups != null && !groups.isEmpty()) {
+			Log.d(this.getClass().getCanonicalName(), "grupos=" + groups);
 			ViewGroup viewGroup = (ViewGroup) getView();
 			LinearLayout layout = (LinearLayout) viewGroup.getChildAt(0);
 			View view = null;

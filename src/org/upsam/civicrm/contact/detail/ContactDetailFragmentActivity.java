@@ -4,14 +4,14 @@ import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.detail.fragments.ContactAddressFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactDetailFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactTagsAndGroupsFragment;
+import org.upsam.civicrm.contact.detail.fragments.OtherInformationFragment;
 import org.upsam.civicrm.contact.detail.menu.MenuOrganizationFragment.OnMenuItemSelectedListener;
-import org.upsam.civicrm.contact.model.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
 
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.slidingmenu.lib.SlidingMenu;
@@ -31,15 +31,16 @@ public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmen
 		}
 		setSlidingActionBarEnabled(false);
 		SlidingMenu menu = getSlidingMenu();
-		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.drawable.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Show the Up button in the action bar.
-			getActionBar().setDisplayHomeAsUpEnabled(true);
+			getActionBar().setDisplayHomeAsUpEnabled(false);
 			getActionBar().setDisplayShowCustomEnabled(true);
+			getActionBar().setIcon(R.drawable.ic_slide);
 		}
 		if (findViewById(R.id.FrameLayout1) != null) {
 			if (savedInstanceState != null) {
@@ -58,13 +59,26 @@ public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmen
 		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout2, addressFragment).commit();
 		getSlidingMenu().toggle();	
 	}
+
+	private void addOtherInfoFragment() {
+		OtherInformationFragment otherInformationFragment = new OtherInformationFragment(contentManager);
+		otherInformationFragment.setArguments(getIntent().getExtras());
+		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout2, otherInformationFragment).commit();
+		getSlidingMenu().toggle();	
+	}
 	
 	private void updateCommunicationPreferences() {
 		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager().findFragmentByTag("contactDetails");
 		fragment.showCommunicationPreferences();	
 		getSlidingMenu().toggle();
 	}
-
+	
+	private void updateDemographics() {
+		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager().findFragmentByTag("contactDetails");
+		fragment.updateDemographics();	
+		getSlidingMenu().toggle();
+	}
+	
 	private void addGroupsAndTagsFragment() {
 		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment(contentManager);
 		tagsAndGroupsFragment.setArguments(getIntent().getExtras());
@@ -95,20 +109,19 @@ public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmen
 		String optionAddress = resources.getString(R.string.address);
 		String optionCommPreferences = resources.getString(R.string.communication_preferences);
 		String optionTagsAndGroup = resources.getString(R.string.tags_and_groups);
+		String optionDemographics = resources.getString(R.string.demographics);
+		String optionOtherInfo = resources.getString(R.string.constituent_information);
 		if (options[position].equals(optionAddress)) {
 			addAddressFragment();
 		} else if (options[position].equals(optionCommPreferences)) {
 			updateCommunicationPreferences();
 		} else if (options[position].equals(optionTagsAndGroup)) {
 			addGroupsAndTagsFragment();
+		} else if(options[position].equals(optionDemographics)) {
+			updateDemographics();
+		} else if(options[position].equals(optionOtherInfo)) {
+			addOtherInfoFragment();
 		}
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_contact_details, menu);
-		return true;
 	}
 
 	@Override

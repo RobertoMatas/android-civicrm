@@ -1,4 +1,4 @@
-package org.upsam.civicrm.contact.model;
+package org.upsam.civicrm.contact.model.contact;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;

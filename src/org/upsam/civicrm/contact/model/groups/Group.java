@@ -84,4 +84,12 @@ public class Group {
 		this.inMethod = inMethod;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Group [title=" + title + ", visibility=" + visibility + ", inDate=" + inDate + ", inMethod=" + inMethod + "]";
+	}
+
 }

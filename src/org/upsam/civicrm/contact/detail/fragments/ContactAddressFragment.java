@@ -9,9 +9,9 @@ import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
-import org.upsam.civicrm.contact.model.ContactSummary;
 import org.upsam.civicrm.contact.model.address.Address;
 import org.upsam.civicrm.contact.model.address.ListAddresses;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

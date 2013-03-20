@@ -9,8 +9,9 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.SpiceAwareActivity;
 import org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity;
-import org.upsam.civicrm.contact.model.ContactSummary;
-import org.upsam.civicrm.contact.model.ListContacts;
+import org.upsam.civicrm.contact.list.ContactListAdapter;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ListContacts;
 
 import android.content.Intent;
 import android.os.Build;
@@ -30,6 +31,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+@Deprecated
 public class ContactListActivity extends SpiceAwareActivity {
 
 	private static final String KEY_LAST_REQUEST_CACHE_KEY = "lastRequestCacheKey";

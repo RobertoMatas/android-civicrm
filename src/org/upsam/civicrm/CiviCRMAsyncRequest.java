@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
@@ -16,7 +17,7 @@ public class CiviCRMAsyncRequest<RESULT> extends SpringAndroidSpiceRequest<RESUL
 	/**
 	 * 
 	 */
-	public static enum ENTITY {Phone, Contact, Email, Address, GroupContact, EntityTag, Tag};
+	public static enum ENTITY {Phone, Contact, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue};
 	/**
 	 * 
 	 */
@@ -72,11 +73,12 @@ public class CiviCRMAsyncRequest<RESULT> extends SpringAndroidSpiceRequest<RESUL
 	}
 
 	public String createCacheKey() {
-		return this.uriReq;
+		return Integer.toString(this.uriReq.hashCode());
 	}
 
 	@Override
 	public RESULT loadDataFromNetwork() throws Exception {
+		Log.d("ContactTagsAndGroupsFragment", "loadDataFromNetwork() -> " + this.uriReq);
 		return getRestTemplate().getForObject(this.uriReq, getResultType());
 	}
 }

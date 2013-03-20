@@ -1,12 +1,12 @@
-package org.upsam.civicrm.contact;
+package org.upsam.civicrm.contact.list;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.util.StringUtils;
 import org.upsam.civicrm.R;
-import org.upsam.civicrm.contact.model.ContactSummary;
-import org.upsam.civicrm.contact.model.ListContacts;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ListContacts;
 
 import android.content.Context;
 import android.view.LayoutInflater;

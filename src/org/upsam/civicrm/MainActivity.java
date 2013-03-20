@@ -1,6 +1,6 @@
 package org.upsam.civicrm;
 
-import org.upsam.civicrm.contact.ContactListActivity;
+import org.upsam.civicrm.contact.list.ContactListTabs;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	public void showContacts(View view) {
-		Intent intent = new Intent(this, ContactListActivity.class);
+		Intent intent = new Intent(this, ContactListTabs.class);
 		startActivity(intent);
 	}
 
