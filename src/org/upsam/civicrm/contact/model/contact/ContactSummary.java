@@ -130,5 +130,4 @@ public class ContactSummary implements Parcelable {
 		dest.writeInt(this.id);
 		dest.writeStringArray(new String[]{this.name, this.type, this.subType});
 	}
-
 }

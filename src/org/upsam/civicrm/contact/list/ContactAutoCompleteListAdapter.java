@@ -28,6 +28,10 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 	private List<ContactSummary> contacts;
 	private final RestTemplate restTemplate;
 
+	static class ViewHolder {
+	    public TextView displayName;
+	  }
+	
 	public ContactAutoCompleteListAdapter(RestTemplate restTemplate, Context context, ListContacts contacts) {
 		super();
 		this.restTemplate = restTemplate;
@@ -68,21 +72,24 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 
 		if (view == null) {
 			view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+			ViewHolder viewHolder = new ViewHolder();
+			viewHolder.displayName = (TextView) view.findViewById(android.R.id.text1);
+			view.setTag(viewHolder);
 		}
+		ViewHolder holder = (ViewHolder) view.getTag();
 		if (contact != null) {
-			TextView displayName = (TextView) view.findViewById(android.R.id.text1);
-			displayName.setText(contact.getName());
+			holder.displayName.setText(contact.getName());
 		}
 		return view;
 	}
 
 	@Override
 	public Filter getFilter() {
-		 Filter filter = new Filter() {
+		Filter filter = new Filter() {
 
 			@Override
 			protected FilterResults performFiltering(CharSequence query) {
-					FilterResults filterResults = new FilterResults();
+				FilterResults filterResults = new FilterResults();
 				if (query != null && query.length() > 2) {
 					Map<String, String> params = new HashMap<String, String>(5);
 					params.put("display_name", query.toString().replace(" ", "+"));
@@ -104,15 +111,14 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 			@Override
 			protected void publishResults(CharSequence query, FilterResults results) {
 				if (results != null && results.count > 0) {
-                    notifyDataSetChanged();
-                }
-                else {
-                    notifyDataSetInvalidated();
-                }
-				
+					notifyDataSetChanged();
+				} else {
+					notifyDataSetInvalidated();
+				}
+
 			}
-			 
-		 };
+
+		};
 		return filter;
 	}
 
