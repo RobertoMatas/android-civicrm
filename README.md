@@ -2,7 +2,7 @@
 ## Universidad Pontififica de Salamanca ##
 ###Proyecto Fin de carrera###
 <p>
-La combinación de los productos **OpenSource  CIVICRM + Drupal** proporcionan uno de los mejores CRM existentes en el mercado.
+La combinación de los productos <b>OpenSource  CIVICRM + Drupal</b> proporcionan uno de los mejores CRM existentes en el mercado.
 Las necesidades de la empresa se van a cubrir son:
 </p>
 <ul>
@@ -13,8 +13,8 @@ Las necesidades de la empresa se van a cubrir son:
 <li>Seguimiento de las relaciones (reuniones, llamadas, correos electrónicos, y personalizadas)</li>
 </ul>
 <p>
-La mayor parte del trabajo de un comercial no requiere estar presente en una oficina con un ordenador, sino que puede ser realizado desde una tableta o desde el propio móvil. El objetivo de este proyecto es el de proveer una aplicación cliente en un Smartphone Android capaz de facilitar el trabajo a los comerciales y/o usuarios que atienden incidencias.
+La mayor parte del trabajo de un comercial no requiere estar presente en una oficina con un ordenador, sino que puede ser realizado desde una tableta o desde el propio móvil. El objetivo de este proyecto es el de proveer una aplicación cliente en un Smartphone <em>Android</em> capaz de facilitar el trabajo a los comerciales y/o usuarios que atienden incidencias.
 </p>
 <p>
-Como resultado final se espera una primera versión de la aplicación publicada a principios de Junio en el Market de *Android*.
+Como resultado final se espera una primera versión de la aplicación publicada a principios de Junio en el Market de <em>Android</em>.
 </p>
