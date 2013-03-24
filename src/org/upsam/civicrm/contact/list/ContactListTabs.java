@@ -1,11 +1,26 @@
 package org.upsam.civicrm.contact.list;
 
+import org.upsam.civicrm.R;
+import org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ListContacts;
+import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
+
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnActionExpandListener;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
 
 /**
@@ -17,11 +32,14 @@ public class ContactListTabs extends Activity {
 	private static final String ALL = "All";
 	private static final String INDIVIDUAL = "Individual";
 	private static final String ORGANIZATION = "Organization";
-
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		configureTabs(savedInstanceState);
+	}
 
+	private void configureTabs(Bundle savedInstanceState) {
 		ActionBar bar = getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
@@ -55,8 +73,57 @@ public class ContactListTabs extends Activity {
 		bar.selectTab(bar.getTabAt(2));
 
 		if (savedInstanceState != null) {
-			bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+			bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 2));
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_contact_list, menu);
+		MenuItem menuItem = menu.findItem(R.id.menu_search);
+		menuItem.setOnActionExpandListener(new OnActionExpandListener() {
+			
+			@Override
+			public boolean onMenuItemActionExpand(MenuItem item) {
+				final AutoCompleteTextView autoComTextView = (AutoCompleteTextView) item.getActionView().findViewById(R.id.ab_Search);
+	    		final ContactAutoCompleteListAdapter adapter = new ContactAutoCompleteListAdapter(
+	    				new CiviCRMAndroidSpiceService().createRestTemplate(), 
+	    				ContactListTabs.this, new ListContacts());
+				autoComTextView.setAdapter(adapter);
+	    		autoComTextView.setThreshold(3);
+	    		autoComTextView.setMaxLines(1);
+	    		autoComTextView.setOnItemClickListener(new OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						autoComTextView.setText("");
+						Intent intent = new Intent(ContactListTabs.this, ContactDetailFragmentActivity.class);
+						intent.putExtra("contact", (ContactSummary) adapter.getItem(position));
+						startActivity(intent);
+						
+					}
+				});
+	    		return true;
+			}
+			
+			@Override
+			public boolean onMenuItemActionCollapse(MenuItem item) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override

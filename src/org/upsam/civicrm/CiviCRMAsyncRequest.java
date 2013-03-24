@@ -21,15 +21,15 @@ public class CiviCRMAsyncRequest<RESULT> extends SpringAndroidSpiceRequest<RESUL
 	/**
 	 * 
 	 */
-	final String key = "96783019a4bef4dd8541b176c828ff5f";
+	final String key = "ad98d9cd2d3a364e3364b50f1db52c3c"; // heliohost -> f56bad924425184e0dd5c562f953a87b
 	/**
 	 * 
 	 */
-	final String api_key = "81579f0a8cd7ba2e002267459d100476";
+	final String api_key = "test";
 	/**
 	 * 
 	 */
-	final String baseUri = "http://civicrm-upsam.btnhost.net/drupal/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=1";
+	final String baseUri = "http://www.proyectofinal.es/drupal7/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=1";
 	/**
 	 * 
 	 */
@@ -63,17 +63,22 @@ public class CiviCRMAsyncRequest<RESULT> extends SpringAndroidSpiceRequest<RESUL
 		uriBuilder.appendQueryParameter("action", action.name());
 		uriBuilder.appendQueryParameter("key", key);
 		uriBuilder.appendQueryParameter("api_key", api_key);
+		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
 		if (params != null && ! params.isEmpty()) {
 			Set<Entry<String, String>> entrySet = params.entrySet();
 			for (Entry<String, String> entry : entrySet) {
-				uriBuilder.appendQueryParameter(entry.getKey(), entry.getValue());
+				uri.append("&" + entry.getKey() + "=" + Uri.encode(entry.getValue(), "+"));
 			}	
 		}
-		return uriBuilder.build().toString();
+		return uri.toString();
 	}
 
 	public String createCacheKey() {
 		return Integer.toString(this.uriReq.hashCode());
+	}
+
+	public String getUriReq() {
+		return this.uriReq;
 	}
 
 	@Override

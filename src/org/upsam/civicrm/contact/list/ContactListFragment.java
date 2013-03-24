@@ -82,7 +82,7 @@ public class ContactListFragment extends Fragment {
 	}
 
 	private void initUIComponents() {
-		ListView contactList = (ListView) getView().findViewById(R.id.listView1);
+		ListView contactList = (ListView) getView().findViewById(R.id.listResults);
 
 		contactsAdapter = new ContactListAdapter(getActivity(), new ListContacts());
 		contactList.setAdapter(contactsAdapter);

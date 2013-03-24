@@ -16,5 +16,5 @@
     <string name="demographics">Demografía</string>
     <string name="constituent_information">Otra Información</string>
     <string name="tags_and_groups">Etiquetas y grupos</string>
-
+    <string name="search">Search</string>
 </resources>

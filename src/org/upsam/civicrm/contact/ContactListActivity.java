@@ -54,7 +54,7 @@ public class ContactListActivity extends SpiceAwareActivity {
 	}
 
 	private void initUIComponents() {
-		ListView contactList = (ListView) findViewById(R.id.listView1);
+		ListView contactList = (ListView) findViewById(R.id.listResults);
 
 		contactsAdapter = new ContactListAdapter(getApplicationContext(), new ListContacts());
 		contactList.setAdapter(contactsAdapter);
