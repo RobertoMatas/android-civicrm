@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:layout="@layout/pref_datos_acceso"
+        android:title="@string/pref_title_acceso" >
+        <EditTextPreference
+            android:key="PREF_URL"
+            android:summary="@string/pref_url_summary"
+            android:title="@string/pref_url_title" />
+        <EditTextPreference
+            android:key="PREF_SITE_KEY"
+            android:summary="@string/pref_keysite_summary"
+            android:title="@string/pref_keysite_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/pref_datos_usuario"
+        android:title="@string/pref_title_usuario" >
+        <EditTextPreference
+            android:key="PREF_USER"
+            android:summary="@string/pref_user_summary"
+            android:title="@string/pref_user_title" />
+        <EditTextPreference
+            android:key="PREF_PASSWORD"
+            android:summary="@string/pref_password_summary"
+            android:title="@string/pref_password_title" />
+        <EditTextPreference
+            android:key="PREF_API_KEY"
+            android:summary="@string/pref_apikey_summary"
+            android:title="@string/pref_apikey_title" />
+        <EditTextPreference
+            android:key="PREF_USER_KEY"
+            android:summary="@string/pref_userkey_summary"
+            android:title="@string/pref_userkey_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

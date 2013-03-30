@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/fondoActividad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/textoHeadLogin"
+        android:text="@string/login_head_superior" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/textoHeadLogin.center"
+        android:text="@string/login_head_inferior" />
+
+    <LinearLayout
+        style="@style/fondoBordeClaro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/prefURL"
+            style="@style/itemsPortraitLogin"
+            android:hint="@string/login_url" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/prefKeySite"
+            style="@style/itemsPortraitLogin"
+            android:hint="@string/login_key_site" />
+
+        <EditText
+            android:id="@+id/prefUser"
+            style="@style/itemsPortraitLogin"
+            android:hint="@string/login_user_name" />
+
+        <EditText
+            android:id="@+id/prefPassword"
+            style="@style/itemsPortraitLogin"
+            android:hint="@string/login_user_password"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/saveSettings"
+            style="@style/botonLogin"
+            android:onClick="saveSettings"
+            android:text="@string/login_button_login" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/footerText"
+        style="@style/textoFooterLogin"
+        android:text="@string/login_footer" />
+
+</LinearLayout>

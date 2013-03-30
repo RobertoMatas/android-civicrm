@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/fondoActividad"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <!-- FILA UNO -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutFila1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila11"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoContactos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_contactos"
+                android:clickable="true"
+                android:contentDescription="@string/home_contactos"
+                android:onClick="showContacts" />
+
+            <TextView
+                android:id="@+id/textContactos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_contactos"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila12"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoEventos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_eventos"
+                android:clickable="true"
+                android:contentDescription="@string/home_eventos"
+                android:onClick="showEvents" />
+
+            <TextView
+                android:id="@+id/textEventos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_eventos"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- FILA DOS -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutFila2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila21"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoActividades"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_actividades"
+                android:clickable="true"
+                android:contentDescription="@string/home_actividades"
+                android:onClick="showActivities" />
+
+            <TextView
+                android:id="@+id/textActividades"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_actividades"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila22"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoReporting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_reporting"
+                android:clickable="true"
+                android:contentDescription="@string/home_informes"
+                android:onClick="showInformes" />
+
+            <TextView
+                android:id="@+id/textReporting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_informes"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- FILA TRES -->
+
+    <LinearLayout
+        android:id="@+id/LinearLayoutFila3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila31"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_settings"
+                android:clickable="true"
+                android:contentDescription="@string/home_settings"
+                android:onClick="loadPreference" />
+
+            <TextView
+                android:id="@+id/textSettings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_settings"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutFila32"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:background="@drawable/borde_home"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/logoAcerca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/ic_info"
+                android:clickable="true"
+                android:contentDescription="@string/home_acercade"
+                android:onClick="acercaDe" />
+
+            <TextView
+                android:id="@+id/textacercade"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="@string/home_acercade"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
