@@ -14,7 +14,10 @@ import org.upsam.civicrm.contact.model.groups.Group;
 import org.upsam.civicrm.contact.model.groups.ListGroups;
 import org.upsam.civicrm.contact.model.tags.ListTags;
 import org.upsam.civicrm.contact.model.tags.Tag;
+import org.upsam.civicrm.util.Utilities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+@SuppressLint("ValidFragment")
 public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 	public class TagListener implements RequestListener<Tag> {
@@ -91,8 +95,9 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public ContactTagsAndGroupsFragment(SpiceManager contentManager) {
-		super(contentManager);
+	
+	public ContactTagsAndGroupsFragment(SpiceManager contentManager,Context activityContext) {
+		super(contentManager,activityContext);
 	}
 
 	/*
@@ -114,7 +119,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		showLoadingProgressDialog();
+		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));
 	}
 
 	/*
@@ -134,8 +139,8 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		final Map<String, String> params = new HashMap<String, String>(1);
 		params.put("contact_id", Long.toString(contactSummary.getId()));
 		Log.d("ContactTagsAndGroupsFragment", "contact_id=" + Long.toString(contactSummary.getId()));
-		CiviCRMAsyncRequest<ListGroups> groupsReq = new CiviCRMAsyncRequest<ListGroups>(ListGroups.class, ACTION.get, ENTITY.GroupContact, params);
-		CiviCRMAsyncRequest<ListTags> tagsReq = new CiviCRMAsyncRequest<ListTags>(ListTags.class, ACTION.get, ENTITY.EntityTag, params);
+		CiviCRMAsyncRequest<ListGroups> groupsReq = new CiviCRMAsyncRequest<ListGroups>(activityContext,ListGroups.class, ACTION.get, ENTITY.GroupContact, params);
+		CiviCRMAsyncRequest<ListTags> tagsReq = new CiviCRMAsyncRequest<ListTags>(activityContext,ListTags.class, ACTION.get, ENTITY.EntityTag, params);
 		contentManager.execute(groupsReq, groupsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactGroupsListener());
 		contentManager.execute(tagsReq, tagsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactTagsListener());
 	}
@@ -147,11 +152,11 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 			for (Tag tag : tags) {
 				params = new HashMap<String, String>(1);
 				params.put("id", Integer.toString(tag.getTagId()));
-				CiviCRMAsyncRequest<Tag> tagsReq = new CiviCRMAsyncRequest<Tag>(Tag.class, ACTION.getsingle, ENTITY.Tag, params);
+				CiviCRMAsyncRequest<Tag> tagsReq = new CiviCRMAsyncRequest<Tag>(activityContext,Tag.class, ACTION.getsingle, ENTITY.Tag, params);
 				contentManager.execute(tagsReq, tagsReq.createCacheKey(), DurationInMillis.ONE_HOUR, new TagListener());
 			}
 		} else {
-			dismissProgressDialog();
+			Utilities.dismissProgressDialog(progressDialog);
 		}
 		
 	}
@@ -162,10 +167,12 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		View view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, layout, false);
 		TextView text1 = (TextView) view.findViewById(android.R.id.text1);
 		TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+		text1.setTextAppearance(activityContext, R.style.textoDefault);
+		text2.setTextAppearance(activityContext, R.style.textoWhite);
 		text1.setText(tag.getName());
 		text2.setText(tag.getDescription());
 		layout.addView(view);
-		dismissProgressDialog();
+		Utilities.dismissProgressDialog(progressDialog);
 		
 	}
 
@@ -181,8 +188,10 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, layout, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
+				text1.setTextAppearance(activityContext, R.style.textoDefault);
+				text2.setTextAppearance(activityContext, R.style.textoWhite);
 				text1.setText(group.getTitle());
-				text2.setText("Since " + group.getInDate() + " by " + group.getInMethod());
+				text2.setText(getString(R.string.since_detail) + group.getInDate() + getString(R.string.by_detail)  + group.getInMethod());
 				layout.addView(view);
 			}
 		}

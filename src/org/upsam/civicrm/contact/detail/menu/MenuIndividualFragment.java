@@ -21,7 +21,14 @@ public class MenuIndividualFragment extends ListFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.list_menu_individual, null);
+		return inflater.inflate(R.layout.list_menu_individual, null);		
+	}
+		
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) 
+	{		
+		super.onActivityCreated(savedInstanceState);				  		
+		setListAdapter(new MenuAdapter(getActivity(), getResources().getStringArray(R.array.slide_individual_menu)));
 	}
 
 	/*

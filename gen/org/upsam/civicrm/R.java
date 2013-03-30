@@ -9,8 +9,8 @@ package org.upsam.civicrm;
 
 public final class R {
     public static final class array {
-        public static final int slide_individual_menu=0x7f040001;
-        public static final int slide_organization_menu=0x7f040000;
+        public static final int slide_individual_menu=0x7f050001;
+        public static final int slide_organization_menu=0x7f050000;
     }
     public static final class attr {
         /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
@@ -126,95 +126,262 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int viewBehind=0x7f010002;
     }
     public static final class dimen {
-        public static final int list_padding=0x7f060001;
-        public static final int shadow_width=0x7f060002;
-        public static final int slidingmenu_offset=0x7f060000;
+        public static final int list_padding=0x7f070001;
+        public static final int shadow_width=0x7f070002;
+        public static final int slidingmenu_offset=0x7f070000;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int ic_slide=0x7f020001;
-        public static final int shadow=0x7f020002;
-        public static final int social_person=0x7f020003;
+        public static final int borde_blanco=0x7f020000;
+        public static final int borde_claro=0x7f020001;
+        public static final int borde_home=0x7f020002;
+        public static final int borde_oscuro=0x7f020003;
+        public static final int borde_verde=0x7f020004;
+        public static final int ic_acercade=0x7f020005;
+        public static final int ic_actividades=0x7f020006;
+        public static final int ic_buscador=0x7f020007;
+        public static final int ic_contactos=0x7f020008;
+        public static final int ic_eventos=0x7f020009;
+        public static final int ic_info=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int ic_listuser=0x7f02000c;
+        public static final int ic_organizacion=0x7f02000d;
+        public static final int ic_reporting=0x7f02000e;
+        public static final int ic_settings=0x7f02000f;
+        public static final int ic_slide=0x7f020010;
+        public static final int ic_userfondo=0x7f020011;
+        public static final int list_divide=0x7f020012;
+        public static final int list_dividesliding=0x7f020013;
+        public static final int preferencias_background=0x7f020014;
+        public static final int shadow=0x7f020015;
+        public static final int social_person=0x7f020016;
+        public static final int splash=0x7f020017;
     }
     public static final class id {
-        public static final int FrameLayout1=0x7f050007;
-        public static final int FrameLayout2=0x7f050008;
-        public static final int LinearLayout1=0x7f05000c;
-        public static final int RelativeLayout1=0x7f050009;
-        public static final int ab_Search=0x7f05001f;
-        public static final int button1=0x7f05000e;
-        public static final int button2=0x7f05000f;
-        public static final int button3=0x7f050010;
-        public static final int contac_img=0x7f050014;
-        public static final int contact_card=0x7f050019;
-        public static final int contact_data=0x7f050017;
-        public static final int contact_list_item_layout=0x7f050018;
-        public static final int contact_type=0x7f050016;
-        public static final int container=0x7f050005;
-        public static final int display_address=0x7f050011;
-        public static final int display_city=0x7f050013;
-        public static final int display_name=0x7f050015;
-        public static final int display_supp_address=0x7f050012;
-        public static final int fragments=0x7f050006;
-        public static final int fullscreen=0x7f050003;
-        public static final int imageView1=0x7f05001e;
-        public static final int left=0x7f050000;
-        public static final int listResults=0x7f05000b;
-        public static final int margin=0x7f050002;
-        public static final int menu_search=0x7f050022;
-        public static final int menu_settings=0x7f050021;
-        public static final int mysearch=0x7f05001d;
-        public static final int progressBar1=0x7f05000a;
-        public static final int right=0x7f050001;
-        public static final int row_icon=0x7f05001b;
-        public static final int row_title=0x7f05001c;
-        public static final int selected_view=0x7f050004;
-        public static final int slidingmenumain=0x7f050020;
-        public static final int textView1=0x7f05000d;
-        public static final int textView2=0x7f05001a;
+        public static final int FrameLayout1=0x7f060007;
+        public static final int FrameLayout2=0x7f060008;
+        public static final int LinearLayoutFila1=0x7f060019;
+        public static final int LinearLayoutFila11=0x7f06001a;
+        public static final int LinearLayoutFila12=0x7f06001d;
+        public static final int LinearLayoutFila2=0x7f060020;
+        public static final int LinearLayoutFila21=0x7f060021;
+        public static final int LinearLayoutFila22=0x7f060024;
+        public static final int LinearLayoutFila3=0x7f060027;
+        public static final int LinearLayoutFila31=0x7f060028;
+        public static final int LinearLayoutFila32=0x7f06002b;
+        public static final int RelativeLayout1=0x7f060009;
+        public static final int ab_Search=0x7f06003b;
+        public static final int botonDialogAcerca=0x7f060018;
+        public static final int contac_img=0x7f06000e;
+        public static final int contact_card=0x7f060013;
+        public static final int contact_data=0x7f060011;
+        public static final int contact_list_item_layout=0x7f060012;
+        public static final int contact_type=0x7f060010;
+        public static final int container=0x7f060005;
+        public static final int display_address=0x7f06000b;
+        public static final int display_city=0x7f06000d;
+        public static final int display_name=0x7f06000f;
+        public static final int display_supp_address=0x7f06000c;
+        public static final int footerText=0x7f060033;
+        public static final int fragments=0x7f060006;
+        public static final int fullscreen=0x7f060003;
+        public static final int imageView1=0x7f06003a;
+        public static final int left=0x7f060000;
+        public static final int listResults=0x7f06000a;
+        public static final int logo=0x7f06003e;
+        public static final int logoAcerca=0x7f06002c;
+        public static final int logoActividades=0x7f060022;
+        public static final int logoContactos=0x7f06001b;
+        public static final int logoEventos=0x7f06001e;
+        public static final int logoReporting=0x7f060025;
+        public static final int logoSettings=0x7f060029;
+        public static final int margin=0x7f060002;
+        public static final int menu_search=0x7f060040;
+        public static final int menu_settings=0x7f06003f;
+        public static final int mysearch=0x7f060039;
+        public static final int prefKeySite=0x7f06002f;
+        public static final int prefPassword=0x7f060031;
+        public static final int prefURL=0x7f06002e;
+        public static final int prefUser=0x7f060030;
+        public static final int right=0x7f060001;
+        public static final int row_icon=0x7f060037;
+        public static final int row_title=0x7f060038;
+        public static final int saveSettings=0x7f060032;
+        public static final int searchItem=0x7f06003c;
+        public static final int selected_view=0x7f060004;
+        public static final int slidingmenumain=0x7f06003d;
+        public static final int textActividades=0x7f060023;
+        public static final int textContactos=0x7f06001c;
+        public static final int textDialogAcerca=0x7f060017;
+        public static final int textEventos=0x7f06001f;
+        public static final int textReporting=0x7f060026;
+        public static final int textSettings=0x7f06002a;
+        public static final int textView1=0x7f060015;
+        public static final int textView2=0x7f060014;
+        public static final int textacercade=0x7f06002d;
+        public static final int titleDialogAcerca=0x7f060016;
+        public static final int trFilaButton=0x7f060036;
+        public static final int trFilaKeys=0x7f060034;
+        public static final int trFilaUser=0x7f060035;
     }
     public static final class integer {
-        public static final int num_cols=0x7f070000;
+        public static final int num_cols=0x7f080000;
     }
     public static final class layout {
         public static final int activity_contact_details=0x7f030000;
         public static final int activity_contact_list=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int contact_address_layout=0x7f030003;
-        public static final int contact_details_layout=0x7f030004;
-        public static final int contact_list_item=0x7f030005;
-        public static final int contact_tags_and_groups_layout=0x7f030006;
-        public static final int list_menu_individual=0x7f030007;
-        public static final int list_menu_organization=0x7f030008;
-        public static final int row=0x7f030009;
-        public static final int search_custom_menu=0x7f03000a;
-        public static final int slide_menu_individual=0x7f03000b;
-        public static final int slide_menu_organization=0x7f03000c;
-        public static final int slidingmenumain=0x7f03000d;
+        public static final int contact_address_layout=0x7f030002;
+        public static final int contact_details_layout=0x7f030003;
+        public static final int contact_list_item=0x7f030004;
+        public static final int contact_tags_and_groups_layout=0x7f030005;
+        public static final int custom_dialog_acercade=0x7f030006;
+        public static final int fragmenthome=0x7f030007;
+        public static final int fragmentlogin=0x7f030008;
+        public static final int list_menu_individual=0x7f030009;
+        public static final int list_menu_organization=0x7f03000a;
+        public static final int pref_datos_acceso=0x7f03000b;
+        public static final int pref_datos_usuario=0x7f03000c;
+        public static final int row=0x7f03000d;
+        public static final int search_custom_menu=0x7f03000e;
+        public static final int search_item_layout=0x7f03000f;
+        public static final int slide_menu_individual=0x7f030010;
+        public static final int slide_menu_organization=0x7f030011;
+        public static final int slidingmenumain=0x7f030012;
+        public static final int splash=0x7f030013;
     }
     public static final class menu {
-        public static final int activity_contact_details=0x7f0a0000;
-        public static final int activity_contact_list=0x7f0a0001;
-        public static final int activity_main=0x7f0a0002;
-        public static final int menu_list=0x7f0a0003;
+        public static final int activity_contact_details=0x7f0b0000;
+        public static final int activity_contact_list=0x7f0b0001;
+        public static final int activity_main=0x7f0b0002;
+        public static final int menu_list=0x7f0b0003;
     }
     public static final class string {
-        public static final int activity_button=0x7f080005;
-        public static final int address=0x7f08000a;
-        public static final int app_name=0x7f080000;
-        public static final int cases_button=0x7f080006;
-        public static final int communication_preferences=0x7f08000b;
-        public static final int constituent_information=0x7f08000d;
-        public static final int contact_image=0x7f080009;
-        public static final int contacts_button=0x7f080004;
-        public static final int demographics=0x7f08000c;
-        public static final int hello_world=0x7f080001;
-        public static final int menu_settings=0x7f080002;
-        public static final int search=0x7f08000f;
-        public static final int tags_and_groups=0x7f08000e;
-        public static final int title_activity_contact_details=0x7f080008;
-        public static final int title_activity_contact_list=0x7f080003;
-        public static final int title_textview=0x7f080007;
+        public static final int acerca_de_boton=0x7f090026;
+        /** 
+    ===============================================================
+     ACERCA DE
+    ===============================================================                        
+    
+         */
+        public static final int acerca_de_label=0x7f090024;
+        public static final int acerca_de_texto=0x7f090025;
+        public static final int action_settings=0x7f090001;
+        /**  menus izquierdo indice 
+         */
+        public static final int address=0x7f09003b;
+        /** 
+    ===============================================================
+     NOMBRE APLICACION
+    ===============================================================                        
+    
+         */
+        public static final int app_name=0x7f090000;
+        public static final int birthdate_detail=0x7f090043;
+        public static final int by_detail=0x7f090047;
+        public static final int communication_preferences=0x7f09003c;
+        public static final int constituent_information=0x7f09003e;
+        /**   
+         */
+        public static final int contact_image=0x7f090039;
+        public static final int deceased_detail=0x7f090044;
+        public static final int demographics=0x7f09003d;
+        /**  detalle del contacto 
+         */
+        public static final int email_detail=0x7f090040;
+        public static final int gender_detail=0x7f090042;
+        public static final int hello_world=0x7f090002;
+        public static final int home_acercade=0x7f090023;
+        public static final int home_actividades=0x7f09001f;
+        /** 
+    ===============================================================
+     HOME
+    ===============================================================                        
+    
+         */
+        public static final int home_contactos=0x7f09001e;
+        public static final int home_eventos=0x7f090020;
+        public static final int home_informes=0x7f090021;
+        public static final int home_settings=0x7f090022;
+        public static final int language_detail=0x7f090045;
+        public static final int login_button_login=0x7f09000d;
+        public static final int login_error_password_obligatoria=0x7f090012;
+        public static final int login_error_sitekey_obligatoria=0x7f090010;
+        public static final int login_error_url_novalida=0x7f09000f;
+        public static final int login_error_url_obligatoria=0x7f09000e;
+        public static final int login_error_user_obligatoria=0x7f090011;
+        public static final int login_footer=0x7f090008;
+        public static final int login_head_all=0x7f090007;
+        public static final int login_head_inferior=0x7f090006;
+        /** 
+    ===============================================================
+     LOGIN
+    ===============================================================                        
+    
+         */
+        public static final int login_head_superior=0x7f090005;
+        public static final int login_key_site=0x7f09000a;
+        public static final int login_url=0x7f090009;
+        public static final int login_user_name=0x7f09000b;
+        public static final int login_user_password=0x7f09000c;
+        public static final int login_validando_error_button=0x7f09001d;
+        public static final int login_validando_error_msg=0x7f09001c;
+        public static final int login_validando_error_title=0x7f09001b;
+        public static final int login_validando_ko_button=0x7f09001a;
+        public static final int login_validando_ko_msg=0x7f090019;
+        public static final int login_validando_ko_title=0x7f090018;
+        public static final int login_validando_msg=0x7f090014;
+        public static final int login_validando_ok_button=0x7f090017;
+        public static final int login_validando_ok_msg=0x7f090016;
+        public static final int login_validando_ok_title=0x7f090015;
+        public static final int login_validando_title=0x7f090013;
+        public static final int menu_settings=0x7f090003;
+        public static final int pref_apikey_summary=0x7f090033;
+        public static final int pref_apikey_title=0x7f090032;
+        public static final int pref_keysite_summary=0x7f09002d;
+        public static final int pref_keysite_title=0x7f09002c;
+        public static final int pref_password_summary=0x7f090031;
+        public static final int pref_password_title=0x7f090030;
+        public static final int pref_title_acceso=0x7f090028;
+        public static final int pref_title_usuario=0x7f090029;
+        public static final int pref_url_summary=0x7f09002b;
+        public static final int pref_url_title=0x7f09002a;
+        public static final int pref_user_summary=0x7f09002f;
+        public static final int pref_user_title=0x7f09002e;
+        public static final int pref_userkey_summary=0x7f090035;
+        public static final int pref_userkey_title=0x7f090034;
+        /** 
+    ===============================================================
+     PREFERENCIAS
+    ===============================================================                        
+    
+         */
+        public static final int preferencias_label=0x7f090027;
+        /** 
+    ===============================================================
+     MENSAJES PROGRESS BAR DE CARGA GENERICOS
+    ===============================================================                        
+    
+         */
+        public static final int progress_bar_msg_generico=0x7f090036;
+        public static final int search=0x7f09003a;
+        public static final int since_detail=0x7f090046;
+        /** 
+    ===============================================================
+     SPLAH
+    ===============================================================                        
+    
+         */
+        public static final int splash_description=0x7f090004;
+        public static final int tags_and_groups=0x7f09003f;
+        public static final int telephone_detail=0x7f090041;
+        public static final int title_activity_contact_details=0x7f090038;
+        /** 
+    ===============================================================
+     CONTACTOS
+    ===============================================================                        
+    
+ titulos actividades 
+         */
+        public static final int title_activity_contact_list=0x7f090037;
     }
     public static final class style {
         /** 
@@ -238,14 +405,118 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f090000;
+        public static final int AppBaseTheme=0x7f0a0000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f090001;
-        /**  All customizations that are NOT specific to a particular API-level can go here. 
+        public static final int AppTheme=0x7f0a0001;
+        /** 
+    ===============================================================
+     PREFERENCIAS
+    ===============================================================                        
+    
          */
-        public static final int HoloTheme=0x7f090002;
+        public static final int CiviConfigTheme=0x7f0a000a;
+        /** 
+    ===============================================================
+     Tema de la aplicacion
+    ===============================================================                        
+    
+         */
+        public static final int CiviTheme=0x7f0a0004;
+        /**  boton login 
+         */
+        public static final int botonLandLogin=0x7f0a0018;
+        /**  boton login 
+         */
+        public static final int botonLogin=0x7f0a0014;
+        /** 
+    ===============================================================
+     Tema dialogos
+    ===============================================================                        
+    
+         */
+        public static final int dialogTheme=0x7f0a0002;
+        /** 
+    ===============================================================
+     Color fondo azul de las actividades
+    ===============================================================                        
+    
+         */
+        public static final int fondoActividad=0x7f0a000b;
+        /**  pinta los bordes redondos 
+         */
+        public static final int fondoBordeActividad=0x7f0a000c;
+        /**  pinta los bordes redondos 
+         */
+        public static final int fondoBordeClaro=0x7f0a000f;
+        /** 
+    ===============================================================
+     Color fondo claro para remarcar - ejmplo home login
+    ===============================================================                        
+    
+         */
+        public static final int fondoClaro=0x7f0a000e;
+        public static final int fondoClaro_styleLoginLayoutLand=0x7f0a0016;
+        /** 
+    ===============================================================
+     Color fondo sliding menu
+    ===============================================================                        
+    
+         */
+        public static final int fondoSlidingMenu=0x7f0a000d;
+        /**  inputs estilos 
+         */
+        public static final int itemsLandLogin=0x7f0a0017;
+        /** 
+    ===============================================================
+     ESTILOS DEL LOGIN PORTRAIT
+    ===============================================================                        
+    
+ inputs estilos 
+         */
+        public static final int itemsPortraitLogin=0x7f0a0010;
+        public static final int progressDialogTheme=0x7f0a0003;
+        /** 
+    ===============================================================
+     Color del Separador de list view
+    ===============================================================                        
+    
+         */
+        public static final int separatorListView=0x7f0a0008;
+        public static final int separatorSlidingMenuListView=0x7f0a0009;
+        /** 
+    ===============================================================
+     Texto por defecto
+    ===============================================================                        
+    
+         */
+        public static final int textoDefault=0x7f0a0005;
+        /**  texto PIE 
+         */
+        public static final int textoFooterLandLogin=0x7f0a0019;
+        /**  texto PIE 
+         */
+        public static final int textoFooterLogin=0x7f0a0012;
+        /**  texto cabecera 
+         */
+        public static final int textoHeadLogin=0x7f0a0011;
+        /**  texto cabecera centrado 
+         */
+        public static final int textoHeadLogin_center=0x7f0a0013;
+        /** 
+    ===============================================================
+     ESTILOS DEL LOGIN LAND
+    ===============================================================                        
+    
+ texto cabecera 
+         */
+        public static final int textoHeadLoginLand=0x7f0a0015;
+        public static final int textoWhite=0x7f0a0006;
+        public static final int textoWhite_bold=0x7f0a0007;
+    }
+    public static final class xml {
+        public static final int preferencias=0x7f040000;
     }
     public static final class styleable {
         /** Attributes that can be used with a SlidingMenu.

@@ -8,24 +8,47 @@
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
+    <!-- PERMISOS APLICACION -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <!-- APLICACION -->
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/HoloTheme" >
+        android:theme="@style/CiviTheme" >
+
+        <!-- SPLASH -->
         <activity
-            android:name="org.upsam.civicrm.MainActivity"
-            android:label="@string/app_name" >
+            android:name="org.upsam.civicrm.splash.SplashActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- MAIN ACTIVITY -->
+        <activity
+            android:name="org.upsam.civicrm.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <!-- PREFERENCIAS -->
+        <activity
+            android:name="org.upsam.civicrm.preference.SetPreferenceActivity"
+            android:label="@string/preferencias_label"
+            android:parentActivityName="org.upsam.civicrm.MainActivity"
+            android:theme="@style/CiviConfigTheme" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
+
+        <!-- LISTADO DE CONTACTOS -->
         <activity
             android:name="org.upsam.civicrm.contact.list.ContactListTabs"
             android:label="@string/title_activity_contact_list"
@@ -34,28 +57,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.MainActivity" />
         </activity>
-      
-        <activity
-            android:name="org.upsam.civicrm.contact.ContactListActivity"
-            android:label="@string/title_activity_contact_list"
-            android:parentActivityName="org.upsam.civicrm.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.upsam.civicrm.MainActivity" />
-        </activity>
-
-        <service
-            android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
-            android:exported="false" />
-
+        <!-- DETALLE DE CONTACTOS -->
         <activity
             android:name=".contact.detail.ContactDetailFragmentActivity"
             android:label="@string/title_activity_contact_details"
-            android:parentActivityName="org.upsam.civicrm.contact.ContactListActivity" >
+            android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.upsam.civicrm.contact.ContactListActivity" />
+                android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
         </activity>
+
+        <!-- ROBOSPICE - SERVICIOS REST -->
+        <service
+            android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
+            android:exported="false" />
     </application>
 
 </manifest>

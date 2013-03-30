@@ -12,8 +12,10 @@ import org.upsam.civicrm.contact.list.EndlessScrollListener.onScrollEndListener;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
+import org.upsam.civicrm.util.Utilities;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
@@ -41,8 +42,8 @@ public class ContactListFragment extends Fragment {
 	private ContactListAdapter contactsAdapter;
 
 	private String lastRequestCacheKey;
-
-	private ProgressBar progressBar;
+	
+	private ProgressDialog progressDialog;	
 	
 	private SpiceManager contentManager;
 
@@ -53,8 +54,7 @@ public class ContactListFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_contact_list, container, false);
-		this.progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+		View view = inflater.inflate(R.layout.activity_contact_list, container, false);		
 		return view;
 	}
 	
@@ -115,8 +115,8 @@ public class ContactListFragment extends Fragment {
 		}));
 	}
 
-	private void performRequest(String type, int page) {
-		progressBar.setVisibility(View.VISIBLE);
+	private void performRequest(String type, int page) {		
+		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,this.getActivity(),getString(R.string.progress_bar_msg_generico));
 		Log.d("ContactAutoCompleteListAdapter", "Pagina solicitada:" + page);
 		CiviCRMAsyncRequest<ListContacts> request = buildReq(type, page);
 		lastRequestCacheKey = request.createCacheKey();
@@ -134,7 +134,7 @@ public class ContactListFragment extends Fragment {
 		if (type != null && !"".equals(type)) {
 			params.put("contact_type", type);
 		}
-		CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(ListContacts.class, ACTION.get, ENTITY.Contact, params);
+		CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(this.getActivity(),ListContacts.class, ACTION.get, ENTITY.Contact, params);
 		Log.d("ContactAutoCompleteListAdapter", "Request:" + req.getUriReq());
 		return req;
 	}
@@ -163,8 +163,8 @@ public class ContactListFragment extends Fragment {
 				return;
 			}			
 			contactsAdapter.addAll(listContacts.getValues());
-			contactsAdapter.notifyDataSetChanged();
-			progressBar.setVisibility(View.GONE);
+			contactsAdapter.notifyDataSetChanged();			
+			Utilities.dismissProgressDialog(progressDialog);
 		}
 	}
 }

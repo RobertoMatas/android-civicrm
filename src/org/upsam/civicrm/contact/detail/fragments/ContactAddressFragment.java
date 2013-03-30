@@ -12,7 +12,10 @@ import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.address.Address;
 import org.upsam.civicrm.contact.model.address.ListAddresses;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.util.Utilities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,14 +27,15 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+@SuppressLint("ValidFragment")
 public class ContactAddressFragment extends AbstractAsyncFragment {
 
 	/**
-	 * Vista de la dirección completa
+	 * Vista de la direcciÃ³n completa
 	 */
 	private TextView displayAddress;
 	/**
-	 * Vista de la información suplementaria
+	 * Vista de la informaciÃ³n suplementaria
 	 */
 	private TextView displaySuppAddress;
 	/**
@@ -43,8 +47,8 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public ContactAddressFragment(SpiceManager contentManager) {
-		super(contentManager);
+	public ContactAddressFragment(SpiceManager contentManager,Context activityContext) {
+		super(contentManager,activityContext);
 	}
 
 	/*
@@ -69,7 +73,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		showLoadingProgressDialog();
+		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));		
 	}
 
 	/*
@@ -87,7 +91,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
 		final Map<String, String> params = new HashMap<String, String>(1);
 		params.put("contact_id", Long.toString(contactSummary.getId()));
-		CiviCRMAsyncRequest<ListAddresses> request = new CiviCRMAsyncRequest<ListAddresses>(ListAddresses.class, ACTION.get, ENTITY.Address, params);
+		CiviCRMAsyncRequest<ListAddresses> request = new CiviCRMAsyncRequest<ListAddresses>(activityContext,ListAddresses.class, ACTION.get, ENTITY.Address, params);
 		contentManager.execute(request, request.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactAddressListener());
 	}
 	
@@ -95,11 +99,16 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 		List<Address> addresses = result.getValues();
 		if (addresses != null && ! addresses.isEmpty()) {
 			Address address = addresses.get(0);
+			
+			this.displayAddress.setTextAppearance(activityContext, R.style.textoDefault);
+			this.displaySuppAddress.setTextAppearance(activityContext, R.style.textoWhite);
+			this.displayCity.setTextAppearance(activityContext, R.style.textoWhite);
+			
 			this.displayAddress.setText(address.getAddress());
 			this.displaySuppAddress.setText(address.getSupplementalAddress());
 			this.displayCity.setText(address.getCity());
 		}
-		dismissProgressDialog();
+		Utilities.dismissProgressDialog(progressDialog);
 		
 	}
  

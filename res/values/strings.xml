@@ -1,20 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">android-civicrm</string>
+    <!--
+    ===============================================================
+     NOMBRE APLICACION
+    ===============================================================                        
+    -->
+    <string name="app_name">Open Mobile CRM</string>
+    <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_contact_list">ContactListActivity</string>
-    <string name="contacts_button">Contactos</string>
-    <string name="activity_button">Actividades</string>
-    <string name="cases_button">Casos</string>
-    <string name="title_textview">Open Mobile CRM</string>
-    <string name="title_activity_contact_details">ContactDetails</string>
+
+    <!--
+    ===============================================================
+     SPLAH
+    ===============================================================                        
+    -->
+    <string name="splash_description">Open Mobile CRM</string>
+    <!--
+    ===============================================================
+     LOGIN
+    ===============================================================                        
+    -->
+    <string name="login_head_superior">Open Mobile</string>
+    <string name="login_head_inferior">CRM</string>
+    <string name="login_head_all">Open Mobile CRM</string>
+    <string name="login_footer">Todos los derechos reservados por Open Mobile CRM</string>
+    <string name="login_url">Url del civicrm</string>
+    <string name="login_key_site">Key del site</string>
+    <string name="login_user_name">Nombre usuario</string>
+    <string name="login_user_password">Password</string>
+    <string name="login_button_login">Acceder sistema</string>
+    <string name="login_error_url_obligatoria">La url es un campo obligatorio</string>
+    <string name="login_error_url_novalida">La url introducida no es valida</string>
+    <string name="login_error_sitekey_obligatoria">La site key es un campo obligatorio</string>
+    <string name="login_error_user_obligatoria">El usuario es un campo obligatorio</string>
+    <string name="login_error_password_obligatoria">La password es un campo obligatorio</string>
+    <string name="login_validando_title">Validando &#8230;</string>
+    <string name="login_validando_msg">Por favor espere &#8230;</string>
+    <string name="login_validando_ok_title">Validación correcta</string>
+    <string name="login_validando_ok_msg">Bienvenido a OPEN MOBILE CRM</string>
+    <string name="login_validando_ok_button">Aceptar</string>
+    <string name="login_validando_ko_title">Validación no valida</string>
+    <string name="login_validando_ko_msg">Alguno de los campos introducidos no es valido</string>
+    <string name="login_validando_ko_button">Aceptar</string>
+    <string name="login_validando_error_title">Error validando</string>
+    <string name="login_validando_error_msg">Alguno de los campos introducidos no es valido</string>
+    <string name="login_validando_error_button">Aceptar</string>
+
+    <!--
+    ===============================================================
+     HOME
+    ===============================================================                        
+    -->
+    <string name="home_contactos">Contactos</string>
+    <string name="home_actividades">Actividades</string>
+    <string name="home_eventos">Eventos</string>
+    <string name="home_informes">Informes</string>
+    <string name="home_settings">Configuracion</string>
+    <string name="home_acercade">Acerca de</string>
+    <!--
+    ===============================================================
+     ACERCA DE
+    ===============================================================                        
+    -->
+    <string name="acerca_de_label">Acerca De</string>
+    <string name="acerca_de_texto">Aplicación creada por Roberto, Jorge, Gonzalo y Fernando como proyecto final</string>
+    <string name="acerca_de_boton">Aceptar</string>
+
+    <!--
+    ===============================================================
+     PREFERENCIAS
+    ===============================================================                        
+    -->
+    <string name="preferencias_label">Configuracion</string>
+    <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
+    <string name="pref_title_usuario">DATOS USUARIO</string>
+    <string name="pref_url_title">URL de acceso a CIVICRM</string>
+    <string name="pref_url_summary">Conexion con la uri aquí indicada</string>
+    <string name="pref_keysite_title">KEY del site proporcionada por un administrador</string>
+    <string name="pref_keysite_summary">Necesaria para establecer la conexión</string>
+    <string name="pref_user_title">Nombre de usuario en el CIVICRM</string>
+    <string name="pref_user_summary">Necesaria para establecer la conexión</string>
+    <string name="pref_password_title">Password del usuario</string>
+    <string name="pref_password_summary">Necesaria para establecer la conexión</string>
+    <string name="pref_apikey_title">API KEY del servidor</string>
+    <string name="pref_apikey_summary">Necesaria para establecer la conexión</string>
+    <string name="pref_userkey_title">USER KEY del usuario introducido</string>
+    <string name="pref_userkey_summary">Necesaria para establecer la conexión</string>
+
+    <!--
+    ===============================================================
+     MENSAJES PROGRESS BAR DE CARGA GENERICOS
+    ===============================================================                        
+    -->
+    <string name="progress_bar_msg_generico">Cargando. Por favor espere &#8230;</string>
+    <!--
+    ===============================================================
+     CONTACTOS
+    ===============================================================                        
+    -->
+    <!-- titulos actividades -->
+    <string name="title_activity_contact_list">Listado contactos</string>
+    <string name="title_activity_contact_details">Detalle Contacto</string>
+    
+     <!--  -->
     <string name="contact_image">Contacto</string>
+    <string name="search">Search</string>
+
+    <!-- menus izquierdo indice -->
     <string name="address">Direcciones</string>
     <string name="communication_preferences">Comunicación</string>
     <string name="demographics">Demografía</string>
     <string name="constituent_information">Otra Información</string>
     <string name="tags_and_groups">Etiquetas y grupos</string>
-    <string name="search">Search</string>
+
+    <!-- detalle del contacto -->
+    <string name="email_detail">Correo electrónico</string>
+    <string name="telephone_detail">Teléfono</string>
+    <string name="gender_detail">Género</string>
+    <string name="birthdate_detail">Cumpleaños</string>
+    <string name="deceased_detail">Contacto difunto</string>
+    <string name="language_detail">Lenguaje preferente</string>
+    <string name="since_detail">Desde</string>
+    <string name="by_detail">por</string>
+
 </resources>

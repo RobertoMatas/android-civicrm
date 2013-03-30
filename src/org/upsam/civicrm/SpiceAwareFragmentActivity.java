@@ -7,13 +7,21 @@ import android.support.v4.app.FragmentActivity;
 
 import com.octo.android.robospice.SpiceManager;
 
+/**
+ * Clase padre de todas las actividades Fragment
+ * 
+ * @author Equipo 7
+ * Universidad Pontificia de Salamanca
+ * v1.0
+ *
+ */
 public class SpiceAwareFragmentActivity extends FragmentActivity {
 
 	protected SpiceManager contentManager = new SpiceManager(CiviCRMAndroidSpiceService.class);
 
-	private ProgressDialog progressDialog;
+	protected ProgressDialog progressDialog;
 
-	private boolean destroyed = false;
+	protected boolean destroyed = Boolean.FALSE;
 
 	public SpiceAwareFragmentActivity() {
 		super();
@@ -34,27 +42,6 @@ public class SpiceAwareFragmentActivity extends FragmentActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.destroyed = true;
+		this.destroyed = Boolean.TRUE;;
 	}
-
-	public void showLoadingProgressDialog() {
-		this.showProgressDialog("Loading. Please wait...");
-	}
-
-	public void showProgressDialog(CharSequence message) {
-		if (this.progressDialog == null) {
-			this.progressDialog = new ProgressDialog(this);
-			this.progressDialog.setIndeterminate(true);
-		}
-
-		this.progressDialog.setMessage(message);
-		this.progressDialog.show();
-	}
-
-	public void dismissProgressDialog() {
-		if (this.progressDialog != null && !this.destroyed) {
-			this.progressDialog.dismiss();
-		}
-	}
-
 }

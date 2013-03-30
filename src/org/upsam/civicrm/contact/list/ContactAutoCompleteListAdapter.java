@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
+import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 
@@ -27,13 +28,16 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 	private final LayoutInflater layoutInflater;
 	private List<ContactSummary> contacts;
 	private final RestTemplate restTemplate;
+	
+	private Context activityContext;
 
 	static class ViewHolder {
 	    public TextView displayName;
 	  }
 	
-	public ContactAutoCompleteListAdapter(RestTemplate restTemplate, Context context, ListContacts contacts) {
+	public ContactAutoCompleteListAdapter(RestTemplate restTemplate, Context context, ListContacts contacts,Context activityContext) {
 		super();
+		this.activityContext = activityContext;
 		this.restTemplate = restTemplate;
 		List<ContactSummary> cs = contacts.getValues();
 		this.contacts = cs != null ? cs : new ArrayList<ContactSummary>(0);
@@ -71,13 +75,13 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 		View view = convertView;
 
 		if (view == null) {
-			view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+			view = layoutInflater.inflate(R.layout.search_item_layout, parent, false);							
 			ViewHolder viewHolder = new ViewHolder();
-			viewHolder.displayName = (TextView) view.findViewById(android.R.id.text1);
+			viewHolder.displayName = (TextView) view.findViewById(R.id.searchItem);
 			view.setTag(viewHolder);
 		}
 		ViewHolder holder = (ViewHolder) view.getTag();
-		if (contact != null) {
+		if (contact != null) {			
 			holder.displayName.setText(contact.getName());
 		}
 		return view;
@@ -98,7 +102,7 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements Filte
 					params.put("return[contact_type]", "1");
 					params.put("return[contact_sub_type]", "1");
 					Log.d("ContactAutoCompleteListAdapter", "query: " + query.toString().replace(" ", "+"));
-					CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(ListContacts.class, ACTION.get, ENTITY.Contact, params);
+					CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(activityContext,ListContacts.class, ACTION.get, ENTITY.Contact, params);
 					Log.d("ContactAutoCompleteListAdapter", "Lanzamos request: " + req.getUriReq());
 					ListContacts result = restTemplate.getForObject(URI.create(req.getUriReq()), ListContacts.class);
 					setContacts(result);

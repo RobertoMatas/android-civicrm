@@ -7,7 +7,15 @@
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>apk</packaging>
 	<name>android-civicrm</name>
-	<inceptionYear>2013</inceptionYear>
+	
+	<!-- Fecha de comienzo del proyecto -->
+	<inceptionYear>08-02-2013</inceptionYear>
+	
+	<!-- Información de la organización -->
+	<organization>
+		<name>Universidad Pontificia de Salamanca</name>
+		<url>http://www.upsam.com</url>
+	</organization>
 
 	<properties>
 		<android-platform>17</android-platform>
@@ -87,5 +95,71 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<!-- Desarrolladores del proyecto -->
+	<developers>
+		<developer>
+			<id>jmontedo</id>
+			<name>Jorge de Borja del Monte</name>
+			<email>jmontedo@gmail.com</email>
+			<organization>UPSAM</organization>
+			<organizationUrl>http://www.upsam.com/</organizationUrl>
+			<roles>
+				<role>manager</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>robertomatas</id>
+			<name>Roberto Matas Pascual</name>
+			<email>robertomatas@gmail.com</email>
+			<organization>UPSAM</organization>
+			<organizationUrl>http://www.upsam.com/</organizationUrl>
+			<roles>
+				<role>manager</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>tabernario</id>
+			<name>Gonzalo Prados Rodriguez</name>
+			<email>tabernario@gmail.com</email>
+			<organization>UPSAM</organization>
+			<organizationUrl>http://www.upsam.com/</organizationUrl>
+			<roles>
+				<role>manager</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>fcastilla</id>
+			<name>Fernando Castilla Abruna</name>
+			<email>fernandoabruna@gmail.com</email>
+			<organization>UPSAM</organization>
+			<organizationUrl>http://www.upsam.com/</organizationUrl>
+			<roles>
+				<role>manager</role>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+	
+	<!-- Colaboradores del proyecto -->
+	<contributors>
+		<contributor>
+			<name>Jesus Soto Carrion</name>
+		</contributor>
+		<contributor>
+			<name>Gustavo Millan Garcia</name>
+		</contributor>	
+	</contributors>
 
 </project>

@@ -6,11 +6,13 @@ import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -32,11 +34,13 @@ public class ContactListTabs extends Activity {
 	private static final String ALL = "All";
 	private static final String INDIVIDUAL = "Individual";
 	private static final String ORGANIZATION = "Organization";
+	private Context activityContext;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		configureTabs(savedInstanceState);
+		this.activityContext = this;
 	}
 
 	private void configureTabs(Bundle savedInstanceState) {
@@ -87,9 +91,11 @@ public class ContactListTabs extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
+		
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_contact_list, menu);
+		getMenuInflater().inflate(R.menu.activity_contact_list, menu);		
 		MenuItem menuItem = menu.findItem(R.id.menu_search);
 		menuItem.setOnActionExpandListener(new OnActionExpandListener() {
 			
@@ -98,7 +104,7 @@ public class ContactListTabs extends Activity {
 				final AutoCompleteTextView autoComTextView = (AutoCompleteTextView) item.getActionView().findViewById(R.id.ab_Search);
 	    		final ContactAutoCompleteListAdapter adapter = new ContactAutoCompleteListAdapter(
 	    				new CiviCRMAndroidSpiceService().createRestTemplate(), 
-	    				ContactListTabs.this, new ListContacts());
+	    				ContactListTabs.this, new ListContacts(),activityContext);
 				autoComTextView.setAdapter(adapter);
 	    		autoComTextView.setThreshold(3);
 	    		autoComTextView.setMaxLines(1);
@@ -143,7 +149,8 @@ public class ContactListTabs extends Activity {
 	            this(activity, tag, clz, null);
 	        }
 
-	        public TabListener(Activity activity, String tag, Class<T> clz, Bundle args) {
+	        @SuppressLint("NewApi")
+			public TabListener(Activity activity, String tag, Class<T> clz, Bundle args) {
 	            mActivity = activity;
 	            mTag = tag;
 	            mClass = clz;
@@ -160,7 +167,8 @@ public class ContactListTabs extends Activity {
 	            }
 	        }
 
-	        public void onTabSelected(Tab tab, FragmentTransaction ft) {
+	        @SuppressLint("NewApi")
+			public void onTabSelected(Tab tab, FragmentTransaction ft) {
 	            if (mFragment == null) {
 	                mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
 	                ft.add(android.R.id.content, mFragment, mTag);
@@ -169,7 +177,8 @@ public class ContactListTabs extends Activity {
 	            }
 	        }
 
-	        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+	        @SuppressLint("NewApi")
+			public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 	            if (mFragment != null) {
 	                ft.detach(mFragment);
 	            }

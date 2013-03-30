@@ -7,13 +7,21 @@ import com.octo.android.robospice.SpiceManager;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
+/**
+ * Clase padre de todas las actividades
+ * 
+ * @author Equipo 7
+ * Universidad Pontificia de Salamanca
+ * v1.0
+ *
+ */
 public class SpiceAwareActivity extends Activity {
 
 	protected SpiceManager contentManager = new SpiceManager(CiviCRMAndroidSpiceService.class);
 
-	private ProgressDialog progressDialog;
+	protected ProgressDialog progressDialog;
 
-	private boolean destroyed = false;
+	protected boolean destroyed = Boolean.FALSE;
 
 	public SpiceAwareActivity() {
 		super();
@@ -34,27 +42,7 @@ public class SpiceAwareActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.destroyed = true;
+		this.destroyed = Boolean.TRUE;
 	}
-
-	public void showLoadingProgressDialog() {
-		this.showProgressDialog("Loading. Please wait...");
-	}
-
-	public void showProgressDialog(CharSequence message) {
-		if (this.progressDialog == null) {
-			this.progressDialog = new ProgressDialog(this);
-			this.progressDialog.setIndeterminate(true);
-		}
-
-		this.progressDialog.setMessage(message);
-		this.progressDialog.show();
-	}
-
-	public void dismissProgressDialog() {
-		if (this.progressDialog != null && !this.destroyed) {
-			this.progressDialog.dismiss();
-		}
-	}
-
+	
 }

@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/fondoActividad"
     android:orientation="vertical" >
 
     <QuickContactBadge
@@ -14,10 +15,11 @@
         android:layout_marginLeft="23dp"
         android:layout_marginTop="22dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/social_person" />
+        android:src="@drawable/ic_userfondo" />
 
     <TextView
         android:id="@+id/display_name"
+        style="@style/textoDefault"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -27,6 +29,7 @@
 
     <TextView
         android:id="@+id/contact_type"
+        style="@style/textoWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/display_name"

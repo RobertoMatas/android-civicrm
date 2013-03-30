@@ -11,9 +11,9 @@ public class SpiceAndSliceMenuAwareFragmentActivity extends SlidingFragmentActiv
 
 	protected SpiceManager contentManager = new SpiceManager(CiviCRMAndroidSpiceService.class);
 
-	private ProgressDialog progressDialog;
+	protected ProgressDialog progressDialog;
 
-	private boolean destroyed = false;
+	protected boolean destroyed = Boolean.FALSE;
 
 	public SpiceAndSliceMenuAwareFragmentActivity() {
 		super();
@@ -34,27 +34,7 @@ public class SpiceAndSliceMenuAwareFragmentActivity extends SlidingFragmentActiv
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		this.destroyed = true;
-	}
-
-	public void showLoadingProgressDialog() {
-		this.showProgressDialog("Loading. Please wait...");
-	}
-
-	public void showProgressDialog(CharSequence message) {
-		if (this.progressDialog == null) {
-			this.progressDialog = new ProgressDialog(this);
-			this.progressDialog.setIndeterminate(true);
-		}
-
-		this.progressDialog.setMessage(message);
-		this.progressDialog.show();
-	}
-
-	public void dismissProgressDialog() {
-		if (this.progressDialog != null && !this.destroyed) {
-			this.progressDialog.dismiss();
-		}
+		this.destroyed = Boolean.TRUE;
 	}
 
 }

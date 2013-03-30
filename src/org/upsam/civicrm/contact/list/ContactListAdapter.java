@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ContactListAdapter extends ArrayAdapter<ContactSummary> {
@@ -32,6 +33,17 @@ public class ContactListAdapter extends ArrayAdapter<ContactSummary> {
 			view = layoutInflater.inflate(R.layout.contact_list_item, parent, false);
 		}
 
+		ImageView image = (ImageView)view.findViewById(R.id.contact_card);
+		if(contact.getType().startsWith("Org")||contact.getType().startsWith("org"))
+		{		
+		     image.setImageResource(R.drawable.ic_organizacion);
+		}
+		else
+		{
+			image.setImageResource(R.drawable.ic_listuser);
+		}
+		
+		
 		TextView displayName = (TextView) view.findViewById(R.id.textView1);
 		displayName.setText(contact.getName());
 

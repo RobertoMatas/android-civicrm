@@ -16,9 +16,198 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
-    <style name="HoloTheme" parent="android:Theme.Holo">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+    <!--
+    ===============================================================
+     Tema dialogos
+    ===============================================================                        
+    -->
+    <style name="dialogTheme" parent="android:Theme.Holo.Light.Dialog"></style>
+
+    <style name="progressDialogTheme" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:background">#084B8A</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!--
+    ===============================================================
+     Tema de la aplicacion
+    ===============================================================                        
+    -->
+    <style name="CiviTheme" parent="android:Theme.Holo.Light.DarkActionBar"></style>
+
+    <!--
+    ===============================================================
+     Texto por defecto
+    ===============================================================                        
+    -->
+    <style name="textoDefault" parent="CiviTheme">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="textoWhite" parent="CiviTheme">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="textoWhite.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    ===============================================================
+     Color del Separador de list view
+    ===============================================================                        
+    -->
+    <style name="separatorListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@drawable/list_divide</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+
+    <style name="separatorSlidingMenuListView" parent="@android:style/Widget.ListView">
+        <item name="android:divider">@drawable/list_dividesliding</item>
+        <item name="android:dividerHeight">1dp</item>
+    </style>
+    <!--
+    ===============================================================
+     PREFERENCIAS
+    ===============================================================                        
+    -->
+    <style name="CiviConfigTheme" parent="CiviTheme">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!--
+    ===============================================================
+     Color fondo azul de las actividades
+    ===============================================================                        
+    -->
+    <style name="fondoActividad" parent="CiviTheme">
+        <item name="android:background">#0B3861</item>
+    </style>
+
+    <!-- pinta los bordes redondos -->
+    <style name="fondoBordeActividad" parent="CiviTheme">
+        <item name="android:background">@drawable/borde_oscuro</item>
+    </style>
+    <!--
+    ===============================================================
+     Color fondo sliding menu
+    ===============================================================                        
+    -->
+    <style name="fondoSlidingMenu" parent="CiviTheme">
+        <item name="android:background">#084B8A</item>
+    </style>
+    <!--
+    ===============================================================
+     Color fondo claro para remarcar - ejmplo home login
+    ===============================================================                        
+    -->
+    <style name="fondoClaro" parent="CiviTheme">
+        <item name="android:background">#084B8A</item>
+    </style>
+
+    <!-- pinta los bordes redondos -->
+    <style name="fondoBordeClaro" parent="CiviTheme">
+        <item name="android:background">@drawable/borde_claro</item>
+    </style>
+    <!--
+    ===============================================================
+     ESTILOS DEL LOGIN PORTRAIT
+    ===============================================================                        
+    -->
+    <!-- inputs estilos -->
+    <style name="itemsPortraitLogin" parent="CiviTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/borde_blanco</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- texto cabecera -->
+    <style name="textoHeadLogin" parent="CiviTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">22pt</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- texto PIE -->
+    <style name="textoFooterLogin" parent="CiviTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- texto cabecera centrado -->
+    <style name="textoHeadLogin.center">
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <!-- boton login -->
+    <style name="botonLogin" parent="CiviTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/borde_verde</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--
+    ===============================================================
+     ESTILOS DEL LOGIN LAND
+    ===============================================================                        
+    -->
+    <!-- texto cabecera -->
+    <style name="textoHeadLoginLand" parent="CiviTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">22pt</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="fondoClaro.styleLoginLayoutLand">
+        <item name="android:layout_width">760dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">40dp</item>
+        <item name="android:layout_marginRight">40dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- inputs estilos -->
+    <style name="itemsLandLogin" parent="CiviTheme">
+        <item name="android:layout_width">350dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/borde_blanco</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <!-- boton login -->
+    <style name="botonLandLogin" parent="CiviTheme">
+        <item name="android:layout_width">730dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:layout_margin">15dp</item>
+        <item name="android:background">@drawable/borde_verde</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- texto PIE -->
+    <style name="textoFooterLandLogin" parent="CiviTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 </resources>

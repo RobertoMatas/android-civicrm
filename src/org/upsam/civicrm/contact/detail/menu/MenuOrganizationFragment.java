@@ -24,6 +24,13 @@ public class MenuOrganizationFragment extends ListFragment {
 		return inflater.inflate(R.layout.list_menu_organization, null);
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) 
+	{		
+		super.onActivityCreated(savedInstanceState);				  		
+		setListAdapter(new MenuAdapter(getActivity(), getResources().getStringArray(R.array.slide_organization_menu)));
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 

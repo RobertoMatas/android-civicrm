@@ -15,7 +15,10 @@ import org.upsam.civicrm.contact.model.custom.CustomValue;
 import org.upsam.civicrm.contact.model.custom.HumanReadableValue;
 import org.upsam.civicrm.contact.model.custom.ListCustomFields;
 import org.upsam.civicrm.contact.model.custom.ListCustomValues;
+import org.upsam.civicrm.util.Utilities;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +32,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+@SuppressLint("ValidFragment")
 public class OtherInformationFragment extends AbstractAsyncFragment {
 	
 	public class CustomHumanReadableValueListener implements RequestListener<HumanReadableValue> {
@@ -95,8 +99,8 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public OtherInformationFragment(SpiceManager contentManager) {
-		super(contentManager);
+	public OtherInformationFragment(SpiceManager contentManager,Context activityContext) {
+		super(contentManager,activityContext);
 		this.customFields = null;
 	}
 
@@ -119,7 +123,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		showLoadingProgressDialog();
+		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));
 	}
 
 	/*
@@ -134,7 +138,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	}
 
 	private void executeRequests() {
-		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = new CiviCRMAsyncRequest<ListCustomFields>(ListCustomFields.class, ACTION.get, ENTITY.CustomField);
+		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = new CiviCRMAsyncRequest<ListCustomFields>(activityContext,ListCustomFields.class, ACTION.get, ENTITY.CustomField);
 		contentManager.execute(customFieldsReq, customFieldsReq.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomFieldsListener());	
 	}
 	
@@ -147,7 +151,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 			final Map<String, String> params = new HashMap<String, String>(1);
 			params.put("entity_id", Long.toString(contactSummary.getId()));
 			Log.d("ContactTagsAndGroupsFragment", "entity_id = " + contactSummary.getId());
-			CiviCRMAsyncRequest<ListCustomValues> customValues = new CiviCRMAsyncRequest<ListCustomValues>(ListCustomValues.class, ACTION.get, ENTITY.CustomValue, params);
+			CiviCRMAsyncRequest<ListCustomValues> customValues = new CiviCRMAsyncRequest<ListCustomValues>(activityContext,ListCustomValues.class, ACTION.get, ENTITY.CustomValue, params);
 			Log.d("ContactTagsAndGroupsFragment", "request = " + customValues.createCacheKey());
 			contentManager.execute(customValues, customValues.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomValuesListener());
 		}
@@ -167,7 +171,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 					params = new HashMap<String, String>(2);
 					params.put("option_group_id", Integer.toString(customField.getOptionGroupId()));
 					params.put("value", customValue.getValue());
-					request = new CiviCRMAsyncRequest<HumanReadableValue>(HumanReadableValue.class, ACTION.getsingle, ENTITY.OptionValue, params);
+					request = new CiviCRMAsyncRequest<HumanReadableValue>(activityContext,HumanReadableValue.class, ACTION.getsingle, ENTITY.OptionValue, params);
 					contentManager.execute(request, request.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomHumanReadableValueListener(customField.getLabel()));
 				} else {
 					HumanReadableValue value = new HumanReadableValue();
@@ -176,7 +180,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 				}
 			}
 		}
-		dismissProgressDialog();
+		Utilities.dismissProgressDialog(progressDialog);
 	}
 	
 	public void refreshView(HumanReadableValue result, String label) {
@@ -186,6 +190,8 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 		View view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, layout, false);
 		TextView text1 = (TextView) view.findViewById(android.R.id.text1);
 		TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+		text1.setTextAppearance(activityContext, R.style.textoDefault);
+		text2.setTextAppearance(activityContext, R.style.textoWhite);
 		text1.setText(result.getLabel());
 		text2.setText(label);
 		layout.addView(view);

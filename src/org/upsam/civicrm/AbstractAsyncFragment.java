@@ -1,44 +1,33 @@
 package org.upsam.civicrm;
 
-import com.octo.android.robospice.SpiceManager;
-
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
+import com.octo.android.robospice.SpiceManager;
+
+/**
+ * Clase padre de la que extenderan todos los fragmentos
+ * 
+ * @author Equipo 7
+ * Universidad Pontificia de Salamanca
+ * v1.0
+ *
+ */
 public abstract class AbstractAsyncFragment extends Fragment {
 
-	private ProgressDialog progressDialog;
-	/**
-	 * 
-	 */
+	protected ProgressDialog progressDialog;
+	
 	protected final SpiceManager contentManager;
+	
+	protected Context activityContext;
 
-	private boolean destroyed = false;
+	protected boolean destroyed = Boolean.FALSE;
 
-	public AbstractAsyncFragment(SpiceManager contentManager) {
+	public AbstractAsyncFragment(SpiceManager contentManager,Context activityContext) {
 		super();
 		this.contentManager = contentManager;
-	}
-
-
-	public void showLoadingProgressDialog() {
-		this.showProgressDialog("Loading. Please wait...");
-	}
-
-	public void showProgressDialog(CharSequence message) {
-		if (this.progressDialog == null) {
-			this.progressDialog = new ProgressDialog(this.getView().getContext(), ProgressDialog.STYLE_SPINNER);
-			this.progressDialog.setIndeterminate(true);
-		}
-
-		this.progressDialog.setMessage(message);
-		this.progressDialog.show();
-	}
-
-	public void dismissProgressDialog() {
-		if (this.progressDialog != null && !this.destroyed) {
-			this.progressDialog.dismiss();
-		}
+		this.activityContext = activityContext;
 	}
 
 }
