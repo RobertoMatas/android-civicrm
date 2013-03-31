@@ -151,10 +151,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_userfondo=0x7f020011;
         public static final int list_divide=0x7f020012;
         public static final int list_dividesliding=0x7f020013;
-        public static final int preferencias_background=0x7f020014;
-        public static final int shadow=0x7f020015;
-        public static final int social_person=0x7f020016;
-        public static final int splash=0x7f020017;
+        public static final int list_selector_contact_pressed=0x7f020014;
+        public static final int list_selector_contacts=0x7f020015;
+        public static final int preferencias_background=0x7f020016;
+        public static final int shadow=0x7f020017;
+        public static final int social_person=0x7f020018;
+        public static final int splash=0x7f020019;
     }
     public static final class id {
         public static final int FrameLayout1=0x7f060007;
