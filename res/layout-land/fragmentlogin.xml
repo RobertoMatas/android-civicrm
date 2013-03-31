@@ -1,88 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     style="@style/fondoActividad"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/textView1"
-        style="@style/textoHeadLoginLand"
-        android:text="@string/login_head_all" />
+    <LinearLayout
+        
+        style="@style/fondoActividad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical" >
 
-    <TableLayout
-        style="@style/fondoBordeClaro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/textoHeadLogin"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_head_all" />
 
-        <TableRow
-            android:id="@+id/trFilaKeys"
-            android:layout_width="wrap_content"
+        <LinearLayout
             style="@style/fondoBordeClaro"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal" >
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:orientation="vertical" >
 
-            <LinearLayout style="@style/fondoClaro.styleLoginLayoutLand" >
+            <EditText
+                android:id="@+id/prefURL"
+                style="@style/itemsPortraitLogin"
+                android:hint="@string/login_url" >
 
-                <EditText
-                    android:id="@+id/prefURL"
-                    style="@style/itemsLandLogin"
-                    android:hint="@string/login_url" >
+                <requestFocus />
+            </EditText>
 
-                    <requestFocus />
-                </EditText>
+            <EditText
+                android:id="@+id/prefKeySite"
+                style="@style/itemsPortraitLogin"
+                android:hint="@string/login_key_site" />
 
-                <EditText
-                    android:id="@+id/prefKeySite"
-                    style="@style/itemsLandLogin"
-                    android:hint="@string/login_key_site" />
-            </LinearLayout>
-        </TableRow>
+            <EditText
+                android:id="@+id/prefUser"
+                style="@style/itemsPortraitLogin"
+                android:hint="@string/login_user_name" />
 
-        <TableRow
-            android:id="@+id/trFilaUser"
-            style="@style/fondoBordeClaro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" >
+            <EditText
+                android:id="@+id/prefPassword"
+                style="@style/itemsPortraitLogin"
+                android:hint="@string/login_user_password"
+                android:inputType="textPassword" />
 
-            <LinearLayout style="@style/fondoClaro.styleLoginLayoutLand" >
+            <Button
+                android:id="@+id/saveSettings"
+                style="@style/botonLogin"
+                android:onClick="saveSettings"
+                android:text="@string/login_button_login" />
+        </LinearLayout>
 
-                <EditText
-                    android:id="@+id/prefUser"
-                    style="@style/itemsLandLogin"
-                    android:hint="@string/login_user_name" />
+        <TextView
+            android:id="@+id/footerText"
+            style="@style/textoFooterLogin"
+            android:text="@string/login_footer" />
+    </LinearLayout>
 
-                <EditText
-                    android:id="@+id/prefPassword"
-                    style="@style/itemsLandLogin"
-                    android:hint="@string/login_user_password"
-                    android:inputType="textPassword" />
-            </LinearLayout>
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trFilaButton"
-            style="@style/fondoBordeClaro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal" >
-
-            <LinearLayout style="@style/fondoClaro.styleLoginLayoutLand" >
-
-                <Button
-                    android:id="@+id/saveSettings"
-                    style="@style/botonLandLogin"
-                    android:onClick="saveSettings"
-                    android:text="@string/login_button_login" />
-            </LinearLayout>
-        </TableRow>
-    </TableLayout>
-
-    <TextView
-        android:id="@+id/footerText"
-        style="@style/textoFooterLandLogin"
-        android:text="@string/login_footer" />
-
-</LinearLayout>
+</ScrollView>
