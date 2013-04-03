@@ -19,7 +19,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactSummary> {
 	private final LayoutInflater layoutInflater;
 
 	public ContactListAdapter(Context context, ListContacts contacts) {
-		super(context, R.id.textView1, contacts.getValues() != null ? contacts.getValues() : new ArrayList<ContactSummary>(0));
+		super(context, R.layout.contact_list_item, contacts.getValues() != null ? contacts.getValues() : new ArrayList<ContactSummary>(0));
 		this.layoutInflater = LayoutInflater.from(context);
 	}
 

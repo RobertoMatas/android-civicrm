@@ -94,7 +94,7 @@
      MENSAJES PROGRESS BAR DE CARGA GENERICOS
     ===============================================================                        
     -->
-    <string name="progress_bar_msg_generico">Cargando. Por favor espere &#8230;</string>
+    <string name="progress_bar_msg_generico">Cargando&#8230;</string>
     <!--
     ===============================================================
      CONTACTOS
