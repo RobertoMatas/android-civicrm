@@ -3,20 +3,18 @@
     style="@style/fondoActividad"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="302dp"
+        android:layout_width="273dp"
+        android:layout_height="match_parent"
         android:layout_gravity="top"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="40dp"
             android:background="@drawable/splash"
             android:contentDescription="@string/splash_description" />
     </LinearLayout>
@@ -24,18 +22,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:orientation="vertical" >
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
 
         <TextView
             android:id="@+id/textView1"
             style="@style/textoDefault"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="116dp"
             android:layout_gravity="center"
+            android:layout_marginTop="30dp"
             android:text="@string/login_head_all"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="14pt" />
+            android:textSize="12pt" />
     </LinearLayout>
 
 </LinearLayout>
