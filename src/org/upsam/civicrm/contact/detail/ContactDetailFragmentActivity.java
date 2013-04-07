@@ -17,28 +17,34 @@ import android.view.MenuItem;
 
 import com.slidingmenu.lib.SlidingMenu;
 
-public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmentActivity implements OnMenuItemSelectedListener,
+public class ContactDetailFragmentActivity extends
+		SpiceAndSliceMenuAwareFragmentActivity
+		implements
+		OnMenuItemSelectedListener,
 		org.upsam.civicrm.contact.detail.menu.MenuIndividualFragment.OnMenuItemSelectedListener {
 
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ContactSummary contact = (ContactSummary) getIntent().getExtras().get("contact");
-		setContentView(R.layout.activity_contact_details);	
-		
-		if(contact!=null && contact.getType()!=null 
-				         && (contact.getType().startsWith("Org")||contact.getType().startsWith("org"))){
-		//if ("Organization".equalsIgnoreCase(contact.getType())) {
-			setBehindContentView(R.layout.slide_menu_organization);		
+		ContactSummary contact = (ContactSummary) getIntent().getExtras().get(
+				"contact");
+		setContentView(R.layout.activity_contact_details);
+
+		if (contact != null
+				&& contact.getType() != null
+				&& (contact.getType().startsWith("Org") || contact.getType()
+						.startsWith("org"))) {
+			// if ("Organization".equalsIgnoreCase(contact.getType())) {
+			setBehindContentView(R.layout.slide_menu_organization);
 		} else {
 			setBehindContentView(R.layout.slide_menu_individual);
 		}
 		setSlidingActionBarEnabled(false);
 		SlidingMenu menu = getSlidingMenu();
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-		menu.setShadowWidthRes(R.dimen.shadow_width);		
-		menu.setShadowDrawable(R.drawable.shadow);		
+		menu.setShadowWidthRes(R.dimen.shadow_width);
+		menu.setShadowDrawable(R.drawable.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -51,53 +57,68 @@ public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmen
 			if (savedInstanceState != null) {
 				return;
 			}
-			ContactDetailFragment contactDetailFragment = new ContactDetailFragment(contentManager,this);
+			ContactDetailFragment contactDetailFragment = new ContactDetailFragment(
+					contentManager, this);
 			contactDetailFragment.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().add(R.id.FrameLayout1, contactDetailFragment, "contactDetails").commit();
+			getSupportFragmentManager()
+					.beginTransaction()
+					.add(R.id.FrameLayout1, contactDetailFragment,
+							"contactDetails").commit();
 		}
 
 	}
 
 	private void addAddressFragment() {
-		ContactAddressFragment addressFragment = new ContactAddressFragment(contentManager,this);
+		ContactAddressFragment addressFragment = new ContactAddressFragment(
+				contentManager, this);
 		addressFragment.setArguments(getIntent().getExtras());
-		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout2, addressFragment).commit();
-		getSlidingMenu().toggle();	
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.FrameLayout2, addressFragment).commit();
+		getSlidingMenu().toggle();
 	}
 
 	private void addOtherInfoFragment() {
-		OtherInformationFragment otherInformationFragment = new OtherInformationFragment(contentManager,this);
+		OtherInformationFragment otherInformationFragment = new OtherInformationFragment(
+				contentManager, this);
 		otherInformationFragment.setArguments(getIntent().getExtras());
-		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout2, otherInformationFragment).commit();
-		getSlidingMenu().toggle();	
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.FrameLayout2, otherInformationFragment).commit();
+		getSlidingMenu().toggle();
 	}
-	
+
 	private void updateCommunicationPreferences() {
-		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager().findFragmentByTag("contactDetails");
-		fragment.showCommunicationPreferences();	
+		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager()
+				.findFragmentByTag("contactDetails");
+		fragment.showCommunicationPreferences();
 		getSlidingMenu().toggle();
 	}
-	
+
 	private void updateDemographics() {
-		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager().findFragmentByTag("contactDetails");
-		fragment.updateDemographics();	
+		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager()
+				.findFragmentByTag("contactDetails");
+		fragment.updateDemographics();
 		getSlidingMenu().toggle();
 	}
-	
+
 	private void addGroupsAndTagsFragment() {
-		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment(contentManager,this);
+		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment(
+				contentManager, this);
 		tagsAndGroupsFragment.setArguments(getIntent().getExtras());
-		getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout2, tagsAndGroupsFragment).commit();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.FrameLayout2, tagsAndGroupsFragment).commit();
 		getSlidingMenu().toggle();
 	}
 
 	@Override
 	public void onMenuOrganizationItemSelected(int position) {
 		Resources resources = getResources();
-		String[] options = resources.getStringArray(R.array.slide_organization_menu);
+		String[] options = resources
+				.getStringArray(R.array.slide_organization_menu);
 		String optionAddress = resources.getString(R.string.address);
-		String optionCommPreferences = resources.getString(R.string.communication_preferences);
-		String optionTagsAndGroup = resources.getString(R.string.tags_and_groups);
+		String optionCommPreferences = resources
+				.getString(R.string.communication_preferences);
+		String optionTagsAndGroup = resources
+				.getString(R.string.tags_and_groups);
 		if (options[position].equals(optionAddress)) {
 			addAddressFragment();
 		} else if (options[position].equals(optionCommPreferences)) {
@@ -110,21 +131,25 @@ public class ContactDetailFragmentActivity extends SpiceAndSliceMenuAwareFragmen
 	@Override
 	public void onMenuIndividualItemSelected(int position) {
 		Resources resources = getResources();
-		String[] options = resources.getStringArray(R.array.slide_individual_menu);
+		String[] options = resources
+				.getStringArray(R.array.slide_individual_menu);
 		String optionAddress = resources.getString(R.string.address);
-		String optionCommPreferences = resources.getString(R.string.communication_preferences);
-		String optionTagsAndGroup = resources.getString(R.string.tags_and_groups);
+		String optionCommPreferences = resources
+				.getString(R.string.communication_preferences);
+		String optionTagsAndGroup = resources
+				.getString(R.string.tags_and_groups);
 		String optionDemographics = resources.getString(R.string.demographics);
-		String optionOtherInfo = resources.getString(R.string.constituent_information);
+		String optionOtherInfo = resources
+				.getString(R.string.constituent_information);
 		if (options[position].equals(optionAddress)) {
 			addAddressFragment();
 		} else if (options[position].equals(optionCommPreferences)) {
 			updateCommunicationPreferences();
 		} else if (options[position].equals(optionTagsAndGroup)) {
 			addGroupsAndTagsFragment();
-		} else if(options[position].equals(optionDemographics)) {
+		} else if (options[position].equals(optionDemographics)) {
 			updateDemographics();
-		} else if(options[position].equals(optionOtherInfo)) {
+		} else if (options[position].equals(optionOtherInfo)) {
 			addOtherInfoFragment();
 		}
 	}

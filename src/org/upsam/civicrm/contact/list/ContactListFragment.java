@@ -1,8 +1,7 @@
 package org.upsam.civicrm.contact.list;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
@@ -42,9 +41,9 @@ public class ContactListFragment extends Fragment {
 	private ContactListAdapter contactsAdapter;
 
 	private String lastRequestCacheKey;
-	
-	private ProgressDialog progressDialog;	
-	
+
+	private ProgressDialog progressDialog;
+
 	private SpiceManager contentManager;
 
 	private int page = 1;
@@ -54,10 +53,11 @@ public class ContactListFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_contact_list, container, false);		
+		View view = inflater.inflate(R.layout.activity_contact_list, container,
+				false);
 		return view;
 	}
-	
+
 	@Override
 	public void onStart() {
 		contentManager.start(this.getActivity());
@@ -69,7 +69,7 @@ public class ContactListFragment extends Fragment {
 		contentManager.shouldStop();
 		super.onStop();
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,54 +87,68 @@ public class ContactListFragment extends Fragment {
 		super.onResume();
 		Bundle arguments = getArguments();
 		this.type = arguments.getString("contact_type");
-		performRequest(this.type, page );
+		performRequest(this.type, page);
 	}
 
 	private void initUIComponents() {
-		ListView contactList = (ListView) getView().findViewById(R.id.listResults);
+		ListView contactList = (ListView) getView().findViewById(
+				R.id.listResults);
 
-		contactsAdapter = new ContactListAdapter(getActivity(), new ListContacts());
+		contactsAdapter = new ContactListAdapter(getActivity(),
+				new ListContacts());
 		contactList.setAdapter(contactsAdapter);
 
 		contactList.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(getActivity(), ContactDetailFragmentActivity.class);
-				intent.putExtra("contact", (ContactSummary) contactsAdapter.getItem(position));
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent = new Intent(getActivity(),
+						ContactDetailFragmentActivity.class);
+				intent.putExtra("contact",
+						(ContactSummary) contactsAdapter.getItem(position));
 				startActivity(intent);
 			}
 		});
-		
-		contactList.setOnScrollListener(new EndlessScrollListener(new onScrollEndListener() {
-			
-			@Override
-			public void onEnd(int page) {
-				Log.d("ContactAutoCompleteListAdapter", "Hemos llegado al final del scroll, pagina a solicitar:" + page);
-				performRequest(type, page);
-			}
-		}));
+
+		contactList.setOnScrollListener(new EndlessScrollListener(
+				new onScrollEndListener() {
+
+					@Override
+					public void onEnd(int page) {
+						Log.d("ContactAutoCompleteListAdapter",
+								"Hemos llegado al final del scroll, pagina a solicitar:"
+										+ page);
+						performRequest(type, page);
+					}
+				}));
 	}
 
-	private void performRequest(String type, int page) {		
-		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,this.getActivity(),getString(R.string.progress_bar_msg_generico));
+	private void performRequest(String type, int page) {
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, this.getActivity(),
+				getString(R.string.progress_bar_msg_generico));
 		Log.d("ContactAutoCompleteListAdapter", "Pagina solicitada:" + page);
 		CiviCRMAsyncRequest<ListContacts> request = buildReq(type, page);
 		lastRequestCacheKey = request.createCacheKey();
-		contentManager.execute(request, lastRequestCacheKey, DurationInMillis.ONE_MINUTE, new ListContactsRequestListener());
+		contentManager.execute(request, lastRequestCacheKey,
+				DurationInMillis.ONE_MINUTE, new ListContactsRequestListener());
 	}
 
 	protected CiviCRMAsyncRequest<ListContacts> buildReq(String type, int page) {
-		Map<String, String> params = new HashMap<String, String>(5);
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				5);
 		if (page != 1) {
-			params.put("offset", Integer.toString(((page - 1) * OFFSET)));
+			params.add("offset", Integer.toString(((page - 1) * OFFSET)));
 		}
-		params.put("return[display_name]", "1");
-		params.put("return[contact_type]", "1");
-		params.put("return[contact_sub_type]", "1");
+		params.add("return[display_name]", "1");
+		params.add("return[contact_type]", "1");
+		params.add("return[contact_sub_type]", "1");
 		if (type != null && !"".equals(type)) {
-			params.put("contact_type", type);
+			params.add("contact_type", type);
 		}
-		CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(this.getActivity(),ListContacts.class, ACTION.get, ENTITY.Contact, params);
+		CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(
+				this.getActivity(), ListContacts.class, ACTION.get,
+				ENTITY.Contact, params);
 		Log.d("ContactAutoCompleteListAdapter", "Request:" + req.getUriReq());
 		return req;
 	}
@@ -146,24 +160,27 @@ public class ContactListFragment extends Fragment {
 		}
 		super.onSaveInstanceState(outState);
 	}
-	
 
-	private class ListContactsRequestListener implements RequestListener<ListContacts> {
+	private class ListContactsRequestListener implements
+			RequestListener<ListContacts> {
 
 		@Override
 		public void onRequestFailure(SpiceException e) {
-			Toast.makeText(getActivity(), "Error during request: " + e.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(),
+					"Error during request: " + e.getMessage(),
+					Toast.LENGTH_LONG).show();
 		}
 
 		@Override
 		public void onRequestSuccess(ListContacts listContacts) {
-			// listContacts could be null just if contentManager.getFromCache(...)
+			// listContacts could be null just if
+			// contentManager.getFromCache(...)
 			// doesn't return anything.
 			if (listContacts == null) {
 				return;
-			}			
+			}
 			contactsAdapter.addAll(listContacts.getValues());
-			contactsAdapter.notifyDataSetChanged();			
+			contactsAdapter.notifyDataSetChanged();
 			Utilities.dismissProgressDialog(progressDialog);
 		}
 	}

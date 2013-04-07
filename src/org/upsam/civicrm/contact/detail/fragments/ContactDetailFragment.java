@@ -1,10 +1,10 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.upsam.civicrm.AbstractAsyncFragment;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
@@ -78,8 +78,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public ContactDetailFragment(SpiceManager contentManager,Context activityContext) {
-		super(contentManager,activityContext);
+	public ContactDetailFragment(SpiceManager contentManager,
+			Context activityContext) {
+		super(contentManager, activityContext);
 		this.yetUpdatedCommunicationPreferences = false;
 		this.yetUpdateDemographics = false;
 	}
@@ -87,11 +88,15 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see
+	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.contact_details_layout, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.contact_details_layout,
+				container, false);
 		this.displayName = (TextView) view.findViewById(R.id.display_name);
 		this.type = (TextView) view.findViewById(R.id.contact_type);
 		this.badge = (QuickContactBadge) view.findViewById(R.id.contac_img);
@@ -108,15 +113,25 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 */
 	private void executeRequests() {
 		this.contactSummary = getArguments().getParcelable("contact");
-		final Map<String, String> params = new HashMap<String, String>(1);
-		params.put("contact_id", Integer.toString(this.contactSummary.getId()));
-		CiviCRMAsyncRequest<Contact> request = new CiviCRMAsyncRequest<Contact>(activityContext,Contact.class, ACTION.getsingle, ENTITY.Contact, params);
-		contentManager.execute(request, request.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactDetailListener());
+		final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				1);
+		params.add("contact_id", Integer.toString(this.contactSummary.getId()));
+		CiviCRMAsyncRequest<Contact> request = new CiviCRMAsyncRequest<Contact>(
+				activityContext, Contact.class, ACTION.getsingle,
+				ENTITY.Contact, params);
+		contentManager.execute(request, request.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new ContactDetailListener());
 		// peticionar emails y phones
-		CiviCRMAsyncRequest<ListEmails> emailsReq = new CiviCRMAsyncRequest<ListEmails>(activityContext,ListEmails.class, ACTION.get, ENTITY.Email, params);
-		CiviCRMAsyncRequest<ListPhones> phonesReq = new CiviCRMAsyncRequest<ListPhones>(activityContext,ListPhones.class, ACTION.get, ENTITY.Phone, params);
-		contentManager.execute(emailsReq, emailsReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactEmailListener());
-		contentManager.execute(phonesReq, phonesReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactPhoneListener());
+		CiviCRMAsyncRequest<ListEmails> emailsReq = new CiviCRMAsyncRequest<ListEmails>(
+				activityContext, ListEmails.class, ACTION.get, ENTITY.Email,
+				params);
+		CiviCRMAsyncRequest<ListPhones> phonesReq = new CiviCRMAsyncRequest<ListPhones>(
+				activityContext, ListPhones.class, ACTION.get, ENTITY.Phone,
+				params);
+		contentManager.execute(emailsReq, emailsReq.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new ContactEmailListener());
+		contentManager.execute(phonesReq, phonesReq.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new ContactPhoneListener());
 	}
 
 	/*
@@ -141,12 +156,18 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	}
 
 	public void showCommunicationPreferences() {
-		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));
-		Map<String, String> params = new HashMap<String, String>(2);
-		params.put("contact_id", Integer.toString(this.contactSummary.getId()));
-		params.put("return[preferred_language]", "1");
-		CiviCRMAsyncRequest<PreferredLanguage> langReq = new CiviCRMAsyncRequest<PreferredLanguage>(activityContext,PreferredLanguage.class, ACTION.getsingle, ENTITY.Contact, params);
-		contentManager.execute(langReq, langReq.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactLangListener());
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, activityContext,
+				getString(R.string.progress_bar_msg_generico));
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				2);
+		params.add("contact_id", Integer.toString(this.contactSummary.getId()));
+		params.add("return[preferred_language]", "1");
+		CiviCRMAsyncRequest<PreferredLanguage> langReq = new CiviCRMAsyncRequest<PreferredLanguage>(
+				activityContext, PreferredLanguage.class, ACTION.getsingle,
+				ENTITY.Contact, params);
+		contentManager.execute(langReq, langReq.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new ContactLangListener());
 	}
 
 	/*
@@ -157,7 +178,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, activityContext,
+				getString(R.string.progress_bar_msg_generico));
 	}
 
 	private void refreshView(Contact result) {
@@ -165,7 +188,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		String img = this.contactDetails.getImage();
 		if (StringUtils.hasText(img)) {
 			ContactImageRequest request = new ContactImageRequest(img);
-			contentManager.execute(request, img, DurationInMillis.ONE_MINUTE, new ContactImageListener());
+			contentManager.execute(request, img, DurationInMillis.ONE_MINUTE,
+					new ContactImageListener());
 		} else {
 			refreshImageView(null);
 		}
@@ -195,7 +219,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			TextView text1 = null;
 			TextView text2 = null;
 			for (Email email : emails) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
 				text1.setText(email.getEmail());
@@ -214,7 +240,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			TextView text1 = null;
 			TextView text2 = null;
 			for (Phone phone : phones) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
 				text1.setText(phone.getPhone());
@@ -226,10 +254,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		}
 		Utilities.dismissProgressDialog(progressDialog);
 	}
-	
 
 	public void updateDemographics() {
-		if (! this.yetUpdateDemographics) {
+		if (!this.yetUpdateDemographics) {
 			View view = null;
 			TextView text1 = null;
 			TextView text2 = null;
@@ -237,7 +264,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			String birthDate = this.contactDetails.getBirthDate();
 			char isDeceased = this.contactDetails.getIsDeceased();
 			if (StringUtils.hasText(gender)) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text1.setTextAppearance(activityContext, R.style.textoDefault);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
@@ -247,7 +276,9 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 				this.contactData.addView(view);
 			}
 			if (StringUtils.hasText(birthDate)) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text1.setTextAppearance(activityContext, R.style.textoDefault);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
@@ -258,43 +289,56 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			}
 			if ('1' == isDeceased) {
 				String deceasedDate = this.contactDetails.getDeceasedDate();
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text1.setTextAppearance(activityContext, R.style.textoDefault);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
 				text2.setTextAppearance(activityContext, R.style.textoWhite);
 				text1.setText(getString(R.string.deceased_detail));
-				text2.setText(StringUtils.hasText(deceasedDate) ? deceasedDate : "");
+				text2.setText(StringUtils.hasText(deceasedDate) ? deceasedDate
+						: "");
 				this.contactData.addView(view);
 			}
 			this.yetUpdateDemographics = true;
 		}
-		
+
 	}
 
 	private void updateCommunicationPreferences(PreferredLanguage result) {
-		if (! this.yetUpdatedCommunicationPreferences) {
+		if (!this.yetUpdatedCommunicationPreferences) {
 			View view = null;
 			TextView text1 = null;
 			TextView text2 = null;
-			char[] props = { this.contactDetails.getDoNotEmail(), this.contactDetails.getDoNotPhone(), this.contactDetails.getDoNotSms(), this.contactDetails.getDoNotTrade() };
-			String[] values = { "Do not email", "Do not phone", "Do not SMS", "Do not trade" };
+			char[] props = { this.contactDetails.getDoNotEmail(),
+					this.contactDetails.getDoNotPhone(),
+					this.contactDetails.getDoNotSms(),
+					this.contactDetails.getDoNotTrade() };
+			String[] values = { "Do not email", "Do not phone", "Do not SMS",
+					"Do not trade" };
 			for (int i = 0; i < props.length; i++) {
 				if ('1' == (props[i])) {
-					view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_1, contactData, false);
+					view = getLayoutInflater(null).inflate(
+							android.R.layout.simple_list_item_1, contactData,
+							false);
 					text1 = (TextView) view.findViewById(android.R.id.text1);
 					text1.setTextAppearance(activityContext, R.style.textoWhite);
 					text1.setText(values[i]);
 					this.contactData.addView(view);
 				}
 			}
-			if (result != null && StringUtils.hasText(result.getPreferredLanguage())) {
-				view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, contactData, false);
+			if (result != null
+					&& StringUtils.hasText(result.getPreferredLanguage())) {
+				view = getLayoutInflater(null)
+						.inflate(android.R.layout.simple_list_item_2,
+								contactData, false);
 				text1 = (TextView) view.findViewById(android.R.id.text1);
 				text2 = (TextView) view.findViewById(android.R.id.text2);
 				text1.setTextAppearance(activityContext, R.style.textoDefault);
 				text2.setTextAppearance(activityContext, R.style.textoWhite);
-				text1.setText(new Locale(result.getPreferredLanguage()).getDisplayLanguage());
+				text1.setText(new Locale(result.getPreferredLanguage())
+						.getDisplayLanguage());
 				text2.setText(getString(R.string.language_detail));
 				this.contactData.addView(view);
 			}
@@ -307,7 +351,11 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			Toast.makeText(ContactDetailFragment.this.getActivity().getApplicationContext(), "Error during request: " + spiceException.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					ContactDetailFragment.this.getActivity()
+							.getApplicationContext(),
+					"Error during request: " + spiceException.getMessage(),
+					Toast.LENGTH_LONG).show();
 		}
 
 		@Override
@@ -321,7 +369,11 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			Toast.makeText(ContactDetailFragment.this.getActivity().getApplicationContext(), "Error during request: " + spiceException.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					ContactDetailFragment.this.getActivity()
+							.getApplicationContext(),
+					"Error during request: " + spiceException.getMessage(),
+					Toast.LENGTH_LONG).show();
 		}
 
 		@Override
@@ -336,7 +388,11 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			Toast.makeText(ContactDetailFragment.this.getActivity().getApplicationContext(), "Error during request: " + spiceException.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					ContactDetailFragment.this.getActivity()
+							.getApplicationContext(),
+					"Error during request: " + spiceException.getMessage(),
+					Toast.LENGTH_LONG).show();
 		}
 
 		@Override
@@ -352,7 +408,11 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			Toast.makeText(ContactDetailFragment.this.getActivity().getApplicationContext(), "Error during request: " + spiceException.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					ContactDetailFragment.this.getActivity()
+							.getApplicationContext(),
+					"Error during request: " + spiceException.getMessage(),
+					Toast.LENGTH_LONG).show();
 		}
 
 		@Override
@@ -364,7 +424,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 	}
 
-	public class ContactLangListener implements RequestListener<PreferredLanguage> {
+	public class ContactLangListener implements
+			RequestListener<PreferredLanguage> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {

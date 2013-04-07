@@ -1,9 +1,9 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.AbstractAsyncFragment;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
@@ -34,11 +34,12 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 @SuppressLint("ValidFragment")
 public class OtherInformationFragment extends AbstractAsyncFragment {
-	
-	public class CustomHumanReadableValueListener implements RequestListener<HumanReadableValue> {
-		
+
+	public class CustomHumanReadableValueListener implements
+			RequestListener<HumanReadableValue> {
+
 		final String label;
-		
+
 		public CustomHumanReadableValueListener(String label) {
 			this.label = label;
 		}
@@ -51,13 +52,15 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(HumanReadableValue result) {
-			if (result == null) return;
+			if (result == null)
+				return;
 			refreshView(result, label);
 		}
 
 	}
 
-	public class CustomValuesListener implements RequestListener<ListCustomValues> {
+	public class CustomValuesListener implements
+			RequestListener<ListCustomValues> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
@@ -67,14 +70,16 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(ListCustomValues result) {
-			if (result == null) return;
+			if (result == null)
+				return;
 			loadValues(result);
 
 		}
 
 	}
 
-	public class CustomFieldsListener implements RequestListener<ListCustomFields> {
+	public class CustomFieldsListener implements
+			RequestListener<ListCustomFields> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
@@ -84,12 +89,14 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(ListCustomFields result) {
-			if (result == null) return;
+			if (result == null)
+				return;
 			loadCustomValues(result);
 
 		}
 
 	}
+
 	/**
 	 * Lista de campos custom
 	 */
@@ -99,19 +106,24 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public OtherInformationFragment(SpiceManager contentManager,Context activityContext) {
-		super(contentManager,activityContext);
+	public OtherInformationFragment(SpiceManager contentManager,
+			Context activityContext) {
+		super(contentManager, activityContext);
 		this.customFields = null;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see
+	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.contact_tags_and_groups_layout, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.contact_tags_and_groups_layout,
+				container, false);
 		return view;
 	}
 
@@ -123,7 +135,9 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, activityContext,
+				getString(R.string.progress_bar_msg_generico));
 	}
 
 	/*
@@ -138,41 +152,63 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	}
 
 	private void executeRequests() {
-		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = new CiviCRMAsyncRequest<ListCustomFields>(activityContext,ListCustomFields.class, ACTION.get, ENTITY.CustomField);
-		contentManager.execute(customFieldsReq, customFieldsReq.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomFieldsListener());	
+		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = new CiviCRMAsyncRequest<ListCustomFields>(
+				activityContext, ListCustomFields.class, ACTION.get,
+				ENTITY.CustomField);
+		contentManager.execute(customFieldsReq,
+				customFieldsReq.createCacheKey(), DurationInMillis.ONE_HOUR,
+				new CustomFieldsListener());
 	}
-	
+
 	private void loadCustomValues(ListCustomFields result) {
 		List<CustomField> customFields = result.getValues();
-		if (customFields != null && ! customFields.isEmpty()) {
-			Log.d("ContactTagsAndGroupsFragment", "customFields = " + customFields);
+		if (customFields != null && !customFields.isEmpty()) {
+			Log.d("ContactTagsAndGroupsFragment", "customFields = "
+					+ customFields);
 			this.customFields = result;
-			ContactSummary contactSummary = getArguments().getParcelable("contact");
-			final Map<String, String> params = new HashMap<String, String>(1);
-			params.put("entity_id", Long.toString(contactSummary.getId()));
-			Log.d("ContactTagsAndGroupsFragment", "entity_id = " + contactSummary.getId());
-			CiviCRMAsyncRequest<ListCustomValues> customValues = new CiviCRMAsyncRequest<ListCustomValues>(activityContext,ListCustomValues.class, ACTION.get, ENTITY.CustomValue, params);
-			Log.d("ContactTagsAndGroupsFragment", "request = " + customValues.createCacheKey());
-			contentManager.execute(customValues, customValues.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomValuesListener());
+			ContactSummary contactSummary = getArguments().getParcelable(
+					"contact");
+			final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+					1);
+			params.add("entity_id", Long.toString(contactSummary.getId()));
+			Log.d("ContactTagsAndGroupsFragment", "entity_id = "
+					+ contactSummary.getId());
+			CiviCRMAsyncRequest<ListCustomValues> customValues = new CiviCRMAsyncRequest<ListCustomValues>(
+					activityContext, ListCustomValues.class, ACTION.get,
+					ENTITY.CustomValue, params);
+			Log.d("ContactTagsAndGroupsFragment",
+					"request = " + customValues.createCacheKey());
+			contentManager.execute(customValues, customValues.createCacheKey(),
+					DurationInMillis.ONE_HOUR, new CustomValuesListener());
 		}
-		
+
 	}
-	
+
 	private void loadValues(ListCustomValues result) {
 		List<CustomValue> customValues = result.getValues();
-		if (customValues != null && ! customValues.isEmpty()) {
-			Log.d("ContactTagsAndGroupsFragment", "customValues = " + customValues);
+		if (customValues != null && !customValues.isEmpty()) {
+			Log.d("ContactTagsAndGroupsFragment", "customValues = "
+					+ customValues);
 			CiviCRMAsyncRequest<HumanReadableValue> request = null;
-			Map<String, String> params = null;
+			MultiValueMap<String, String> params = null;
 			CustomField customField = null;
 			for (CustomValue customValue : customValues) {
-				customField = this.customFields.getFieldById(customValue.getId());
+				customField = this.customFields.getFieldById(customValue
+						.getId());
 				if (customField.getOptionGroupId() != 0) {
-					params = new HashMap<String, String>(2);
-					params.put("option_group_id", Integer.toString(customField.getOptionGroupId()));
-					params.put("value", customValue.getValue());
-					request = new CiviCRMAsyncRequest<HumanReadableValue>(activityContext,HumanReadableValue.class, ACTION.getsingle, ENTITY.OptionValue, params);
-					contentManager.execute(request, request.createCacheKey(), DurationInMillis.ONE_HOUR, new CustomHumanReadableValueListener(customField.getLabel()));
+					params = new LinkedMultiValueMap<String, String>(2);
+					params.add("option_group_id",
+							Integer.toString(customField.getOptionGroupId()));
+					params.add("value", customValue.getValue());
+					request = new CiviCRMAsyncRequest<HumanReadableValue>(
+							activityContext, HumanReadableValue.class,
+							ACTION.getsingle, ENTITY.OptionValue, params);
+					contentManager.execute(
+							request,
+							request.createCacheKey(),
+							DurationInMillis.ONE_HOUR,
+							new CustomHumanReadableValueListener(customField
+									.getLabel()));
 				} else {
 					HumanReadableValue value = new HumanReadableValue();
 					value.setLabel(customValue.getValue());
@@ -182,12 +218,14 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 		}
 		Utilities.dismissProgressDialog(progressDialog);
 	}
-	
+
 	public void refreshView(HumanReadableValue result, String label) {
-		Log.d("ContactTagsAndGroupsFragment", "label = " + label + ", valor = " + result);
+		Log.d("ContactTagsAndGroupsFragment", "label = " + label + ", valor = "
+				+ result);
 		ViewGroup viewGroup = (ViewGroup) getView();
 		LinearLayout layout = (LinearLayout) viewGroup.getChildAt(0);
-		View view = getLayoutInflater(null).inflate(android.R.layout.simple_list_item_2, layout, false);
+		View view = getLayoutInflater(null).inflate(
+				android.R.layout.simple_list_item_2, layout, false);
 		TextView text1 = (TextView) view.findViewById(android.R.id.text1);
 		TextView text2 = (TextView) view.findViewById(android.R.id.text2);
 		text1.setTextAppearance(activityContext, R.style.textoDefault);

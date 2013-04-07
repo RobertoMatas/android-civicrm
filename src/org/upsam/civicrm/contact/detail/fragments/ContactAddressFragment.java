@@ -1,9 +1,9 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.AbstractAsyncFragment;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
@@ -47,20 +47,27 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 	 * 
 	 * @param contentManager
 	 */
-	public ContactAddressFragment(SpiceManager contentManager,Context activityContext) {
-		super(contentManager,activityContext);
+	public ContactAddressFragment(SpiceManager contentManager,
+			Context activityContext) {
+		super(contentManager, activityContext);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 * @see
+	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.contact_address_layout, container, false);
-		this.displayAddress = (TextView) view.findViewById(R.id.display_address);
-		this.displaySuppAddress = (TextView) view.findViewById(R.id.display_supp_address);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.contact_address_layout,
+				container, false);
+		this.displayAddress = (TextView) view
+				.findViewById(R.id.display_address);
+		this.displaySuppAddress = (TextView) view
+				.findViewById(R.id.display_supp_address);
 		this.displayCity = (TextView) view.findViewById(R.id.display_city);
 		return view;
 	}
@@ -73,7 +80,9 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.progressDialog = Utilities.showLoadingProgressDialog(this.progressDialog,activityContext,getString(R.string.progress_bar_msg_generico));		
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, activityContext,
+				getString(R.string.progress_bar_msg_generico));
 	}
 
 	/*
@@ -89,30 +98,38 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 	private void executeRequests() {
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
-		final Map<String, String> params = new HashMap<String, String>(1);
-		params.put("contact_id", Long.toString(contactSummary.getId()));
-		CiviCRMAsyncRequest<ListAddresses> request = new CiviCRMAsyncRequest<ListAddresses>(activityContext,ListAddresses.class, ACTION.get, ENTITY.Address, params);
-		contentManager.execute(request, request.createCacheKey(), DurationInMillis.ONE_MINUTE, new ContactAddressListener());
+		final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				1);
+		params.add("contact_id", Long.toString(contactSummary.getId()));
+		CiviCRMAsyncRequest<ListAddresses> request = new CiviCRMAsyncRequest<ListAddresses>(
+				activityContext, ListAddresses.class, ACTION.get,
+				ENTITY.Address, params);
+		contentManager.execute(request, request.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new ContactAddressListener());
 	}
-	
+
 	private void refreshView(ListAddresses result) {
 		List<Address> addresses = result.getValues();
-		if (addresses != null && ! addresses.isEmpty()) {
+		if (addresses != null && !addresses.isEmpty()) {
 			Address address = addresses.get(0);
-			
-			this.displayAddress.setTextAppearance(activityContext, R.style.textoDefault);
-			this.displaySuppAddress.setTextAppearance(activityContext, R.style.textoWhite);
-			this.displayCity.setTextAppearance(activityContext, R.style.textoWhite);
-			
+
+			this.displayAddress.setTextAppearance(activityContext,
+					R.style.textoDefault);
+			this.displaySuppAddress.setTextAppearance(activityContext,
+					R.style.textoWhite);
+			this.displayCity.setTextAppearance(activityContext,
+					R.style.textoWhite);
+
 			this.displayAddress.setText(address.getAddress());
 			this.displaySuppAddress.setText(address.getSupplementalAddress());
 			this.displayCity.setText(address.getCity());
 		}
 		Utilities.dismissProgressDialog(progressDialog);
-		
+
 	}
- 
-	public class ContactAddressListener implements RequestListener<ListAddresses> {
+
+	public class ContactAddressListener implements
+			RequestListener<ListAddresses> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
@@ -122,7 +139,8 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestSuccess(ListAddresses result) {
-			if (result == null) return;
+			if (result == null)
+				return;
 			refreshView(result);
 
 		}
