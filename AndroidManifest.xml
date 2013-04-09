@@ -59,7 +59,7 @@
         </activity>
         <!-- DETALLE DE CONTACTOS -->
         <activity
-            android:name=".contact.detail.ContactDetailFragmentActivity"
+            android:name="org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity"
             android:label="@string/title_activity_contact_details"
             android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
             <meta-data
@@ -71,6 +71,15 @@
         <service
             android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
             android:exported="false" />
+
+        <activity
+            android:name="org.upsam.civicrm.contact.add.AddContactActivity"
+            android:label="@string/title_activity_add_contact"
+            android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
+        </activity>
     </application>
 
 </manifest>

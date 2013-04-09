@@ -4,7 +4,7 @@
     <!--
     ===============================================================
      NOMBRE APLICACION
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="app_name">Open Mobile CRM</string>
     <string name="action_settings">Settings</string>
@@ -14,13 +14,13 @@
     <!--
     ===============================================================
      SPLAH
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="splash_description">Open Mobile CRM</string>
     <!--
     ===============================================================
      LOGIN
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="login_head_superior">Open Mobile</string>
     <string name="login_head_inferior">CRM</string>
@@ -51,7 +51,7 @@
     <!--
     ===============================================================
      HOME
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="home_contactos">Contactos</string>
     <string name="home_actividades">Actividades</string>
@@ -62,7 +62,7 @@
     <!--
     ===============================================================
      ACERCA DE
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="acerca_de_label">Acerca De</string>
     <string name="acerca_de_texto">Aplicación creada por Roberto, Jorge, Gonzalo y Fernando como proyecto final</string>
@@ -71,7 +71,7 @@
     <!--
     ===============================================================
      PREFERENCIAS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="preferencias_label">Configuracion</string>
     <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
@@ -92,21 +92,22 @@
     <!--
     ===============================================================
      MENSAJES PROGRESS BAR DE CARGA GENERICOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="progress_bar_msg_generico">Cargando. Por favor espere &#8230;</string>
     <!--
     ===============================================================
      CONTACTOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
     <string name="title_activity_contact_details">Detalle Contacto</string>
-    
-     <!--  -->
+
+    <!--  -->
     <string name="contact_image">Contacto</string>
     <string name="search">Search</string>
+    <string name="add_contact">Añadir Contacto</string>
 
     <!-- menus izquierdo indice -->
     <string name="address">Direcciones</string>
@@ -124,5 +125,6 @@
     <string name="language_detail">Lenguaje preferente</string>
     <string name="since_detail">Desde</string>
     <string name="by_detail">por</string>
+    <string name="title_activity_add_contact">AddContactActivity</string>
 
 </resources>
