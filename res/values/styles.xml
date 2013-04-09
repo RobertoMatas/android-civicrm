@@ -61,7 +61,8 @@
     -->
     <style name="separatorListView" parent="@android:style/Widget.ListView">
         <item name="android:divider">@drawable/list_divide</item>
-        <item name="android:dividerHeight">1dp</item>        
+        <item name="android:dividerHeight">1dp</item> 
+        <item name="android:listSelector">@drawable/list_selector_contacts</item>          
     </style>
 
     <style name="separatorSlidingMenuListView" parent="@android:style/Widget.ListView">
