@@ -124,5 +124,12 @@
     <string name="language_detail">Lenguaje preferente</string>
     <string name="since_detail">Desde</string>
     <string name="by_detail">por</string>
+    
+    <!-- Añadir contacto -->
 	<string name="title_activity_add_contact">AddContactActivity</string>
+	<string name="add_contact">Nuevo contacto</string>
+	<string name="add_contact_name_hint">Nombre del contacto</string>
+	<string name="add_contact_email_hint">Email del contacto</string>
+	<string name="add_contact_phone_hint">Teléfono del contacto</string>
+	<string name="add_contact_create_btn">Crear</string>
 </resources>

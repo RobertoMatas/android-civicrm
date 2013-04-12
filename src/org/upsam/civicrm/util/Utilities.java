@@ -176,6 +176,7 @@ public class Utilities {
 		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);		
 		progressDialog.setMessage(body);
 		progressDialog.setIndeterminate(Boolean.TRUE);
+		progressDialog.setCancelable(false);
 		return progressDialog;		 
 	}
 

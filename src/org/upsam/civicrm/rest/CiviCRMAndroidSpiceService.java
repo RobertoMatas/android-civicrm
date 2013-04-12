@@ -3,6 +3,8 @@ package org.upsam.civicrm.rest;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.codehaus.jackson.map.DeserializationConfig.Feature;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.FormHttpMessageConverter;
@@ -30,10 +32,13 @@ public class CiviCRMAndroidSpiceService extends
 		RestTemplate restTemplate = new RestTemplate();
 		// web services support json responses
 		MappingJacksonHttpMessageConverter jsonConverter = new MappingJacksonHttpMessageConverter();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		jsonConverter.setObjectMapper(objectMapper);
 		List<MediaType> supportedMediaTypes = new ArrayList<MediaType>(2);
 		supportedMediaTypes.add(MediaType.APPLICATION_JSON);
 		supportedMediaTypes.add(new MediaType("text", "javascript"));
-		supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
+		//supportedMediaTypes.add(MediaType.APPLICATION_FORM_URLENCODED);
 		jsonConverter.setSupportedMediaTypes(supportedMediaTypes);
 		// binary (eg: images)
 		ByteArrayHttpMessageConverter bArrayHttpMessageConverter = new ByteArrayHttpMessageConverter();

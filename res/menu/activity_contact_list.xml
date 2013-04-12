@@ -5,5 +5,9 @@
           android:icon="@drawable/ic_buscador"
           android:showAsAction="always|collapseActionView"
           android:actionLayout="@layout/search_custom_menu" />
-
+    
+    <item android:id="@+id/add_contact" 
+          android:title="@string/add_contact"
+          android:showAsAction="always|collapseActionView" 
+          android:icon="@drawable/ic_action_add_contact" />
 </menu>
