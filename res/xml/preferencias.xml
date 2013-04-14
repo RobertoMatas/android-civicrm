@@ -33,5 +33,17 @@
             android:summary="@string/pref_userkey_summary"
             android:title="@string/pref_userkey_title" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/pref_datos_generales"
+        android:title="@string/pref_title_generales" >
+        <EditTextPreference
+            android:key="PREF_MAIL"
+            android:summary="@string/pref_mail_summary"
+            android:title="@string/pref_mail_title" />
+        <EditTextPreference
+            android:key="PREF_CONTACTID"
+            android:summary="@string/pref_idcontact_summary"
+            android:title="@string/pref_idcontact_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

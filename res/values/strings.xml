@@ -47,6 +47,9 @@
     <string name="login_validando_error_title">Error validando</string>
     <string name="login_validando_error_msg">Alguno de los campos introducidos no es valido</string>
     <string name="login_validando_error_button">Aceptar</string>
+    <string name="login_validando_error_drupal_msg">No se ha podido autenticar en el portal</string>
+    <string name="login_validando_drupal_ko_msg">Alguno de los campos introducidos en el portal no son validos</string>
+    <string name="login_validando_error_ufmatch_msg">No se ha podido obtener su usuario. Contacte Administrador</string>
 
     <!--
     ===============================================================
@@ -76,6 +79,7 @@
     <string name="preferencias_label">Configuracion</string>
     <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
     <string name="pref_title_usuario">DATOS USUARIO</string>
+    <string name="pref_title_generales">DATOS GENERALES</string>
     <string name="pref_url_title">URL de acceso a CIVICRM</string>
     <string name="pref_url_summary">Conexion con la uri aquí indicada</string>
     <string name="pref_keysite_title">KEY del site proporcionada por un administrador</string>
@@ -88,6 +92,10 @@
     <string name="pref_apikey_summary">Necesaria para establecer la conexión</string>
     <string name="pref_userkey_title">USER KEY del usuario introducido</string>
     <string name="pref_userkey_summary">Necesaria para establecer la conexión</string>
+    <string name="pref_mail_title">Mail del usuario registrado</string>
+    <string name="pref_mail_summary">Necesaria para obtenes actividades del usuario</string>
+    <string name="pref_idcontact_title">Id del contacto en CiviCrm</string>
+    <string name="pref_idcontact_summary">Necesaria para obtener informacion del CRM</string>
 
     <!--
     ===============================================================
