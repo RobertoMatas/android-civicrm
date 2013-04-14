@@ -1,4 +1,4 @@
-package org.upsam.civicrm.contact.model;
+package org.upsam.civicrm.beans;
 
 import java.util.List;
 

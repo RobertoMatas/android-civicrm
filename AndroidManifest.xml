@@ -81,6 +81,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
         </activity>
+
         <service
             android:name="org.upsam.civicrm.activity.services.AddActivityService"
             android:exported="false" />
@@ -90,6 +91,7 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
