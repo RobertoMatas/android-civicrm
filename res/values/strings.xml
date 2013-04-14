@@ -103,8 +103,8 @@
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
     <string name="title_activity_contact_details">Detalle Contacto</string>
-    
-     <!--  -->
+  
+    <!--  -->
     <string name="contact_image">Contacto</string>
     <string name="search">Search</string>
 
@@ -114,6 +114,7 @@
     <string name="demographics">Demografía</string>
     <string name="constituent_information">Otra Información</string>
     <string name="tags_and_groups">Etiquetas y grupos</string>
+    <string name="contact_activities">Actividades</string>
 
     <!-- detalle del contacto -->
     <string name="email_detail">Correo electrónico</string>
@@ -124,5 +125,19 @@
     <string name="language_detail">Lenguaje preferente</string>
     <string name="since_detail">Desde</string>
     <string name="by_detail">por</string>
+    <!--
+    ===============================================================
+     CALENDARIO
+    ===============================================================                        
+    -->
+    <string name="title_activity_calendario">Calendario</string>
+    <!-- Añadir contacto -->
+    <string name="title_activity_add_contact">AddContactActivity</string>
+    <string name="add_contact">Nuevo contacto</string>
+    <string name="add_contact_name_hint">Nombre del contacto</string>
+    <string name="add_contact_email_hint">Email del contacto</string>
+    <string name="add_contact_phone_hint">Teléfono del contacto</string>
+    <string name="add_contact_create_btn">Crear</string>
+    <string name="title_activity_list_contacts_activities">ListContactsActivities</string>
 
 </resources>
