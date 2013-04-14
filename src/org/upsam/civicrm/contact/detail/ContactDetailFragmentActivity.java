@@ -4,6 +4,7 @@ import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.detail.fragments.ContactAddressFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactDetailFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactTagsAndGroupsFragment;
+import org.upsam.civicrm.contact.detail.fragments.ListContactsActivitiesFragment;
 import org.upsam.civicrm.contact.detail.fragments.OtherInformationFragment;
 import org.upsam.civicrm.contact.detail.menu.MenuOrganizationFragment.OnMenuItemSelectedListener;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
@@ -23,12 +24,15 @@ public class ContactDetailFragmentActivity extends
 		OnMenuItemSelectedListener,
 		org.upsam.civicrm.contact.detail.menu.MenuIndividualFragment.OnMenuItemSelectedListener {
 
+	int contactId = 0;
+	
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		ContactSummary contact = (ContactSummary) getIntent().getExtras().get(
 				"contact");
+		this.contactId = contact.getId();
 		setContentView(R.layout.activity_contact_details);
 
 		if (contact != null
@@ -100,6 +104,16 @@ public class ContactDetailFragmentActivity extends
 		getSlidingMenu().toggle();
 	}
 
+	private void addActivitiesFragment() {
+		ListContactsActivitiesFragment activitiesFragment = new ListContactsActivitiesFragment(
+				contentManager, this);
+		activitiesFragment.setArguments(getIntent().getExtras());
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.FrameLayout2, activitiesFragment).commit();
+		getSlidingMenu().toggle();
+		
+	}
+
 	private void addGroupsAndTagsFragment() {
 		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment(
 				contentManager, this);
@@ -119,12 +133,15 @@ public class ContactDetailFragmentActivity extends
 				.getString(R.string.communication_preferences);
 		String optionTagsAndGroup = resources
 				.getString(R.string.tags_and_groups);
+		String activities = resources.getString(R.string.contact_activities);
 		if (options[position].equals(optionAddress)) {
 			addAddressFragment();
 		} else if (options[position].equals(optionCommPreferences)) {
 			updateCommunicationPreferences();
 		} else if (options[position].equals(optionTagsAndGroup)) {
 			addGroupsAndTagsFragment();
+		} else if (options[position].equals(activities)) {
+			addActivitiesFragment();
 		}
 	}
 
@@ -141,6 +158,7 @@ public class ContactDetailFragmentActivity extends
 		String optionDemographics = resources.getString(R.string.demographics);
 		String optionOtherInfo = resources
 				.getString(R.string.constituent_information);
+		String activities = resources.getString(R.string.contact_activities);
 		if (options[position].equals(optionAddress)) {
 			addAddressFragment();
 		} else if (options[position].equals(optionCommPreferences)) {
@@ -151,6 +169,8 @@ public class ContactDetailFragmentActivity extends
 			updateDemographics();
 		} else if (options[position].equals(optionOtherInfo)) {
 			addOtherInfoFragment();
+		} else if (options[position].equals(activities)) {
+			addActivitiesFragment();
 		}
 	}
 

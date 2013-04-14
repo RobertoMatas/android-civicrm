@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.beans.DataCivi;
 import org.upsam.civicrm.util.Utilities;
@@ -41,7 +44,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * 
 	 */
 	public static enum ENTITY {
-		Phone, Contact, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity
+		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity
 	};
 
 	/**
@@ -58,7 +61,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 
 	private METHOD method = METHOD.get;
 
-	private MultiValueMap<String, String> params;
+	private final MultiValueMap<String, String> params;
 
 	/**
 	 * 
@@ -103,6 +106,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 */
 	public CiviCRMAsyncRequest(Class<RESULT> clazz, DataCivi datacivi) {
 		super(clazz);
+		this.params = null;
 		this.uriReq = buildRequest(datacivi);
 	}
 
@@ -175,13 +179,33 @@ public class CiviCRMAsyncRequest<RESULT> extends
 				+ this.uriReq);
 		switch (method) {
 		case post: {
-			return getRestTemplate().postForObject(this.uriReq, params,
-					getResultType());
+			MultiValueMap<String, String> headers = getHeadersForPost();
+			HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(
+					params, headers);
+			return getRestTemplate().exchange(this.uriReq, HttpMethod.POST,
+					requestEntity, getResultType()).getBody();
+			/*
+			 * return getRestTemplate().postForObject(this.uriReq, params,
+			 * getResultType());
+			 */
 		}
 		case get:
 		default:
 			return getRestTemplate().getForObject(this.uriReq, getResultType());
 		}
 
+	}
+
+	private MultiValueMap<String, String> getHeadersForPost() {
+		MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+		headers.add("Content-Type", "application/x-www-form-urlencoded");
+		/*
+		 * headers.set("Connection", "Close"). Hay un bug que se corrige con
+		 * esta cabecera
+		 * http://stackoverflow.com/questions/13182519/spring-rest-
+		 * template-usage-causes-eofexception
+		 */
+		headers.set("Connection", "Close");
+		return headers;
 	}
 }

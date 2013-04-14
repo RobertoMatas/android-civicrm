@@ -11,10 +11,8 @@ import org.upsam.civicrm.contact.list.EndlessScrollListener.onScrollEndListener;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
-import org.upsam.civicrm.util.Utilities;
 
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
@@ -41,20 +40,18 @@ public class ContactListFragment extends Fragment {
 	private ContactListAdapter contactsAdapter;
 
 	private String lastRequestCacheKey;
-
-	private ProgressDialog progressDialog;
+	
+	private ProgressBar progressBar;	
 
 	private SpiceManager contentManager;
-
-	private int page = 1;
 
 	private String type = null;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.activity_contact_list, container,
-				false);
+		View view = inflater.inflate(R.layout.activity_contact_list, container, false);
+		this.progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
 		return view;
 	}
 
@@ -87,7 +84,7 @@ public class ContactListFragment extends Fragment {
 		super.onResume();
 		Bundle arguments = getArguments();
 		this.type = arguments.getString("contact_type");
-		performRequest(this.type, page);
+		performRequest(this.type, 1);
 	}
 
 	private void initUIComponents() {
@@ -123,10 +120,8 @@ public class ContactListFragment extends Fragment {
 				}));
 	}
 
-	private void performRequest(String type, int page) {
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, this.getActivity(),
-				getString(R.string.progress_bar_msg_generico));
+	private void performRequest(String type, int page) {		
+		this.progressBar.setVisibility(View.VISIBLE);
 		Log.d("ContactAutoCompleteListAdapter", "Pagina solicitada:" + page);
 		CiviCRMAsyncRequest<ListContacts> request = buildReq(type, page);
 		lastRequestCacheKey = request.createCacheKey();
@@ -180,8 +175,9 @@ public class ContactListFragment extends Fragment {
 				return;
 			}
 			contactsAdapter.addAll(listContacts.getValues());
-			contactsAdapter.notifyDataSetChanged();
-			Utilities.dismissProgressDialog(progressDialog);
+			contactsAdapter.notifyDataSetChanged();			
+			progressBar.setVisibility(View.GONE);
+
 		}
 	}
 }

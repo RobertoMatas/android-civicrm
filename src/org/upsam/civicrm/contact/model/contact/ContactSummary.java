@@ -11,7 +11,7 @@ public class ContactSummary implements Parcelable {
 	/**
 	 * Contact ID
 	 */
-	@JsonProperty("contact_id")
+	//@JsonProperty("contact_id")
 	private int id;
 	/**
 	 * Nombre para mostrar

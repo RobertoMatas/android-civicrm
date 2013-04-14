@@ -1,6 +1,6 @@
 package org.upsam.civicrm.contact.model.custom;
 
-import org.upsam.civicrm.contact.model.ListOfEntities;
+import org.upsam.civicrm.beans.ListOfEntities;
 
 public class ListCustomFields extends ListOfEntities<CustomField> {
 

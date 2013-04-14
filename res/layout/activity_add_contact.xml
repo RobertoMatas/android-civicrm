@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/fondoActividad"
+    tools:context=".AddContactActivity" >
+
+    <EditText
+        android:id="@+id/contact_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ems="10"
+        style="@style/itemsPortraitLogin"
+        android:hint="@string/add_contact_name_hint"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/contact_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ems="10"
+        style="@style/itemsPortraitLogin"
+        android:hint="@string/add_contact_email_hint"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/contact_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:ems="10"
+        style="@style/itemsPortraitLogin"
+        android:hint="@string/add_contact_phone_hint"
+        android:inputType="phone" />
+
+    <Spinner
+        android:id="@+id/contact_type"
+        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/add_contact_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        style="@style/botonLogin"
+        android:text="@string/add_contact_create_btn" />
+
+</LinearLayout>

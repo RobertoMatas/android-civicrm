@@ -21,7 +21,6 @@ import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.contact.model.telephone.Phone;
 import org.upsam.civicrm.util.Utilities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -39,7 +38,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-@SuppressLint("ValidFragment")
+//@SuppressLint("ValidFragment")
 public class ContactDetailFragment extends AbstractAsyncFragment {
 	/**
 	 * Vista nombre de contacto

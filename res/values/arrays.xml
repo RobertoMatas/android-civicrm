@@ -4,6 +4,7 @@
         <item>@string/address</item>
         <item>@string/communication_preferences</item>
         <item>@string/tags_and_groups</item>
+        <item>@string/contact_activities</item>
     </array>
     <array name="slide_individual_menu">
         <item>@string/address</item>
@@ -11,5 +12,6 @@
         <item>@string/demographics</item>
         <item>@string/constituent_information</item>
         <item>@string/tags_and_groups</item>
+        <item>@string/contact_activities</item>
     </array>
 </resources>

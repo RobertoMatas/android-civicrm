@@ -103,7 +103,11 @@
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
     <string name="title_activity_contact_details">Detalle Contacto</string>
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> branch 'master' of https://github.com/IIIRepublica/android-civicrm.git
     <!--  -->
     <string name="contact_image">Contacto</string>
     <string name="search">Search</string>
@@ -131,6 +135,15 @@
     ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendario</string>
+    <!-- Añadir contacto -->
+    <string name="title_activity_add_contact">AddContactActivity</string>
+    <string name="add_contact">Nuevo contacto</string>
+    <string name="add_contact_name_hint">Nombre del contacto</string>
+    <string name="add_contact_email_hint">Email del contacto</string>
+    <string name="add_contact_phone_hint">Teléfono del contacto</string>
+    <string name="add_contact_create_btn">Crear</string>
+    <string name="title_activity_list_contacts_activities">ListContactsActivities</string>
+
     <!-- Añadir contacto -->
     <string name="title_activity_add_contact">AddContactActivity</string>
     <string name="add_contact">Nuevo contacto</string>
