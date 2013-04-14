@@ -92,6 +92,14 @@
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="org.upsam.civicrm.charts.ActivityResolutionColumnChart"
+            android:label="@string/title_activity_activity_resolution_column_chart"
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

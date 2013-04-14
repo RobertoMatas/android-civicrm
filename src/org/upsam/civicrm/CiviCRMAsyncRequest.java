@@ -37,7 +37,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * 
 	 */
 	public static enum ACTION {
-		get, getsingle, create
+		get, getsingle, create, getcount
 	};
 
 	/**

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.upsam.civicrm.beans.DataCivi;
+import org.upsam.civicrm.charts.ActivityResolutionColumnChart;
 import org.upsam.civicrm.contact.list.ContactListTabs;
 import org.upsam.civicrm.login.FragmentHome;
 import org.upsam.civicrm.login.FragmentLogin;
@@ -206,7 +207,8 @@ public class MainActivity extends FragmentActivity  {
 	}
 	
 	public void showInformes(View view) {
-		Toast.makeText(getApplicationContext(),"En construcción INFORMES", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this, ActivityResolutionColumnChart.class);
+		startActivity(intent);
 	}	
 	
 	/**
