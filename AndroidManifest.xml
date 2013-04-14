@@ -60,18 +60,37 @@
         </activity>
         <!-- DETALLE DE CONTACTOS -->
         <activity
-            android:name=".contact.detail.ContactDetailFragmentActivity"
+            android:name="org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity"
             android:label="@string/title_activity_contact_details"
             android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
         </activity>
-
+		
+        <activity
+            android:name="org.upsam.civicrm.calendar.CalendarTabs"
+            android:label="@string/title_activity_calendario"
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
+        
         <!-- ROBOSPICE - SERVICIOS REST -->
         <service
             android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
             android:exported="false" />
+
+        <activity
+            android:name="org.upsam.civicrm.contact.add.AddContactActivity"
+            android:label="@string/title_activity_add_contact"
+            android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
+        </activity>
+
         <service
             android:name="org.upsam.civicrm.activity.services.AddActivityService"
             android:exported="false" />
@@ -81,6 +100,7 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
