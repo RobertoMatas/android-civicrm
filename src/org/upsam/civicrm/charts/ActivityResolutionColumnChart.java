@@ -12,6 +12,7 @@ import org.upsam.civicrm.activity.model.ActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.charts.model.ActivityResolutionReport;
 import org.upsam.civicrm.util.CiviCRMRequestHelper;
+import org.upsam.civicrm.util.Utilities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -19,8 +20,8 @@ import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -46,8 +47,9 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 		@Override
 		public void onRequestSuccess(ActivityCounter result) {
-			if (result == null) return;
-			numReqCompleted ++;
+			if (result == null)
+				return;
+			numReqCompleted++;
 			chartData.setValue(statusKey, result.getNumber());
 			checkForCompletation();
 		}
@@ -73,7 +75,7 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 			for (ActivityStatus activityStatus : values) {
 				map.put(activityStatus.getLabel(), 0);
 			}
-			chartData = new ActivityResolutionReport(map);
+			chartData = new ActivityResolutionReport(map, webView);
 			executeNumActivitiesRequests(values);
 		}
 
@@ -93,8 +95,6 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 		setContentView(R.layout.activity_activity_resolution_column_chart);
 		webView = (WebView) findViewById(R.id.chartWebView);
 		webView.getSettings().setJavaScriptEnabled(true);
-		// webView.addJavascriptInterface(mGraphHandler, "testhandler");
-		webView.loadUrl("file:///android_asset/charts/columnChart.html");
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		executeRequests();
@@ -102,10 +102,14 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 	private void checkForCompletation() {
 		if (numReqCompleted == numReqToExecute) {
-			Toast.makeText(this, this.chartData.getDataTable().toString(), Toast.LENGTH_LONG).show();
-			Log.d("ActivityResolutionColumnChart", this.chartData.getDataTable().toString());
+			Log.d("ActivityResolutionColumnChart",
+					this.chartData.getDataTable());
+			webView.addJavascriptInterface(this.chartData, "chartHandler");
+			webView.loadUrl("file:///android_asset/charts/columnChart.html");
+			Utilities.dismissProgressDialog(progressDialog);
+			webView.setVisibility(View.VISIBLE);
 		}
-		
+
 	}
 
 	private void executeNumActivitiesRequests(List<ActivityStatus> values) {
@@ -114,12 +118,15 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 			req = CiviCRMRequestHelper.requestNumberOfActivities(this,
 					activityStatus.getValue());
 			contentManager.execute(req, req.createCacheKey(),
-					DurationInMillis.ONE_HOUR, new ActivityCounterListener(activityStatus.getName()));
+					DurationInMillis.ONE_HOUR, new ActivityCounterListener(
+							activityStatus.getName()));
 		}
 
 	}
 
 	private void executeRequests() {
+		webView.setVisibility(View.GONE);
+		this.progressDialog = Utilities.showLoadingProgressDialog(progressDialog, this, "Calculando...");
 		CiviCRMAsyncRequest<ListActivityStatus> req = CiviCRMRequestHelper
 				.requestActivitiesStatus(this);
 		contentManager.execute(req, req.createCacheKey(),
