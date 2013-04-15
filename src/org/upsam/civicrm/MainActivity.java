@@ -30,7 +30,7 @@ import org.upsam.civicrm.login.model.Drupal;
 import org.upsam.civicrm.login.model.Login;
 import org.upsam.civicrm.login.model.Ufmatch;
 import org.upsam.civicrm.preference.SetPreferenceActivity;
-import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
+import org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService;
 import org.upsam.civicrm.util.Utilities;
 
 import android.app.ProgressDialog;
@@ -78,7 +78,9 @@ public class MainActivity extends FragmentActivity {
 	private DataCivi dataCiviResults;
 
 	private SpiceManager contentManager = new SpiceManager(
-			CiviCRMAndroidSpiceService.class);
+			CiviCRMAndroidPostSpiceService.class);
+	// private SpiceManager contentManager = new
+	// SpiceManager(CiviCRMAndroidSpiceService.class);
 	private ProgressDialog progressDialog;
 
 	@Override
@@ -302,6 +304,12 @@ public class MainActivity extends FragmentActivity {
 
 		dataCiviResults = new DataCivi();
 
+		// la autenticacion es correcta vamos a drupal a por el mail
+		CiviCRMAsyncRequest<Drupal> requestDrupal = new CiviCRMAsyncRequest<Drupal>(
+				Drupal.class, datos, METHOD.post);
+		contentManager.execute(requestDrupal, requestDrupal.createCacheKey(),
+				DurationInMillis.NEVER, new AutenticacionDrupalListener());
+
 		// autenticando en civi
 		CiviCRMAsyncRequest<Login> requestCivicrm = new CiviCRMAsyncRequest<Login>(
 				Login.class, datos);
@@ -365,13 +373,6 @@ public class MainActivity extends FragmentActivity {
 				dataCiviResults.setApi_key(result.getApiKey());
 				dataCiviResults.setUser_name(prefUser.getText().toString());
 				dataCiviResults.setPassword(prefPassword.getText().toString());
-
-				// la autenticacion es correcta vamos a drupal a por el mail
-				CiviCRMAsyncRequest<Drupal> requestDrupal = new CiviCRMAsyncRequest<Drupal>(
-						Drupal.class, dataCiviResults, METHOD.post);
-				contentManager.execute(requestDrupal,
-						requestDrupal.createCacheKey(), DurationInMillis.NEVER,
-						new AutenticacionDrupalListener());
 
 			} else {
 				Utilities.dismissProgressDialog(progressDialog);
@@ -440,6 +441,13 @@ public class MainActivity extends FragmentActivity {
 
 				dataCiviResults.setMail(result.getUser().getMail());
 
+				while (dataCiviResults.getApi_key() == null
+						|| "".equalsIgnoreCase(dataCiviResults.getApi_key())) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException ie) {
+					}
+				}
 				// obtener contact id
 				CiviCRMAsyncRequest<Ufmatch> requestUfMatch = new CiviCRMAsyncRequest<Ufmatch>(
 						Ufmatch.class, dataCiviResults, METHOD.get);

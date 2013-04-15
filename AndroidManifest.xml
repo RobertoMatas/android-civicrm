@@ -72,6 +72,9 @@
         <service
             android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
             android:exported="false" />
+        <service
+            android:name="org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService"
+            android:exported="false" />
 
         <activity
             android:name="org.upsam.civicrm.contact.add.AddContactActivity"
@@ -91,8 +94,7 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-
-        <activity
+        <activity
             android:name="org.upsam.civicrm.charts.ActivityResolutionColumnChart"
             android:label="@string/title_activity_activity_resolution_column_chart"
             android:parentActivityName="org.upsam.civicrm.MainActivity" >
