@@ -57,6 +57,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
+
 /**
  * Actividad de entrada a la aplicacion
  * 
@@ -224,16 +225,14 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void showEvents(View view) {
-		Toast.makeText(getApplicationContext(), "En construccion EVENTOS",
-				Toast.LENGTH_LONG).show();
 		Intent intent = new Intent(this, CalendarTabs.class);
 		startActivity(intent);
+
 	}
 
 	public void showActivities(View view) {
 		Toast.makeText(getApplicationContext(), "En construccion ACTIVIDADES",
 				Toast.LENGTH_LONG).show();
-
 	}
 
 	public void showInformes(View view) {

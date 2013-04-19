@@ -37,7 +37,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * 
 	 */
 	public static enum ACTION {
-		get, getsingle, create
+		get, getsingle, create, getcount
 	};
 
 	/**
@@ -97,6 +97,38 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	}
 
 	/**
+	 * Autenticacion POST en drupal
+	 * 
+	 * @param clazz
+	 * @param datacivi
+	 * @param method
+	 */
+	public CiviCRMAsyncRequest(Class<RESULT> clazz, DataCivi datacivi,
+			METHOD method) {
+		super(clazz);
+		
+		
+		switch (method) {
+		case post: {
+			MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
+					2);
+			fields.add("username", datacivi.getUser_name());
+			fields.add("password", datacivi.getPassword());
+			this.params = fields;
+			this.method = method;
+			this.uriReq = buildRequestPostLogin(datacivi);
+			break;
+		}
+		case get:
+		default: {
+			this.params = null;
+			this.uriReq = buildRequestUfmatch(datacivi);
+			break;
+		}
+		}
+	}
+
+	/**
 	 * Utilizado la primera vez se autentica
 	 * 
 	 * @param clazz
@@ -122,6 +154,13 @@ public class CiviCRMAsyncRequest<RESULT> extends
 		this(applicationContext, clazz, action, entity, null);
 	}
 
+	/**
+	 * 
+	 * @param applicationContext
+	 * @param action
+	 * @param entity
+	 * @return
+	 */
 	private String buildRequest(Context applicationContext, ACTION action,
 			ENTITY entity) {
 		Uri.Builder uriBuilder = Uri.parse(
@@ -147,7 +186,22 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	}
 
 	/**
-	 * Llamada al autenticarse
+	 * peticion post para autenticacion
+	 * 
+	 * @param applicationContext
+	 * @return
+	 */
+	private String buildRequestPostLogin(DataCivi datacivi) {
+		Uri.Builder uriBuilder = Uri.parse(
+				Utilities.cleanUrl(datacivi.getBase_url())
+						+ "/api/rest/user/login").buildUpon();
+
+		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
+		return uri.toString();
+	}
+
+	/**
+	 * Llamada al autenticarse en civicrm
 	 * 
 	 * @param datacivi
 	 * @return
@@ -163,6 +217,30 @@ public class CiviCRMAsyncRequest<RESULT> extends
 		uriBuilder.appendQueryParameter("key", datacivi.getSite_key());
 		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
 		return uri.toString();
+	}
+
+	/**
+	 * construir url para obtener el contactid en la autenticacion
+	 * 
+	 * @param datacivi
+	 * @return
+	 */
+	private String buildRequestUfmatch(DataCivi datacivi) {
+
+		Uri.Builder uriBuilder = Uri.parse(
+				Utilities.cleanUrl(datacivi.getBase_url())
+						+ "/sites/all/modules/civicrm/extern/rest.php")
+				.buildUpon();
+		uriBuilder.appendQueryParameter("json", "1");
+		uriBuilder.appendQueryParameter("sequential", "1");
+		uriBuilder.appendQueryParameter("debug", "1");
+		uriBuilder.appendQueryParameter("key", datacivi.getSite_key());
+		uriBuilder.appendQueryParameter("api_key", datacivi.getApi_key());
+		uriBuilder.appendQueryParameter("entity", "UFMatch");
+		uriBuilder.appendQueryParameter("action", "getsingle");
+		//uriBuilder.appendQueryParameter("uf_name", datacivi.getMail());
+		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
+		return uri.toString()+"&uf_name="+datacivi.getMail();
 	}
 
 	public String createCacheKey() {

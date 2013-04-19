@@ -1,26 +1,50 @@
 package org.upsam.civicrm.beans;
 
 /**
- * Objeto guarda los datos de autenticación
+ * Objeto guarda los datos de autenticaciÃ³n
  * 
- * @author Equipo 7
- * Universidad Pontificia de Salamanca
- * v1.0
- *
+ * @author Equipo 7 Universidad Pontificia de Salamanca v1.0
+ * 
  */
-public class DataCivi 
-{	
+public class DataCivi {
 	private String api_key;
-	
+
 	private String key;
-	
+
 	private String user_name;
-	
+
 	private String password;
-	
+
 	private String site_key;
-	
+
 	private String base_url;
+
+	private String mail;
+
+	private String contactid;
+
+	/**
+	 * @return the contactid
+	 */
+	public String getContactid() {
+		return contactid;
+	}
+
+	/**
+	 * @param contactid
+	 *            the contactid to set
+	 */
+	public void setContactid(String contactid) {
+		this.contactid = contactid;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
 
 	/**
 	 * @return the api_key
@@ -30,7 +54,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param api_key the api_key to set
+	 * @param api_key
+	 *            the api_key to set
 	 */
 	public void setApi_key(String api_key) {
 		this.api_key = api_key;
@@ -44,7 +69,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param key the key to set
+	 * @param key
+	 *            the key to set
 	 */
 	public void setKey(String key) {
 		this.key = key;
@@ -58,7 +84,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param user_name the user_name to set
+	 * @param user_name
+	 *            the user_name to set
 	 */
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
@@ -72,7 +99,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -86,7 +114,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param site_key the site_key to set
+	 * @param site_key
+	 *            the site_key to set
 	 */
 	public void setSite_key(String site_key) {
 		this.site_key = site_key;
@@ -100,7 +129,8 @@ public class DataCivi
 	}
 
 	/**
-	 * @param base_url the base_url to set
+	 * @param base_url
+	 *            the base_url to set
 	 */
 	public void setBase_url(String base_url) {
 		this.base_url = base_url;

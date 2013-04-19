@@ -2,10 +2,10 @@ package org.upsam.civicrm;
 
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
 
-import com.octo.android.robospice.SpiceManager;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
+
+import com.octo.android.robospice.SpiceManager;
 
 /**
  * Clase padre de todas las actividades

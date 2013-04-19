@@ -150,6 +150,5 @@
     ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendario</string>
-	<string name="title_activity_activity_resolution_column_chart">ActivityResolutionColumnChart</string>
-	
+
 </resources>
