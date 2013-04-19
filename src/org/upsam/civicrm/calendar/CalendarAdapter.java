@@ -1,8 +1,11 @@
 package org.upsam.civicrm.calendar;
 
 import java.util.Calendar;
+import java.util.List;
 
+import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.R;
+import org.upsam.civicrm.activity.model.ActivitySummary;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,18 +15,20 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class CalendarAdapter extends BaseAdapter {
-	static final int FIRST_DAY_OF_WEEK =0; // Sunday = 0, Monday = 1
+	static final int FIRST_DAY_OF_WEEK =1; // Sunday = 0, Monday = 1
 	
     private Calendar month;
     private Calendar selectedDate;
     private String[] days;
     private Context mContext;
+    private MultiValueMap<String, ActivitySummary> activitiesPerDay;
     
-	public CalendarAdapter(Context context, Calendar monthCalendar) {
+	public CalendarAdapter(Context context, Calendar monthCalendar,MultiValueMap<String, ActivitySummary> activitiesPerDay) {
 		month = monthCalendar;
     	selectedDate = (Calendar)monthCalendar.clone();
     	month.set(Calendar.DAY_OF_MONTH, 1);
     	mContext = context;
+    	this.activitiesPerDay = activitiesPerDay;
         refreshDays();
 	}
 
@@ -47,7 +52,8 @@ public class CalendarAdapter extends BaseAdapter {
         else {
         	// mark current day as focused
         	if(month.get(Calendar.YEAR)== selectedDate.get(Calendar.YEAR) && month.get(Calendar.MONTH)== selectedDate.get(Calendar.MONTH) && days[position].equals(""+selectedDate.get(Calendar.DAY_OF_MONTH))) {
-        		v.setBackgroundResource(R.drawable.item_background_focused);
+        		v.setBackgroundColor(R.color.background);
+        		//v.setBackgroundResource(R.drawable.item_background_focused);
         	}
         	else {
         		v.setBackgroundResource(R.drawable.item_background);
@@ -65,10 +71,17 @@ public class CalendarAdapter extends BaseAdapter {
     	if(monthStr.length()==1) {
     		monthStr = "0"+monthStr;
     	}
-       
+    	String yearStr = ""+month.get(Calendar.YEAR);
         // show icon if date is not empty and it exists in the items array
         TextView numberOfActivities = (TextView)v.findViewById(R.id.num_events_per_day);
-        numberOfActivities.setText("1");
+        List<ActivitySummary> listActivitiesPerDay = activitiesPerDay.get(yearStr+monthStr+date);
+        if (listActivitiesPerDay != null){
+        	numberOfActivities.setText(""+listActivitiesPerDay.size()+" Act" );
+        }
+        else{
+        	numberOfActivities.setText("");        	
+        }
+        
         return v;
 	}
 
@@ -93,6 +106,17 @@ public class CalendarAdapter extends BaseAdapter {
 		return 0;
 	}
 	
+	public MultiValueMap<String, ActivitySummary> getActivitiesPerDay() {
+		return activitiesPerDay;
+	}
+
+
+	public void setActivitiesPerDay(
+			MultiValueMap<String, ActivitySummary> activitiesPerDay) {
+		this.activitiesPerDay = activitiesPerDay;
+	}
+
+
 	public void refreshDays()
     {
 

@@ -27,31 +27,25 @@ public class CalendarTabs extends Activity{
 		ActionBar bar = getActionBar();
 		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
-		Bundle args = new Bundle();
-		args.putString("calendar_type", MONTH);
 		Tab tab = bar
 				.newTab()
 				.setText(MONTH)
 				.setTabListener(
 						new TabListener<MonthlyCalendarFragment>(this,
-							MONTH, MonthlyCalendarFragment.class, args));
+							MONTH, MonthlyCalendarFragment.class));
 		bar.addTab(tab);
 		
-		args = new Bundle();
-		args.putString("calendar_type", WEEK);
 		tab = bar
 				.newTab()
 				.setText(WEEK)
 				.setTabListener(
 						new TabListener<WeeklyCalendarFragment>(this,
-								WEEK, WeeklyCalendarFragment.class, args));
+								WEEK, WeeklyCalendarFragment.class));
 		bar.addTab(tab);
 		
-		args = new Bundle();
-		args.putString("calendar_type", DAY);
 		tab = bar.newTab().setText(DAY)
 				.setTabListener(new TabListener<DailyCalendarFragment>(this,
-						DAY, DailyCalendarFragment.class, args));
+						DAY, DailyCalendarFragment.class));
 		bar.addTab(tab);
 
 		bar.selectTab(bar.getTabAt(0));

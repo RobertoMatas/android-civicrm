@@ -126,6 +126,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int viewBehind=0x7f010002;
     }
     public static final class color {
+        public static final int background=0x7f070002;
         public static final int text_color=0x7f070000;
         public static final int white=0x7f070001;
     }
@@ -142,134 +143,154 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int borde_verde=0x7f020004;
         public static final int header_background=0x7f020005;
         public static final int ic_acercade=0x7f020006;
-        public static final int ic_actividades=0x7f020007;
-        public static final int ic_buscador=0x7f020008;
-        public static final int ic_contactos=0x7f020009;
-        public static final int ic_eventos=0x7f02000a;
-        public static final int ic_info=0x7f02000b;
-        public static final int ic_launcher=0x7f02000c;
-        public static final int ic_listuser=0x7f02000d;
-        public static final int ic_organizacion=0x7f02000e;
-        public static final int ic_reporting=0x7f02000f;
-        public static final int ic_settings=0x7f020010;
-        public static final int ic_slide=0x7f020011;
-        public static final int ic_userfondo=0x7f020012;
-        public static final int item_background=0x7f020013;
-        public static final int item_background_focused=0x7f020014;
-        public static final int list_divide=0x7f020015;
-        public static final int list_dividesliding=0x7f020016;
-        public static final int list_item_background=0x7f020017;
-        public static final int list_selector_contact_pressed=0x7f020018;
-        public static final int list_selector_contacts=0x7f020019;
-        public static final int preferencias_background=0x7f02001a;
-        public static final int shadow=0x7f02001b;
-        public static final int social_person=0x7f02001c;
-        public static final int splash=0x7f02001d;
+        public static final int ic_action_add_contact=0x7f020007;
+        public static final int ic_actividades=0x7f020008;
+        public static final int ic_buscador=0x7f020009;
+        public static final int ic_contactos=0x7f02000a;
+        public static final int ic_eventos=0x7f02000b;
+        public static final int ic_info=0x7f02000c;
+        public static final int ic_launcher=0x7f02000d;
+        public static final int ic_listuser=0x7f02000e;
+        public static final int ic_organizacion=0x7f02000f;
+        public static final int ic_reporting=0x7f020010;
+        public static final int ic_settings=0x7f020011;
+        public static final int ic_slide=0x7f020012;
+        public static final int ic_userfondo=0x7f020013;
+        public static final int item_background=0x7f020014;
+        public static final int item_background_focused=0x7f020015;
+        public static final int list_divide=0x7f020016;
+        public static final int list_dividesliding=0x7f020017;
+        public static final int list_item_background=0x7f020018;
+        public static final int list_selector_contact_pressed=0x7f020019;
+        public static final int list_selector_contacts=0x7f02001a;
+        public static final int preferencias_background=0x7f02001b;
+        public static final int shadow=0x7f02001c;
+        public static final int social_person=0x7f02001d;
+        public static final int splash=0x7f02001e;
     }
     public static final class id {
-        public static final int FrameLayout1=0x7f060007;
-        public static final int FrameLayout2=0x7f060008;
-        public static final int LinearLayoutFila1=0x7f060020;
-        public static final int LinearLayoutFila11=0x7f060021;
-        public static final int LinearLayoutFila12=0x7f060024;
-        public static final int LinearLayoutFila2=0x7f060027;
-        public static final int LinearLayoutFila21=0x7f060028;
-        public static final int LinearLayoutFila22=0x7f06002b;
-        public static final int LinearLayoutFila3=0x7f06002e;
-        public static final int LinearLayoutFila31=0x7f06002f;
-        public static final int LinearLayoutFila32=0x7f060032;
-        public static final int RelativeLayout1=0x7f060009;
-        public static final int ab_Search=0x7f060040;
-        public static final int botonDialogAcerca=0x7f06001f;
-        public static final int calendar=0x7f06000f;
-        public static final int contac_img=0x7f060015;
-        public static final int contact_card=0x7f06001a;
-        public static final int contact_data=0x7f060018;
-        public static final int contact_list_item_layout=0x7f060019;
-        public static final int contact_type=0x7f060017;
-        public static final int container=0x7f060005;
-        public static final int date=0x7f060010;
-        public static final int display_address=0x7f060012;
-        public static final int display_city=0x7f060014;
-        public static final int display_name=0x7f060016;
-        public static final int display_supp_address=0x7f060013;
-        public static final int footerText=0x7f06003b;
-        public static final int fragments=0x7f060006;
+        public static final int ActivitySummarySubject=0x7f06002d;
+        public static final int FrameLayout1=0x7f06000d;
+        public static final int FrameLayout2=0x7f06000e;
+        public static final int LinearLayout1=0x7f060005;
+        public static final int LinearLayoutFila1=0x7f06002e;
+        public static final int LinearLayoutFila11=0x7f06002f;
+        public static final int LinearLayoutFila12=0x7f060032;
+        public static final int LinearLayoutFila2=0x7f060035;
+        public static final int LinearLayoutFila21=0x7f060036;
+        public static final int LinearLayoutFila22=0x7f060039;
+        public static final int LinearLayoutFila3=0x7f06003c;
+        public static final int LinearLayoutFila31=0x7f06003d;
+        public static final int LinearLayoutFila32=0x7f060040;
+        public static final int RelativeLayout1=0x7f06000f;
+        public static final int ab_Search=0x7f06004e;
+        public static final int activitySumaryDateTime=0x7f06002c;
+        public static final int activitySumaryName=0x7f06002b;
+        public static final int add_contact=0x7f060054;
+        public static final int add_contact_button=0x7f06000a;
+        public static final int botonDialogAcerca=0x7f060026;
+        public static final int calendar=0x7f060017;
+        public static final int contac_img=0x7f06001d;
+        public static final int contact_card=0x7f060021;
+        public static final int contact_data=0x7f06001f;
+        public static final int contact_email=0x7f060007;
+        public static final int contact_list_item_layout=0x7f060020;
+        public static final int contact_name=0x7f060006;
+        public static final int contact_phone=0x7f060008;
+        public static final int contact_type=0x7f060009;
+        public static final int container=0x7f06000b;
+        public static final int dailyActivities=0x7f060029;
+        public static final int dailyCalendar=0x7f060027;
+        public static final int daily_calendar_item=0x7f06002a;
+        public static final int date=0x7f060018;
+        public static final int display_address=0x7f06001a;
+        public static final int display_city=0x7f06001c;
+        public static final int display_name=0x7f06001e;
+        public static final int display_supp_address=0x7f06001b;
+        public static final int footerText=0x7f060049;
+        public static final int fragments=0x7f06000c;
         public static final int fullscreen=0x7f060003;
-        public static final int header=0x7f06000b;
-        public static final int imageView1=0x7f06003f;
+        public static final int header=0x7f060012;
+        public static final int imageView1=0x7f06004d;
         public static final int left=0x7f060000;
-        public static final int listResults=0x7f06000a;
-        public static final int logo=0x7f060043;
-        public static final int logoAcerca=0x7f060033;
-        public static final int logoActividades=0x7f060029;
-        public static final int logoContactos=0x7f060022;
-        public static final int logoEventos=0x7f060025;
-        public static final int logoReporting=0x7f06002c;
-        public static final int logoSettings=0x7f060030;
+        public static final int listResults=0x7f060011;
+        public static final int logo=0x7f060051;
+        public static final int logoAcerca=0x7f060041;
+        public static final int logoActividades=0x7f060037;
+        public static final int logoContactos=0x7f060030;
+        public static final int logoEventos=0x7f060033;
+        public static final int logoReporting=0x7f06003a;
+        public static final int logoSettings=0x7f06003e;
         public static final int margin=0x7f060002;
-        public static final int menu_search=0x7f060045;
-        public static final int menu_settings=0x7f060044;
-        public static final int mysearch=0x7f06003e;
-        public static final int next=0x7f06000e;
-        public static final int num_events_per_day=0x7f060011;
-        public static final int prefKeySite=0x7f060037;
-        public static final int prefPassword=0x7f060039;
-        public static final int prefURL=0x7f060036;
-        public static final int prefUser=0x7f060038;
-        public static final int previous=0x7f06000c;
+        public static final int menu_search=0x7f060053;
+        public static final int menu_settings=0x7f060052;
+        public static final int mysearch=0x7f06004c;
+        public static final int next=0x7f060015;
+        public static final int num_events_per_day=0x7f060019;
+        public static final int prefKeySite=0x7f060045;
+        public static final int prefPassword=0x7f060047;
+        public static final int prefURL=0x7f060044;
+        public static final int prefUser=0x7f060046;
+        public static final int previous=0x7f060013;
+        public static final int progressBar1=0x7f060010;
+        public static final int progressBarCalendar=0x7f060016;
+        public static final int progressBarDailyCalendar=0x7f060028;
         public static final int right=0x7f060001;
-        public static final int row_icon=0x7f06003c;
-        public static final int row_title=0x7f06003d;
-        public static final int saveSettings=0x7f06003a;
-        public static final int scrollView1=0x7f060035;
-        public static final int searchItem=0x7f060041;
+        public static final int row_icon=0x7f06004a;
+        public static final int row_title=0x7f06004b;
+        public static final int saveSettings=0x7f060048;
+        public static final int scrollView1=0x7f060043;
+        public static final int searchItem=0x7f06004f;
         public static final int selected_view=0x7f060004;
-        public static final int slidingmenumain=0x7f060042;
-        public static final int textActividades=0x7f06002a;
-        public static final int textContactos=0x7f060023;
-        public static final int textDialogAcerca=0x7f06001e;
-        public static final int textEventos=0x7f060026;
-        public static final int textReporting=0x7f06002d;
-        public static final int textSettings=0x7f060031;
-        public static final int textView1=0x7f06001c;
-        public static final int textView2=0x7f06001b;
-        public static final int textacercade=0x7f060034;
-        public static final int title=0x7f06000d;
-        public static final int titleDialogAcerca=0x7f06001d;
+        public static final int slidingmenumain=0x7f060050;
+        public static final int textActividades=0x7f060038;
+        public static final int textContactos=0x7f060031;
+        public static final int textDialogAcerca=0x7f060025;
+        public static final int textEventos=0x7f060034;
+        public static final int textReporting=0x7f06003b;
+        public static final int textSettings=0x7f06003f;
+        public static final int textView1=0x7f060023;
+        public static final int textView2=0x7f060022;
+        public static final int textacercade=0x7f060042;
+        public static final int title=0x7f060014;
+        public static final int titleDialogAcerca=0x7f060024;
     }
     public static final class integer {
         public static final int num_cols=0x7f090000;
     }
     public static final class layout {
-        public static final int activity_contact_details=0x7f030000;
-        public static final int activity_contact_list=0x7f030001;
-        public static final int calendar=0x7f030002;
-        public static final int calendar_item=0x7f030003;
-        public static final int contact_address_layout=0x7f030004;
-        public static final int contact_details_layout=0x7f030005;
-        public static final int contact_list_item=0x7f030006;
-        public static final int contact_tags_and_groups_layout=0x7f030007;
-        public static final int custom_dialog_acercade=0x7f030008;
-        public static final int fragmenthome=0x7f030009;
-        public static final int fragmentlogin=0x7f03000a;
-        public static final int list_menu_individual=0x7f03000b;
-        public static final int list_menu_organization=0x7f03000c;
-        public static final int pref_datos_acceso=0x7f03000d;
-        public static final int pref_datos_usuario=0x7f03000e;
-        public static final int row=0x7f03000f;
-        public static final int search_custom_menu=0x7f030010;
-        public static final int search_item_layout=0x7f030011;
-        public static final int slide_menu_individual=0x7f030012;
-        public static final int slide_menu_organization=0x7f030013;
-        public static final int slidingmenumain=0x7f030014;
-        public static final int splash=0x7f030015;
+        public static final int activity_add_contact=0x7f030000;
+        public static final int activity_contact_details=0x7f030001;
+        public static final int activity_contact_list=0x7f030002;
+        public static final int calendar=0x7f030003;
+        public static final int calendar_item=0x7f030004;
+        public static final int contact_address_layout=0x7f030005;
+        public static final int contact_details_layout=0x7f030006;
+        public static final int contact_list_item=0x7f030007;
+        public static final int contact_tags_and_groups_layout=0x7f030008;
+        public static final int custom_dialog_acercade=0x7f030009;
+        public static final int daily_calendar=0x7f03000a;
+        public static final int daily_calendar_item=0x7f03000b;
+        public static final int fragmenthome=0x7f03000c;
+        public static final int fragmentlogin=0x7f03000d;
+        public static final int list_menu_individual=0x7f03000e;
+        public static final int list_menu_organization=0x7f03000f;
+        public static final int pref_datos_acceso=0x7f030010;
+        public static final int pref_datos_usuario=0x7f030011;
+        public static final int row=0x7f030012;
+        public static final int search_custom_menu=0x7f030013;
+        public static final int search_item_layout=0x7f030014;
+        public static final int slide_menu_individual=0x7f030015;
+        public static final int slide_menu_organization=0x7f030016;
+        public static final int slidingmenumain=0x7f030017;
+        public static final int splash=0x7f030018;
     }
     public static final class menu {
-        public static final int activity_contact_details=0x7f0c0000;
-        public static final int activity_contact_list=0x7f0c0001;
-        public static final int activity_main=0x7f0c0002;
-        public static final int menu_list=0x7f0c0003;
+        public static final int activity_add_contact=0x7f0c0000;
+        public static final int activity_contact_details=0x7f0c0001;
+        public static final int activity_contact_list=0x7f0c0002;
+        public static final int activity_main=0x7f0c0003;
+        public static final int menu_list=0x7f0c0004;
     }
     public static final class string {
         public static final int acerca_de_boton=0x7f0a0026;
@@ -282,6 +303,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int acerca_de_label=0x7f0a0024;
         public static final int acerca_de_texto=0x7f0a0025;
         public static final int action_settings=0x7f0a0001;
+        public static final int add_contact=0x7f0a004a;
+        public static final int add_contact_create_btn=0x7f0a004e;
+        public static final int add_contact_email_hint=0x7f0a004c;
+        public static final int add_contact_name_hint=0x7f0a004b;
+        public static final int add_contact_phone_hint=0x7f0a004d;
         /**  menus izquierdo indice 
          */
         public static final int address=0x7f0a003b;
@@ -292,19 +318,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
          */
         public static final int app_name=0x7f0a0000;
-        public static final int birthdate_detail=0x7f0a0043;
-        public static final int by_detail=0x7f0a0047;
+        public static final int birthdate_detail=0x7f0a0044;
+        public static final int by_detail=0x7f0a0048;
         public static final int communication_preferences=0x7f0a003c;
         public static final int constituent_information=0x7f0a003e;
+        public static final int contact_activities=0x7f0a0040;
         /**   
          */
         public static final int contact_image=0x7f0a0039;
-        public static final int deceased_detail=0x7f0a0044;
+        public static final int deceased_detail=0x7f0a0045;
         public static final int demographics=0x7f0a003d;
         /**  detalle del contacto 
          */
-        public static final int email_detail=0x7f0a0040;
-        public static final int gender_detail=0x7f0a0042;
+        public static final int email_detail=0x7f0a0041;
+        public static final int gender_detail=0x7f0a0043;
         public static final int hello_world=0x7f0a0002;
         public static final int home_acercade=0x7f0a0023;
         public static final int home_actividades=0x7f0a001f;
@@ -318,7 +345,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int home_eventos=0x7f0a0020;
         public static final int home_informes=0x7f0a0021;
         public static final int home_settings=0x7f0a0022;
-        public static final int language_detail=0x7f0a0045;
+        public static final int language_detail=0x7f0a0046;
         public static final int login_button_login=0x7f0a000d;
         public static final int login_error_password_obligatoria=0x7f0a0012;
         public static final int login_error_sitekey_obligatoria=0x7f0a0010;
@@ -380,7 +407,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int progress_bar_msg_generico=0x7f0a0036;
         public static final int search=0x7f0a003a;
-        public static final int since_detail=0x7f0a0046;
+        public static final int since_detail=0x7f0a0047;
         /** 
     ===============================================================
      SPLAH
@@ -389,14 +416,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int splash_description=0x7f0a0004;
         public static final int tags_and_groups=0x7f0a003f;
-        public static final int telephone_detail=0x7f0a0041;
+        public static final int telephone_detail=0x7f0a0042;
+        /**  Añadir contacto 
+         */
+        public static final int title_activity_add_contact=0x7f0a0049;
         /** 
     ===============================================================
      CALENDARIO
     ===============================================================                        
     
          */
-        public static final int title_activity_calendario=0x7f0a0048;
+        public static final int title_activity_calendario=0x7f0a0050;
         public static final int title_activity_contact_details=0x7f0a0038;
         /** 
     ===============================================================
@@ -406,6 +436,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
  titulos actividades 
          */
         public static final int title_activity_contact_list=0x7f0a0037;
+        public static final int title_activity_list_contacts_activities=0x7f0a004f;
     }
     public static final class style {
         /** 

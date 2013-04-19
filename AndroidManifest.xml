@@ -67,19 +67,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
         </activity>
-		
-        <activity
-            android:name="org.upsam.civicrm.calendar.CalendarTabs"
-            android:label="@string/title_activity_calendario"
-            android:parentActivityName="org.upsam.civicrm.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.upsam.civicrm.MainActivity" />
-        </activity>
-        
+
         <!-- ROBOSPICE - SERVICIOS REST -->
         <service
             android:name="org.upsam.civicrm.rest.CiviCRMAndroidSpiceService"
+            android:exported="false" />
+        <service
+            android:name="org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService"
             android:exported="false" />
 
         <activity
@@ -100,7 +94,15 @@
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
-
-    </application>
+	    
+	    <activity
+            android:name="org.upsam.civicrm.charts.ActivityResolutionColumnChart"
+            android:label="@string/title_activity_activity_resolution_column_chart"
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
+	</application>
 
 </manifest>

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class ActivitySummary {
+public class ActivitySummary implements Comparable<ActivitySummary>{
 	/**
 	 * Nombre de la actividad
 	 */
@@ -72,6 +72,23 @@ public class ActivitySummary {
 	 */
 	public Map<String, String> getAsignees() {
 		return asignees;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	@Override
+	public int compareTo(ActivitySummary another) {
+		return this.dateTime.compareTo(another.getDateTime());
 	}
 
 }

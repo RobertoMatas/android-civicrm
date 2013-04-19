@@ -1,7 +1,5 @@
 package org.upsam.civicrm.calendar;
 
-import org.upsam.civicrm.CiviCRMAsyncRequest;
-import org.upsam.civicrm.activity.model.ListActivities;
 
 
 public class WeeklyCalendarFragment extends CalendarFragment {
@@ -13,9 +11,10 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 	}
 
 	@Override
-	protected CiviCRMAsyncRequest<ListActivities> buildReq(String type, int page) {
+	protected void performRequest() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
+
 
 }

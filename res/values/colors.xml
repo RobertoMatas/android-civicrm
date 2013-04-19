@@ -3,5 +3,6 @@
 
     <color name="text_color">#31D1F1</color>
     <color name="white">#ffffff</color>
+    <color name="background">#0B3861</color>
 
 </resources>
