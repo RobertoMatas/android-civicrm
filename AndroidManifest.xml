@@ -84,7 +84,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.contact.list.ContactListTabs" />
         </activity>
-
+		
+        <activity
+            android:name="org.upsam.civicrm.calendar.CalendarTabs"
+            android:label="@string/title_activity_calendario"
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
+        
         <service
             android:name="org.upsam.civicrm.activity.services.AddActivityService"
             android:exported="false" />
