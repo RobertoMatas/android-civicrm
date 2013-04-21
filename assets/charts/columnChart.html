@@ -27,7 +27,7 @@
 		}
 		
 		function drawChart(data) {
-			var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 			gdata = google.visualization.arrayToDataTable(data);
 			// Create and draw the visualization.
 			chart.draw(gdata, options);
