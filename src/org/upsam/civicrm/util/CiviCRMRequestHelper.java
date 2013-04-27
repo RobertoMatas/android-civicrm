@@ -8,6 +8,7 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.activity.model.ActivityCounter;
 import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
+import org.upsam.civicrm.charts.model.ListOfContribution;
 
 import android.content.Context;
 
@@ -40,5 +41,19 @@ public class CiviCRMRequestHelper {
 		params.add("rowCount", "10000000");
 		return new CiviCRMAsyncRequest<ActivityCounter>(ctx,
 				ActivityCounter.class, ACTION.getcount, ENTITY.Activity, params);
+	}
+
+	public static CiviCRMAsyncRequest<ListOfContribution> requestContributions(
+			Context ctx) {
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				5);
+		params.add("rowCount", "500");
+		params.add("return[total_amount]", "1");
+		params.add("return[receive_date]", "1");
+		params.add("return[currency]", "1");
+		params.add("sort", "receive_date");
+		return new CiviCRMAsyncRequest<ListOfContribution>(ctx,
+				ListOfContribution.class, ACTION.get, ENTITY.Contribution,
+				params);
 	}
 }

@@ -23,7 +23,7 @@ import org.json.JSONTokener;
 import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.beans.DataCivi;
 import org.upsam.civicrm.calendar.CalendarTabs;
-import org.upsam.civicrm.charts.ActivityResolutionColumnChart;
+import org.upsam.civicrm.charts.ReportSelectorActivity;
 import org.upsam.civicrm.contact.list.ContactListTabs;
 import org.upsam.civicrm.login.FragmentHome;
 import org.upsam.civicrm.login.FragmentLogin;
@@ -236,7 +236,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void showInformes(View view) {
-		Intent intent = new Intent(this, ActivityResolutionColumnChart.class);
+		Intent intent = new Intent(this, ReportSelectorActivity.class);
 		startActivity(intent);
 	}	
 

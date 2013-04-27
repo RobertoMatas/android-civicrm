@@ -17,18 +17,18 @@ import org.upsam.civicrm.util.Utilities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class ActivityResolutionColumnChart extends SpiceAwareActivity {
+public class ActivityResolutionReportActivity extends SpiceAwareActivity {
 
 	public class ActivityCounterListener implements
 			RequestListener<ActivityCounter> {
@@ -41,8 +41,7 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
-
+			notifyError();
 		}
 
 		@Override
@@ -60,7 +59,7 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
+			notifyError();
 
 		}
 
@@ -69,7 +68,7 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 			if (result == null)
 				return;
 			numReqToExecute = result.getCount();
-			Map<String, Integer> map = new HashMap<String, Integer>(
+			Map<String, Number> map = new HashMap<String, Number>(
 					numReqToExecute);
 			List<ActivityStatus> values = result.getValues();
 			for (ActivityStatus activityStatus : values) {
@@ -92,7 +91,7 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_activity_resolution_column_chart);
+		setContentView(R.layout.activity_activity_resolution_report);
 		webView = (WebView) findViewById(R.id.chartWebView);
 		webView.getSettings().setJavaScriptEnabled(true);
 		// Show the Up button in the action bar.
@@ -102,14 +101,20 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 	private void checkForCompletation() {
 		if (numReqCompleted == numReqToExecute) {
-			Log.d("ActivityResolutionColumnChart",
-					this.chartData.getDataTable());
 			webView.addJavascriptInterface(this.chartData, "chartHandler");
-			webView.loadUrl("file:///android_asset/charts/columnChart.html");
+			webView.loadUrl("file:///android_asset/charts/activity_resolution_report.html");
 			Utilities.dismissProgressDialog(progressDialog);
 			webView.setVisibility(View.VISIBLE);
 		}
 
+	}
+
+	private void notifyError() {
+		Utilities.dismissProgressDialog(progressDialog);
+		Toast.makeText(
+				getApplicationContext(),
+				"Hubo un error al cargar el informe. Inténtelo de nuevo más tarde",
+				Toast.LENGTH_LONG).show();
 	}
 
 	private void executeNumActivitiesRequests(List<ActivityStatus> values) {
@@ -126,7 +131,8 @@ public class ActivityResolutionColumnChart extends SpiceAwareActivity {
 
 	private void executeRequests() {
 		webView.setVisibility(View.GONE);
-		this.progressDialog = Utilities.showLoadingProgressDialog(progressDialog, this, "Calculando...");
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				progressDialog, this, "Calculando...");
 		CiviCRMAsyncRequest<ListActivityStatus> req = CiviCRMRequestHelper
 				.requestActivitiesStatus(this);
 		contentManager.execute(req, req.createCacheKey(),

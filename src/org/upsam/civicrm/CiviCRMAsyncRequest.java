@@ -44,7 +44,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * 
 	 */
 	public static enum ENTITY {
-		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity
+		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity, Contribution
 	};
 
 	/**
@@ -106,8 +106,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	public CiviCRMAsyncRequest(Class<RESULT> clazz, DataCivi datacivi,
 			METHOD method) {
 		super(clazz);
-		
-		
+
 		switch (method) {
 		case post: {
 			MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
@@ -238,9 +237,9 @@ public class CiviCRMAsyncRequest<RESULT> extends
 		uriBuilder.appendQueryParameter("api_key", datacivi.getApi_key());
 		uriBuilder.appendQueryParameter("entity", "UFMatch");
 		uriBuilder.appendQueryParameter("action", "getsingle");
-		//uriBuilder.appendQueryParameter("uf_name", datacivi.getMail());
+		// uriBuilder.appendQueryParameter("uf_name", datacivi.getMail());
 		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
-		return uri.toString()+"&uf_name="+datacivi.getMail();
+		return uri.toString() + "&uf_name=" + datacivi.getMail();
 	}
 
 	public String createCacheKey() {

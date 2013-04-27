@@ -4,7 +4,7 @@
     <!--
     ===============================================================
      NOMBRE APLICACION
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="app_name">Open Mobile CRM</string>
     <string name="action_settings">Settings</string>
@@ -14,13 +14,13 @@
     <!--
     ===============================================================
      SPLAH
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="splash_description">Open Mobile CRM</string>
     <!--
     ===============================================================
      LOGIN
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="login_head_superior">Open Mobile</string>
     <string name="login_head_inferior">CRM</string>
@@ -54,7 +54,7 @@
     <!--
     ===============================================================
      HOME
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="home_contactos">Contactos</string>
     <string name="home_actividades">Actividades</string>
@@ -65,7 +65,7 @@
     <!--
     ===============================================================
      ACERCA DE
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="acerca_de_label">Acerca De</string>
     <string name="acerca_de_texto">Aplicación creada por Roberto, Jorge, Gonzalo y Fernando como proyecto final</string>
@@ -74,7 +74,7 @@
     <!--
     ===============================================================
      PREFERENCIAS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="preferencias_label">Configuracion</string>
     <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
@@ -100,13 +100,13 @@
     <!--
     ===============================================================
      MENSAJES PROGRESS BAR DE CARGA GENERICOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="progress_bar_msg_generico">Cargando&#8230;</string>
     <!--
     ===============================================================
      CONTACTOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
@@ -133,7 +133,7 @@
     <string name="language_detail">Lenguaje preferente</string>
     <string name="since_detail">Desde</string>
     <string name="by_detail">por</string>
-        <!-- Añadir contacto -->
+    <!-- Añadir contacto -->
     <string name="title_activity_add_contact">AddContactActivity</string>
     <string name="add_contact">Nuevo contacto</string>
     <string name="add_contact_name_hint">Nombre del contacto</string>
@@ -142,13 +142,24 @@
     <string name="add_contact_create_btn">Crear</string>
     <string name="title_activity_list_contacts_activities">ListContactsActivities</string>
     <string name="title_activity_activity_resolution_column_chart">ActivityResolutionColumnChart</string>
-	
+
+    <!--
+    ===============================================================
+     CALENDARIO
+    ===============================================================                        
+    -->
+    <string name="title_activity_calendario">Calendario</string>
     
     <!--
     ===============================================================
      CALENDARIO
     ===============================================================                        
+
+
     -->
-    <string name="title_activity_calendario">Calendario</string>
+    <string name="menu_sybunt_report">SYBUNT</string>
+    <string name="menu_activity_resolution_report">Resolución de actividades</string>
+    <string name="title_activity_sybunt_report">SYBUNT Report</string>
+    <string name="title_activity_report_selector">Informes</string>
 
 </resources>
