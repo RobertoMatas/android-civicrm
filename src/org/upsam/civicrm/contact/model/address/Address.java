@@ -34,6 +34,11 @@ public class Address implements Comparable<Address> {
 	@JsonProperty("country_id")
 	private String countryId;
 	/**
+	 * ID del tipo de dirección
+	 */
+	@JsonProperty("location_type_id")
+	private String locationTypeId;
+	/**
 	 * Indica si es el principal
 	 */
 	@JsonIgnore
@@ -153,6 +158,20 @@ public class Address implements Comparable<Address> {
 	 */
 	public void setCountryId(String countryId) {
 		this.countryId = countryId;
+	}
+
+	/**
+	 * @return the locationTypeId
+	 */
+	public String getLocationTypeId() {
+		return locationTypeId;
+	}
+
+	/**
+	 * @param locationTypeId the locationTypeId to set
+	 */
+	public void setLocationTypeId(String locationTypeId) {
+		this.locationTypeId = locationTypeId;
 	}
 
 }

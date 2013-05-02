@@ -49,6 +49,11 @@
     <style name="textoWhite" parent="CiviTheme">
         <item name="android:textColor">@android:color/white</item>
     </style>
+    
+    <style name="textoGreen" parent="CiviTheme">
+        <item name="android:textColor">#D8FF3D</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="textoWhite.bold">
         <item name="android:textStyle">bold</item>

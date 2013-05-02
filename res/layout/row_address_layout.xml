@@ -15,20 +15,22 @@
         android:src="@android:drawable/ic_menu_directions" />
 
     <TextView
-        android:id="@+id/display_country"
+        android:id="@+id/addressType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/display_address"
-        android:layout_below="@+id/display_city"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignParentTop="true"
+        android:text="TextView"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/display_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/addressType"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/imageView1"
+        android:text="azaaaaaaaaaa"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -36,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/display_address"
-        android:layout_alignTop="@+id/imageView1"
+        android:layout_below="@+id/display_address"
+        android:text="aaadddddd"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -45,6 +48,16 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/display_supp_address"
         android:layout_below="@+id/display_supp_address"
+        android:text="cdsfsdfsdfsd"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/display_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/display_city"
+        android:layout_below="@+id/display_city"
+        android:text="asdasdasdasda"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
