@@ -1,15 +1,16 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCommunicationPreferencesByContactId;
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestContactById;
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestEmailsByContactId;
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestPhonesByContactId;
+
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.upsam.civicrm.AbstractAsyncFragment;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.detail.req.ContactImageRequest;
 import org.upsam.civicrm.contact.model.contact.Contact;
@@ -116,21 +117,16 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 				this.progressDialog, activityContext,
 				getString(R.string.progress_bar_msg_generico));
 		this.contactSummary = getArguments().getParcelable("contact");
-		final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
-				1);
-		params.add("contact_id", Integer.toString(this.contactSummary.getId()));
-		CiviCRMAsyncRequest<Contact> request = new CiviCRMAsyncRequest<Contact>(
-				activityContext, Contact.class, ACTION.getsingle,
-				ENTITY.Contact, params);
+		int contactId = this.contactSummary.getId();
+		CiviCRMAsyncRequest<Contact> request = requestContactById(
+				activityContext, contactId);
 		contentManager.execute(request, request.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactDetailListener());
 		// peticionar emails y phones
-		CiviCRMAsyncRequest<ListEmails> emailsReq = new CiviCRMAsyncRequest<ListEmails>(
-				activityContext, ListEmails.class, ACTION.get, ENTITY.Email,
-				params);
-		CiviCRMAsyncRequest<ListPhones> phonesReq = new CiviCRMAsyncRequest<ListPhones>(
-				activityContext, ListPhones.class, ACTION.get, ENTITY.Phone,
-				params);
+		CiviCRMAsyncRequest<ListEmails> emailsReq = requestEmailsByContactId(
+				activityContext, contactId);
+		CiviCRMAsyncRequest<ListPhones> phonesReq = requestPhonesByContactId(
+				activityContext, contactId);
 		contentManager.execute(emailsReq, emailsReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactEmailListener());
 		contentManager.execute(phonesReq, phonesReq.createCacheKey(),
@@ -162,13 +158,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		this.progressDialog = Utilities.showLoadingProgressDialog(
 				this.progressDialog, activityContext,
 				getString(R.string.progress_bar_msg_generico));
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
-				2);
-		params.add("contact_id", Integer.toString(this.contactSummary.getId()));
-		params.add("return[preferred_language]", "1");
-		CiviCRMAsyncRequest<PreferredLanguage> langReq = new CiviCRMAsyncRequest<PreferredLanguage>(
-				activityContext, PreferredLanguage.class, ACTION.getsingle,
-				ENTITY.Contact, params);
+		CiviCRMAsyncRequest<PreferredLanguage> langReq = requestCommunicationPreferencesByContactId(
+				activityContext, this.contactSummary.getId());
 		contentManager.execute(langReq, langReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactLangListener());
 	}

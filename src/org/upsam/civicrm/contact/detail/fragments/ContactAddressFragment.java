@@ -142,7 +142,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 		displayAddressType.setText(locationTypes.getValues().get(
 				address.getLocationTypeId())
-				+ ", " + "Address");
+				+ " " + getString(R.string.address_literal));
 		displayAddress.setText(address.getAddress());
 		displaySuppAddress.setText(address.getSupplementalAddress());
 		String city = StringUtils.hasText(address.getZipCode()) ? address

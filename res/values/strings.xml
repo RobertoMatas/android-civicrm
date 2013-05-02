@@ -128,6 +128,7 @@
     <string name="email_detail">Correo electrónico</string>
     <string name="email_detail_ppal">Correo electrónico principal</string>
     <string name="telephone_detail">Teléfono</string>
+    <string name="address_literal">Address</string>
     <string name="telephone_detail_ppal">Teléfono principal</string>
     <string name="do_not_phone">No llamar</string>
     <string name="do_not_trade">No ventas</string>
