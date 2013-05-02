@@ -1,10 +1,8 @@
 package org.upsam.civicrm.contact.model.address;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Address implements Comparable<Address> {
 	/**
 	 * Dirección completa
@@ -26,11 +24,21 @@ public class Address implements Comparable<Address> {
 	@JsonProperty("is_primary")
 	private String primaryStr;
 	/**
+	 * Código postal
+	 */
+	@JsonProperty("postal_code")
+	private String zipCode;
+	/**
+	 * ID del país
+	 */
+	@JsonProperty("country_id")
+	private String countryId;
+	/**
 	 * Indica si es el principal
 	 */
 	@JsonIgnore
 	private boolean isPrimary;
-	
+
 	/**
 	 * @return the address
 	 */
@@ -39,7 +47,8 @@ public class Address implements Comparable<Address> {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address
+	 *            the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -53,7 +62,8 @@ public class Address implements Comparable<Address> {
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -67,7 +77,8 @@ public class Address implements Comparable<Address> {
 	}
 
 	/**
-	 * @param supplementalAddress the supplementalAddress to set
+	 * @param supplementalAddress
+	 *            the supplementalAddress to set
 	 */
 	public void setSupplementalAddress(String supplementalAddress) {
 		this.supplementalAddress = supplementalAddress;
@@ -81,11 +92,13 @@ public class Address implements Comparable<Address> {
 	}
 
 	/**
-	 * @param primaryStr the primaryStr to set
+	 * @param primaryStr
+	 *            the primaryStr to set
 	 */
 	public void setPrimaryStr(String primaryStr) {
 		this.primaryStr = primaryStr;
-		this.isPrimary = primaryStr != null && primaryStr.equals("1") ? true : false;
+		this.isPrimary = primaryStr != null && primaryStr.equals("1") ? true
+				: false;
 	}
 
 	/**
@@ -96,7 +109,8 @@ public class Address implements Comparable<Address> {
 	}
 
 	/**
-	 * @param isPrimary the isPrimary to set
+	 * @param isPrimary
+	 *            the isPrimary to set
 	 */
 	public void setPrimary(boolean isPrimary) {
 		this.isPrimary = isPrimary;
@@ -109,6 +123,36 @@ public class Address implements Comparable<Address> {
 		if (another.isPrimary)
 			return 1;
 		return this.address.compareTo(another.getAddress());
+	}
+
+	/**
+	 * @return the zipCode
+	 */
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	/**
+	 * @param zipCode
+	 *            the zipCode to set
+	 */
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	/**
+	 * @return the countryId
+	 */
+	public String getCountryId() {
+		return countryId;
+	}
+
+	/**
+	 * @param countryId
+	 *            the countryId to set
+	 */
+	public void setCountryId(String countryId) {
+		this.countryId = countryId;
 	}
 
 }

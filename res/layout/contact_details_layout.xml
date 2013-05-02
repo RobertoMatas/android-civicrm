@@ -39,13 +39,16 @@
 
     <LinearLayout
         android:id="@+id/contact_data"
+        style="@style/fondoBordeClaro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/contac_img"
         android:layout_alignRight="@+id/contact_type"
         android:layout_below="@+id/contac_img"
         android:layout_marginTop="10dp"
+        android:animateLayoutChanges="true"
         android:orientation="vertical" >
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -23,6 +23,7 @@ import android.widget.TextView;
  */
 public class Utilities {
 
+	private static final String BASE_URI_TEMPLATE = "/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=%s";
 	public static String APY_KEY = "api_key";
 	public static String KEY = "key";
 	public static String BASE_URI = "base_uri";
@@ -86,12 +87,12 @@ public class Utilities {
 	 * @param applicationContext
 	 * @return
 	 */
-	public static DataCivi getDataCivi(Context applicationContext) {
+	public static DataCivi getDataCivi(Context applicationContext, boolean sequential) {
 		DataCivi data = new DataCivi();
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(applicationContext);
 		data.setBase_url(cleanUrl(prefs.getString("PREF_URL", null))
-				+ "/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=1");
+				+ String.format(BASE_URI_TEMPLATE, sequential ? "1" : "0"));
 		data.setSite_key(prefs.getString("PREF_SITE_KEY", null));
 		data.setUser_name(prefs.getString("PREF_USER", null));
 		data.setPassword(prefs.getString("PREF_PASSWORD", null));
@@ -101,7 +102,7 @@ public class Utilities {
 		data.setContactid(prefs.getString("PREF_CONTACTID", null));
 		return data;
 	}
-
+	
 	/**
 	 * devolver el contactid del usuario
 	 * 

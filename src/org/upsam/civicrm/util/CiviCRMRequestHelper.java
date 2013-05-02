@@ -10,9 +10,20 @@ import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.charts.model.ListOfContribution;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 public class CiviCRMRequestHelper {
+
+	public static void notifyRequestError(Context ctx,
+			ProgressDialog progressDialog) {
+		Utilities.dismissProgressDialog(progressDialog);
+		Toast.makeText(
+				ctx,
+				"Hubo un error al contactar con el servidor. Inténtelo de nuevo más tarde",
+				Toast.LENGTH_LONG).show();
+	}
 
 	public static CiviCRMAsyncRequest<ListActivtiesSummary> requestActivitiesForContact(
 			int contactId, Context ctx) {
@@ -56,4 +67,5 @@ public class CiviCRMRequestHelper {
 				ListOfContribution.class, ACTION.get, ENTITY.Contribution,
 				params);
 	}
+
 }

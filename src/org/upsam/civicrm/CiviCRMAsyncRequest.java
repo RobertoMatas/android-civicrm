@@ -44,7 +44,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * 
 	 */
 	public static enum ENTITY {
-		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity, Contribution
+		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity, Contribution, Constant
 	};
 
 	/**
@@ -75,7 +75,25 @@ public class CiviCRMAsyncRequest<RESULT> extends
 			ACTION action, ENTITY entity, MultiValueMap<String, String> params) {
 		super(clazz);
 		this.params = params;
-		this.uriReq = buildRequest(applicationContext, action, entity);
+		this.uriReq = buildRequest(applicationContext, action, entity, true);
+	}
+
+	/**
+	 * 
+	 * @param applicationContext
+	 * @param clazz
+	 * @param action
+	 * @param entity
+	 * @param params
+	 * @param sequential
+	 */
+	public CiviCRMAsyncRequest(Context applicationContext, Class<RESULT> clazz,
+			ACTION action, ENTITY entity, MultiValueMap<String, String> params,
+			boolean sequential) {
+		super(clazz);
+		this.params = params;
+		this.uriReq = buildRequest(applicationContext, action, entity,
+				sequential);
 	}
 
 	/**
@@ -93,7 +111,7 @@ public class CiviCRMAsyncRequest<RESULT> extends
 		super(clazz);
 		this.params = params;
 		this.method = method;
-		this.uriReq = buildRequest(applicationContext, action, entity);
+		this.uriReq = buildRequest(applicationContext, action, entity, true);
 	}
 
 	/**
@@ -161,17 +179,19 @@ public class CiviCRMAsyncRequest<RESULT> extends
 	 * @return
 	 */
 	private String buildRequest(Context applicationContext, ACTION action,
-			ENTITY entity) {
+			ENTITY entity, boolean sequential) {
 		Uri.Builder uriBuilder = Uri.parse(
-				Utilities.getDataCivi(applicationContext).getBase_url())
-				.buildUpon();
+				Utilities.getDataCivi(applicationContext, sequential)
+						.getBase_url()).buildUpon();
 		uriBuilder.appendQueryParameter("json", "1");
 		uriBuilder.appendQueryParameter("entity", entity.name());
 		uriBuilder.appendQueryParameter("action", action.name());
 		uriBuilder.appendQueryParameter("key",
-				Utilities.getDataCivi(applicationContext).getSite_key());
+				Utilities.getDataCivi(applicationContext, sequential)
+						.getSite_key());
 		uriBuilder.appendQueryParameter("api_key",
-				Utilities.getDataCivi(applicationContext).getApi_key());
+				Utilities.getDataCivi(applicationContext, sequential)
+						.getApi_key());
 		StringBuilder uri = new StringBuilder(uriBuilder.build().toString());
 		if (params != null && !params.isEmpty()
 				&& METHOD.get.ordinal() == method.ordinal()) {

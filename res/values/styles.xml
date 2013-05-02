@@ -91,6 +91,7 @@
     <style name="fondoBordeActividad" parent="CiviTheme">
         <item name="android:background">@drawable/borde_oscuro</item>
     </style>
+
     <!--
     ===============================================================
      Color fondo sliding menu
