@@ -45,5 +45,23 @@
             android:summary="@string/pref_idcontact_summary"
             android:title="@string/pref_idcontact_title" />
     </PreferenceCategory>
+    <PreferenceCategory
+        android:layout="@layout/pref_datos_sync"
+        android:title="@string/pref_title_sync" >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/horasExecution"
+            android:entryValues="@array/horasExecutionValues"
+            android:key="PREF_HOURS_SYNC"
+            android:summary="@string/sync_preferencias_horas_summary"
+            android:title="@string/sync_preferencias_horas_title" />
+        <ListPreference
+            android:defaultValue="ALL"
+            android:entries="@array/usersExporting"
+            android:entryValues="@array/usersExportingValues"
+            android:key="PREF_USERS_SYNC"
+            android:summary="@string/sync_preferencias_users_summary"
+            android:title="@string/sync_preferencias_users_title" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

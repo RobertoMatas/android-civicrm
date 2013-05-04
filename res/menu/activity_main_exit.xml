@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    
+    <item android:id="@+id/exitOut" 
+          android:title="@string/button_exit"
+          android:showAsAction="always|collapseActionView" 
+          android:icon="@drawable/ic_exit" />
+</menu>
