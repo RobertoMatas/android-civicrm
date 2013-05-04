@@ -12,13 +12,19 @@
 		google.setOnLoadCallback(notifyAPILoad);
 
 		// options 
+		// options 
 		var options = {
+			backgroundColor: '#0B3861',
 			legend: {position: 'none'},
 			width: '100%', height: '100%',
 			hAxis: {title: 'Year'}, 
 			vAxis: {title: 'Amount (USD)'},
 			theme: 'maximized',
-			colors:['#33CC99']
+			colors:['#33CC99'],
+			hAxis: {textStyle: {color: 'white'}},
+			vAxis: {textStyle: {color: 'white'}},
+			legend: {textStyle: {color: 'white'}},
+			titleTextStyle: {color: 'white'}
 		};
 
 		var gdata;
@@ -36,7 +42,7 @@
 		</script>
 	</head>
 
-	<body>
+	<body style="background-color: #0B3861;">
 		<!--Div that will hold the pie chart-->
 		<div style="width:'100%'; height:'100%'" id="chart_div"></div>
 	</body>
