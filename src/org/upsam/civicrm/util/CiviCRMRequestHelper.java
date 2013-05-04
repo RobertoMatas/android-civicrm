@@ -5,6 +5,7 @@ import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
+import org.upsam.civicrm.R;
 import org.upsam.civicrm.activity.model.ActivityCounter;
 import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
@@ -19,9 +20,7 @@ public class CiviCRMRequestHelper {
 	public static void notifyRequestError(Context ctx,
 			ProgressDialog progressDialog) {
 		Utilities.dismissProgressDialog(progressDialog);
-		Toast.makeText(
-				ctx,
-				"Hubo un error al contactar con el servidor. Inténtelo de nuevo más tarde",
+		Toast.makeText(ctx, ctx.getString(R.string.general_http_error),
 				Toast.LENGTH_LONG).show();
 	}
 

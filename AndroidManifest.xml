@@ -62,7 +62,8 @@
         <activity
             android:name="org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity"
             android:label="@string/title_activity_contact_details"
-            android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs" >
+            android:parentActivityName="org.upsam.civicrm.contact.list.ContactListTabs"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.contact.list.ContactListTabs" />

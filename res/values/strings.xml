@@ -129,6 +129,11 @@
     <string name="email_detail_ppal">Correo electrónico principal</string>
     <string name="telephone_detail">Teléfono</string>
     <string name="address_literal">Address</string>
+    <string name="groups_literal">Grupos</string>
+    <string name="tags_literal">Etiquetas</string>
+    <string name="activity_assigned_literal">Asignada a mi</string>
+    <string name="activity_target_literal">Objetivo</string>
+    <string name="activity_created_literal">Creada por mi</string>
     <string name="telephone_detail_ppal">Teléfono principal</string>
     <string name="do_not_phone">No llamar</string>
     <string name="do_not_trade">No ventas</string>
@@ -168,5 +173,6 @@
     <string name="menu_activity_resolution_report">Resolución de actividades</string>
     <string name="title_activity_sybunt_report">SYBUNT Report</string>
     <string name="title_activity_report_selector">Informes</string>
+    <string name="general_http_error">Hubo un error al contactar con el servidor. Inténtelo de nuevo más tarde</string>
 
 </resources>

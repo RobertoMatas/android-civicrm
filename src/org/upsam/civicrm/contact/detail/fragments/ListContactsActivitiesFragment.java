@@ -1,5 +1,7 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
+import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,9 +19,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -38,10 +40,7 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			Utilities.dismissProgressDialog(progressDialog);
-			Toast.makeText(getActivity(),
-					"Error al recuperar la lista de actividades",
-					Toast.LENGTH_LONG).show();
+			notifyRequestError(activityContext, progressDialog);
 
 		}
 
@@ -65,8 +64,8 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(
-				org.upsam.civicrm.R.layout.contact_tags_and_groups_layout,
-				container, false);
+				org.upsam.civicrm.R.layout.contact_address_layout, container,
+				false);
 		return view;
 	}
 
@@ -78,7 +77,8 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 
 	private void executeRequest() {
 		progressDialog = Utilities.showLoadingProgressDialog(progressDialog,
-				this.getActivity(), "Cargando...");
+				this.getActivity(),
+				getString(R.string.progress_bar_msg_generico));
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
 		if (contactSummary != null) {
 			CiviCRMAsyncRequest<ListActivtiesSummary> req = CiviCRMRequestHelper
@@ -93,37 +93,51 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 
 	private void refreshView(ListActivtiesSummary result) {
 		List<ActivitySummary> values = result.getValues();
-		ViewGroup viewGroup = (ViewGroup) getView();
-		LinearLayout layout = (LinearLayout) viewGroup.getChildAt(0);
-		View view = null;
 		for (ActivitySummary activitySummary : values) {
-			view = getLayoutInflater(null).inflate(
-					android.R.layout.simple_list_item_2, layout, false);
-			TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-			TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-			text1.setTextAppearance(activityContext, R.style.textoDefault);
-			text2.setTextAppearance(activityContext, R.style.textoWhite);
-			text1.setText(activitySummary.getName());
-			text2.setText(activityInfo(activitySummary));
-			layout.addView(view);
+			paintActivityRow(activitySummary);
 		}
 		Utilities.dismissProgressDialog(progressDialog);
 	}
 
-	private String activityInfo(ActivitySummary activitySummary) {
-		StringBuilder sb = new StringBuilder();
+	private void paintActivityRow(ActivitySummary activitySummary) {
+		LinearLayout listLayout = (LinearLayout) getView().findViewById(
+				R.id.addressList);
+		View row = getLayoutInflater(null).inflate(R.layout.row_address_layout,
+				listLayout, false);
+		ImageView imag = (ImageView) row.findViewById(R.id.imageView1);
+		TextView title = (TextView) row.findViewById(R.id.addressType);
+		TextView text1 = (TextView) row.findViewById(R.id.display_address);
+		TextView text2 = (TextView) row.findViewById(R.id.display_supp_address);
+		TextView text3 = (TextView) row.findViewById(R.id.display_city);
+		TextView text4 = (TextView) row.findViewById(R.id.display_country);
+		imag.setImageResource(android.R.drawable.ic_menu_agenda);
+		title.setTextAppearance(activityContext, R.style.textoGreen);
+		text1.setTextAppearance(activityContext, R.style.textoDefault);
+		text2.setTextAppearance(activityContext, R.style.textoWhite);
+		text3.setTextAppearance(activityContext, R.style.textoWhite);
+		text4.setTextAppearance(activityContext, R.style.textoWhite);
+
+		title.setText(activitySummary.getName());
+		text1.setText(activitySummary.getSubject());
+		text2.setText(activityAssignatedInfo(activitySummary));
+		text3.setText(activitySummary.getDateTime());
+		text4.setText(activitySummary.getStatus());
+
+		listLayout.addView(row);
+
+	}
+
+	private String activityAssignatedInfo(ActivitySummary activitySummary) {
+		String assInfo = null;
 		Map<String, String> asignees = activitySummary.getAsignees();
 		Map<String, String> targets = activitySummary.getTargets();
 		if (asignees != null && !asignees.isEmpty()) {
-			sb.append("Asigned to me\n");
+			assInfo = getString(R.string.activity_assigned_literal);
 		} else if (targets != null && !targets.isEmpty()) {
-			sb.append("Target to me\n");
+			assInfo = getString(R.string.activity_target_literal);
 		} else {
-			sb.append("Created by me\n");
+			assInfo = getString(R.string.activity_created_literal);
 		}
-		sb.append(activitySummary.getSubject() + "\n");
-		sb.append(activitySummary.getDateTime() + "\n");
-		sb.append(activitySummary.getStatus());
-		return sb.toString();
+		return assInfo;
 	}
 }

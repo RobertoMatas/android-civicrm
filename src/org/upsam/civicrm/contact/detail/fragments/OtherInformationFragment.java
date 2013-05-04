@@ -1,13 +1,14 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCustomFields;
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCustomValuesByContactId;
+import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestHumanReadableValue;
+import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
+
 import java.util.List;
 
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.AbstractAsyncFragment;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.custom.CustomField;
@@ -17,10 +18,8 @@ import org.upsam.civicrm.contact.model.custom.ListCustomFields;
 import org.upsam.civicrm.contact.model.custom.ListCustomValues;
 import org.upsam.civicrm.util.Utilities;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-@SuppressLint("ValidFragment")
 public class OtherInformationFragment extends AbstractAsyncFragment {
 
 	public class CustomHumanReadableValueListener implements
@@ -46,7 +44,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
+			notifyRequestError(activityContext, progressDialog);
 
 		}
 
@@ -64,7 +62,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
+			notifyRequestError(activityContext, progressDialog);
 
 		}
 
@@ -83,7 +81,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
+			notifyRequestError(activityContext, progressDialog);
 
 		}
 
@@ -122,7 +120,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.contact_tags_and_groups_layout,
+		View view = inflater.inflate(R.layout.contact_other_information_layout,
 				container, false);
 		return view;
 	}
@@ -152,9 +150,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	}
 
 	private void executeRequests() {
-		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = new CiviCRMAsyncRequest<ListCustomFields>(
-				activityContext, ListCustomFields.class, ACTION.get,
-				ENTITY.CustomField);
+		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = requestCustomFields(activityContext);
 		contentManager.execute(customFieldsReq,
 				customFieldsReq.createCacheKey(), DurationInMillis.ONE_HOUR,
 				new CustomFieldsListener());
@@ -163,21 +159,11 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	private void loadCustomValues(ListCustomFields result) {
 		List<CustomField> customFields = result.getValues();
 		if (customFields != null && !customFields.isEmpty()) {
-			Log.d("ContactTagsAndGroupsFragment", "customFields = "
-					+ customFields);
 			this.customFields = result;
 			ContactSummary contactSummary = getArguments().getParcelable(
 					"contact");
-			final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
-					1);
-			params.add("entity_id", Long.toString(contactSummary.getId()));
-			Log.d("ContactTagsAndGroupsFragment", "entity_id = "
-					+ contactSummary.getId());
-			CiviCRMAsyncRequest<ListCustomValues> customValues = new CiviCRMAsyncRequest<ListCustomValues>(
-					activityContext, ListCustomValues.class, ACTION.get,
-					ENTITY.CustomValue, params);
-			Log.d("ContactTagsAndGroupsFragment",
-					"request = " + customValues.createCacheKey());
+			CiviCRMAsyncRequest<ListCustomValues> customValues = requestCustomValuesByContactId(
+					activityContext, contactSummary.getId());
 			contentManager.execute(customValues, customValues.createCacheKey(),
 					DurationInMillis.ONE_HOUR, new CustomValuesListener());
 		}
@@ -187,22 +173,16 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	private void loadValues(ListCustomValues result) {
 		List<CustomValue> customValues = result.getValues();
 		if (customValues != null && !customValues.isEmpty()) {
-			Log.d("ContactTagsAndGroupsFragment", "customValues = "
-					+ customValues);
 			CiviCRMAsyncRequest<HumanReadableValue> request = null;
-			MultiValueMap<String, String> params = null;
 			CustomField customField = null;
+			putTitle();
 			for (CustomValue customValue : customValues) {
 				customField = this.customFields.getFieldById(customValue
 						.getId());
 				if (customField.getOptionGroupId() != 0) {
-					params = new LinkedMultiValueMap<String, String>(2);
-					params.add("option_group_id",
-							Integer.toString(customField.getOptionGroupId()));
-					params.add("value", customValue.getValue());
-					request = new CiviCRMAsyncRequest<HumanReadableValue>(
-							activityContext, HumanReadableValue.class,
-							ACTION.getsingle, ENTITY.OptionValue, params);
+					request = requestHumanReadableValue(activityContext,
+							customField.getOptionGroupId(),
+							customValue.getValue());
 					contentManager.execute(
 							request,
 							request.createCacheKey(),
@@ -219,19 +199,29 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 		Utilities.dismissProgressDialog(progressDialog);
 	}
 
+	private void putTitle() {
+		LinearLayout layout = (LinearLayout) getView().findViewById(
+				R.id.other_info);
+		View view = (TextView) getLayoutInflater(null).inflate(
+				android.R.layout.simple_list_item_1, layout, false);
+		TextView textView = (TextView) view.findViewById(android.R.id.text1);
+		textView.setTextAppearance(activityContext, R.style.textoGreen);
+		textView.setText(getString(R.string.constituent_information));
+		layout.addView(view);
+	}
+
 	public void refreshView(HumanReadableValue result, String label) {
-		Log.d("ContactTagsAndGroupsFragment", "label = " + label + ", valor = "
-				+ result);
-		ViewGroup viewGroup = (ViewGroup) getView();
-		LinearLayout layout = (LinearLayout) viewGroup.getChildAt(0);
+		LinearLayout layout = (LinearLayout) getView().findViewById(
+				R.id.other_info);
 		View view = getLayoutInflater(null).inflate(
-				android.R.layout.simple_list_item_2, layout, false);
-		TextView text1 = (TextView) view.findViewById(android.R.id.text1);
-		TextView text2 = (TextView) view.findViewById(android.R.id.text2);
-		text1.setTextAppearance(activityContext, R.style.textoDefault);
-		text2.setTextAppearance(activityContext, R.style.textoWhite);
-		text1.setText(result.getLabel());
-		text2.setText(label);
+				R.layout.contact_tags_and_groups_row, layout, false);
+
+		TextView textView1 = (TextView) view.findViewById(R.id.textView1);
+		TextView textView2 = (TextView) view.findViewById(R.id.textView2);
+		textView1.setTextAppearance(activityContext, R.style.textoDefault);
+		textView2.setTextAppearance(activityContext, R.style.textoWhite);
+		textView1.setText(result.getLabel());
+		textView2.setText(label);
 		layout.addView(view);
 	}
 
