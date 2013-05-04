@@ -423,7 +423,10 @@ public class ContactSyncService extends IntentService
 		 
 		 notificationManager.cancelAll();
 		 
-		 if(tipo==SyncUtil.NOTIFICACION_SYNC_WAS_OK)
+		 infoText = getString(R.string.sync_ok_notification) +" "+ String.valueOf(minutes) +" "+ getString(R.string.sync_ok_min_notification);
+		 textoBreve =getString(R.string.sync_text_notification_ok);		
+		 
+	/*	 if(tipo==SyncUtil.NOTIFICACION_SYNC_WAS_OK)
 		 {
 			 infoText = getString(R.string.sync_ok_notification) +" "+ String.valueOf(minutes) +" "+ getString(R.string.sync_ok_min_notification);
 			 textoBreve =getString(R.string.sync_text_notification_ok);			
@@ -443,7 +446,7 @@ public class ContactSyncService extends IntentService
 			 infoText =getString(R.string.sync_ko_rest_notification);	
 			 textoBreve =getString(R.string.sync_text_notification_ko);		
 		 }
-		 
+		*/ 
 		 Intent intent = new Intent(this, MainActivity.class);
 		 PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
 		 		
