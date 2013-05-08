@@ -93,7 +93,8 @@
         <activity
             android:name="org.upsam.civicrm.calendar.CalendarTabs"
             android:label="@string/title_activity_calendario"
-            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            android:parentActivityName="org.upsam.civicrm.MainActivity" 
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.MainActivity" />
