@@ -4,11 +4,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.beans.DataCivi;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
@@ -23,6 +24,7 @@ import android.widget.TextView;
  */
 public class Utilities {
 
+	private static final String BASE_URI_TEMPLATE = "/sites/all/modules/civicrm/extern/rest.php?json=1&sequential=%s";
 	public static String APY_KEY = "api_key";
 	public static String KEY = "key";
 	public static String BASE_URI = "base_uri";
@@ -86,6 +88,29 @@ public class Utilities {
 	 * @param applicationContext
 	 * @return
 	 */
+	public static DataCivi getDataCivi(Context applicationContext,
+			boolean sequential) {
+		DataCivi data = new DataCivi();
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(applicationContext);
+		data.setBase_url(cleanUrl(prefs.getString("PREF_URL", null))
+				+ String.format(BASE_URI_TEMPLATE, sequential ? "1" : "0"));
+		data.setSite_key(prefs.getString("PREF_SITE_KEY", null));
+		data.setUser_name(prefs.getString("PREF_USER", null));
+		data.setPassword(prefs.getString("PREF_PASSWORD", null));
+		data.setApi_key(prefs.getString("PREF_API_KEY", null));
+		data.setKey(prefs.getString("PREF_USER_KEY", null));
+		data.setMail(prefs.getString("PREF_MAIL", null));
+		data.setContactid(prefs.getString("PREF_CONTACTID", null));
+		return data;
+	}
+
+	/**
+	 * Obtencion de objeto con los datos del login
+	 * 
+	 * @param applicationContext
+	 * @return
+	 */
 	public static DataCivi getDataCivi(Context applicationContext) {
 		DataCivi data = new DataCivi();
 		SharedPreferences prefs = PreferenceManager
@@ -101,7 +126,7 @@ public class Utilities {
 		data.setContactid(prefs.getString("PREF_CONTACTID", null));
 		return data;
 	}
-
+	
 	/**
 	 * devolver el contactid del usuario
 	 * 
@@ -120,7 +145,7 @@ public class Utilities {
 	 * @param context
 	 * @return
 	 */
-	public static boolean isInformationLoad(Activity context) {
+	public static boolean isInformationLoad(Context context) {
 		SharedPreferences mySharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
@@ -214,4 +239,19 @@ public class Utilities {
 		return progressDialog;
 	}
 
+	/**
+	 * comprobar si har conexion a Interner
+	 * 
+	 * @param applicationContext
+	 * @return
+	 */
+	public static boolean isOnline(Context applicationContext) {
+		ConnectivityManager cm = (ConnectivityManager) applicationContext
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo netInfo = cm.getActiveNetworkInfo();
+		if (netInfo != null && netInfo.isConnected()) {
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
+	}
 }

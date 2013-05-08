@@ -24,22 +24,26 @@ public class ContactDetailFragmentActivity extends
 		OnMenuItemSelectedListener,
 		org.upsam.civicrm.contact.detail.menu.MenuIndividualFragment.OnMenuItemSelectedListener {
 
-	int contactId = 0;
-	
+	private static final String CONTACT_KEY = "contact";
+	private ContactSummary contact;
+
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ContactSummary contact = (ContactSummary) getIntent().getExtras().get(
-				"contact");
-		this.contactId = contact.getId();
+		if (savedInstanceState != null
+				&& savedInstanceState.containsKey(CONTACT_KEY)) {
+			this.contact = (ContactSummary) savedInstanceState.get(CONTACT_KEY);
+		} else {
+			this.contact = (ContactSummary) getIntent().getExtras()
+					.get(CONTACT_KEY);
+		}
 		setContentView(R.layout.activity_contact_details);
 
 		if (contact != null
 				&& contact.getType() != null
 				&& (contact.getType().startsWith("Org") || contact.getType()
 						.startsWith("org"))) {
-			// if ("Organization".equalsIgnoreCase(contact.getType())) {
 			setBehindContentView(R.layout.slide_menu_organization);
 		} else {
 			setBehindContentView(R.layout.slide_menu_individual);
@@ -63,13 +67,23 @@ public class ContactDetailFragmentActivity extends
 			}
 			ContactDetailFragment contactDetailFragment = new ContactDetailFragment(
 					contentManager, this);
-			contactDetailFragment.setArguments(getIntent().getExtras());
+			Bundle params = new Bundle();
+			params.putParcelable("contact", this.contact);
+			contactDetailFragment.setArguments(params);
 			getSupportFragmentManager()
 					.beginTransaction()
 					.add(R.id.FrameLayout1, contactDetailFragment,
 							"contactDetails").commit();
 		}
 
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		if (contact != null) {
+			outState.putParcelable(CONTACT_KEY, contact);
+		}
+		super.onSaveInstanceState(outState);
 	}
 
 	private void addAddressFragment() {
@@ -111,7 +125,7 @@ public class ContactDetailFragmentActivity extends
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.FrameLayout2, activitiesFragment).commit();
 		getSlidingMenu().toggle();
-		
+
 	}
 
 	private void addGroupsAndTagsFragment() {

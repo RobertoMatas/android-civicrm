@@ -52,10 +52,16 @@
                 android:text="@string/login_button_login" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/footerText"
-            style="@style/textoFooterLogin"
-            android:text="@string/login_footer" />
+        
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#0B3861"
+            android:onClick="enterToTesting"
+            android:text="@string/login_foot_test"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
 </ScrollView>

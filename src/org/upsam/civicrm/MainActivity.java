@@ -23,15 +23,18 @@ import org.json.JSONTokener;
 import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.beans.DataCivi;
 import org.upsam.civicrm.calendar.CalendarTabs;
-import org.upsam.civicrm.charts.ActivityResolutionColumnChart;
+import org.upsam.civicrm.charts.ReportSelectorActivity;
 import org.upsam.civicrm.contact.list.ContactListTabs;
+import org.upsam.civicrm.login.ControlTesting;
 import org.upsam.civicrm.login.FragmentHome;
 import org.upsam.civicrm.login.FragmentLogin;
+import org.upsam.civicrm.login.FragmentNoInternet;
 import org.upsam.civicrm.login.model.Drupal;
 import org.upsam.civicrm.login.model.Login;
 import org.upsam.civicrm.login.model.Ufmatch;
 import org.upsam.civicrm.preference.SetPreferenceActivity;
 import org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService;
+import org.upsam.civicrm.sync.ContactSyncService;
 import org.upsam.civicrm.util.Utilities;
 
 import android.app.ProgressDialog;
@@ -47,6 +50,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.EditText;
@@ -56,7 +61,6 @@ import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-
 
 /**
  * Actividad de entrada a la aplicacion
@@ -91,45 +95,53 @@ public class MainActivity extends FragmentActivity {
 		fragmentManager = getSupportFragmentManager();
 		fragmentTransaction = fragmentManager.beginTransaction();
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		if (Utilities.isInformationLoad(this)) {
-			FragmentHome fragmentHome = new FragmentHome();
-			fragmentTransaction.replace(android.R.id.content, fragmentHome);
-		} else {
-			FragmentLogin fragmentLogin = new FragmentLogin();
-			fragmentTransaction.replace(android.R.id.content, fragmentLogin);
-		}
-		fragmentTransaction.commit();
-
-		if (!Utilities.isInformationLoad(this)) {
-			if (savedInstanceState != null) {
-				mapaSaveStates = new HashMap<String, String>();
-				if (savedInstanceState.getString("prefUrl") != null
-						&& !"".equalsIgnoreCase(savedInstanceState
-								.getString("prefUrl"))) {
-					mapaSaveStates.put("prefUrl",
-							savedInstanceState.getString("prefUrl"));
-				}
-				if (savedInstanceState.getString("prefSiteKey") != null
-						&& !"".equalsIgnoreCase(savedInstanceState
-								.getString("prefSiteKey"))) {
-					mapaSaveStates.put("prefSiteKey",
-							savedInstanceState.getString("prefSiteKey"));
-				}
-				if (savedInstanceState.getString("prefUser") != null
-						&& !"".equalsIgnoreCase(savedInstanceState
-								.getString("prefUser"))) {
-					mapaSaveStates.put("prefUser",
-							savedInstanceState.getString("prefUser"));
-				}
-				if (savedInstanceState.getString("prefPassword") != null
-						&& !"".equalsIgnoreCase(savedInstanceState
-								.getString("prefPassword"))) {
-					mapaSaveStates.put("prefPassword",
-							savedInstanceState.getString("prefPassword"));
-				}
-
+		if (Utilities.isOnline(this)) {
+			if (Utilities.isInformationLoad(this)) {
+				FragmentHome fragmentHome = new FragmentHome();
+				fragmentTransaction.replace(android.R.id.content, fragmentHome);
+			} else {
+				FragmentLogin fragmentLogin = new FragmentLogin();
+				fragmentTransaction
+						.replace(android.R.id.content, fragmentLogin);
 			}
+			fragmentTransaction.commit();
+
+			if (!Utilities.isInformationLoad(this)) {
+				if (savedInstanceState != null) {
+					mapaSaveStates = new HashMap<String, String>();
+					if (savedInstanceState.getString("prefUrl") != null
+							&& !"".equalsIgnoreCase(savedInstanceState
+									.getString("prefUrl"))) {
+						mapaSaveStates.put("prefUrl",
+								savedInstanceState.getString("prefUrl"));
+					}
+					if (savedInstanceState.getString("prefSiteKey") != null
+							&& !"".equalsIgnoreCase(savedInstanceState
+									.getString("prefSiteKey"))) {
+						mapaSaveStates.put("prefSiteKey",
+								savedInstanceState.getString("prefSiteKey"));
+					}
+					if (savedInstanceState.getString("prefUser") != null
+							&& !"".equalsIgnoreCase(savedInstanceState
+									.getString("prefUser"))) {
+						mapaSaveStates.put("prefUser",
+								savedInstanceState.getString("prefUser"));
+					}
+					if (savedInstanceState.getString("prefPassword") != null
+							&& !"".equalsIgnoreCase(savedInstanceState
+									.getString("prefPassword"))) {
+						mapaSaveStates.put("prefPassword",
+								savedInstanceState.getString("prefPassword"));
+					}
+
+				}
+			}
+		} else {
+			// sin internet
+			FragmentNoInternet fragmentNoInternet = new FragmentNoInternet();
+			fragmentTransaction.replace(android.R.id.content,
+					fragmentNoInternet);
+			fragmentTransaction.commit();
 		}
 	}
 
@@ -137,6 +149,11 @@ public class MainActivity extends FragmentActivity {
 	public void onStart() {
 		contentManager.start(this);
 		super.onStart();
+
+		// syncronize contacts
+		Intent intent = new Intent(this, ContactSyncService.class);
+		startService(intent);
+
 		if (mapaSaveStates != null && mapaSaveStates.size() > 0) {
 			if (mapaSaveStates.get("prefUrl") != null
 					&& !"".equalsIgnoreCase(mapaSaveStates.get("prefUrl"))) {
@@ -160,6 +177,38 @@ public class MainActivity extends FragmentActivity {
 			}
 
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_main_exit, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.exitOut: {
+			ControlTesting ct = new ControlTesting(this);
+			if (ct.isTesting()) {
+				ct.setOffTesting();
+				Editor editor = prefs.edit();
+				editor.putString("PREF_URL", "");
+				editor.putString("PREF_SITE_KEY", "");
+				editor.putString("PREF_USER", "");
+				editor.putString("PREF_PASSWORD", "");
+				editor.putString("PREF_USER_KEY", "");
+				editor.putString("PREF_API_KEY", "");
+				editor.putString("PREF_MAIL", "");
+				editor.putString("PREF_CONTACTID", "");
+				editor.commit();
+			}
+			moveTaskToBack(Boolean.TRUE);
+			this.finish();
+		}
+		}
+		return super.onMenuItemSelected(featureId, item);
 	}
 
 	@Override
@@ -208,9 +257,17 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void loadPreference(View view) {
-		Intent intent = new Intent();
-		intent.setClass(MainActivity.this, SetPreferenceActivity.class);
-		startActivityForResult(intent, REQUEST_PREFERENCES);
+		ControlTesting ct = new ControlTesting(this);
+		if (ct.isTesting()) {
+			Utilities.createCustomDialog(this,
+					getString(R.string.pref_testingcontrol_label),
+					getString(R.string.pref_testingcontrol_texto),
+					getString(R.string.pref_testingcontrol_boton));
+		} else {
+			Intent intent = new Intent();
+			intent.setClass(MainActivity.this, SetPreferenceActivity.class);
+			startActivityForResult(intent, REQUEST_PREFERENCES);
+		}
 	}
 
 	public void acercaDe(View view) {
@@ -236,9 +293,58 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void showInformes(View view) {
-		Intent intent = new Intent(this, ActivityResolutionColumnChart.class);
+		Intent intent = new Intent(this, ReportSelectorActivity.class);
 		startActivity(intent);
-	}	
+	}
+
+	public void enterToTesting(View view) {
+		this.progressDialog = Utilities.showLoadingProgressDialog(
+				this.progressDialog, this,
+				getString(R.string.login_validando_msg));
+
+		Editor editor = prefs.edit();
+
+		/*
+		 * editor.putString("PREF_URL","http://www.proyectofinal.es/drupal7");
+		 * editor.putString("PREF_SITE_KEY",
+		 * "ad98d9cd2d3a364e3364b50f1db52c3c");
+		 * editor.putString("PREF_USER","admin");
+		 * editor.putString("PREF_PASSWORD", "LnguZfXs");
+		 * editor.putString("PREF_USER_KEY",
+		 * "8b2ff408788c4baaa95147f4e16fd7a7ae96c49");
+		 * editor.putString("PREF_API_KEY", "test");
+		 * editor.putString("PREF_MAIL","postmaster@proyectofinal.es");
+		 * editor.putString("PREF_CONTACTID", "102");
+		 */
+
+		editor.putString("PREF_URL",
+				"http://civicrm-upsam.heliohost.org/drupal");
+		editor.putString("PREF_SITE_KEY", "f56bad924425184e0dd5c562f953a87b");
+		editor.putString("PREF_USER", "civicrm_admin");
+		editor.putString("PREF_PASSWORD", "4rf5tg7uj");
+		editor.putString("PREF_USER_KEY", "f56bad924425184e0dd5c562f953a87b");
+		editor.putString("PREF_API_KEY", "test");
+		editor.putString("PREF_MAIL", "robertomatas@gmail.com");
+		editor.putString("PREF_CONTACTID", "102");
+
+		editor.commit();
+
+		// controlar el usuario entro para pruebas
+		ControlTesting ct = new ControlTesting(this);
+		ct.setOnTesting();
+
+		Utilities.dismissProgressDialog(progressDialog);
+
+		// syncronize contacts
+		Intent intent = new Intent(this, ContactSyncService.class);
+		startService(intent);
+
+		// redireccion a la home
+		fragmentTransaction = fragmentManager.beginTransaction();
+		FragmentHome fragmentHome = new FragmentHome();
+		fragmentTransaction.replace(android.R.id.content, fragmentHome);
+		fragmentTransaction.commit();
+	}
 
 	/**
 	 * el usuario da boton acceder sistema y recogemos los datos a introducido y

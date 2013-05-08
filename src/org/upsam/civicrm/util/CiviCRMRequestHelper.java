@@ -5,13 +5,24 @@ import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
+import org.upsam.civicrm.R;
 import org.upsam.civicrm.activity.model.ActivityCounter;
 import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
+import org.upsam.civicrm.charts.model.ListOfContribution;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
 
 public class CiviCRMRequestHelper {
+
+	public static void notifyRequestError(Context ctx,
+			ProgressDialog progressDialog) {
+		Utilities.dismissProgressDialog(progressDialog);
+		Toast.makeText(ctx, ctx.getString(R.string.general_http_error),
+				Toast.LENGTH_LONG).show();
+	}
 
 	public static CiviCRMAsyncRequest<ListActivtiesSummary> requestActivitiesForContact(
 			int contactId, Context ctx) {
@@ -41,4 +52,19 @@ public class CiviCRMRequestHelper {
 		return new CiviCRMAsyncRequest<ActivityCounter>(ctx,
 				ActivityCounter.class, ACTION.getcount, ENTITY.Activity, params);
 	}
+
+	public static CiviCRMAsyncRequest<ListOfContribution> requestContributions(
+			Context ctx) {
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				5);
+		params.add("rowCount", "500");
+		params.add("return[total_amount]", "1");
+		params.add("return[receive_date]", "1");
+		params.add("return[currency]", "1");
+		params.add("sort", "receive_date");
+		return new CiviCRMAsyncRequest<ListOfContribution>(ctx,
+				ListOfContribution.class, ACTION.get, ENTITY.Contribution,
+				params);
+	}
+
 }

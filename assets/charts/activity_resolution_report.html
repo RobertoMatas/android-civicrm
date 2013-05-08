@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1">
+		<!--Load the AJAX API-->
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript">
+
+		// Load the Visualization API and the piechart package.
+		google.load('visualization', '1.0', {'packages':['corechart']});
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(notifyAPILoad);
+
+		// options 
+		//var options = {title:"Informe de resolucion de actividades", hAxis: {slantedText: true, slantedTextAngle: 60}, legend: {position: 'none'} };
+		var options = {
+			backgroundColor: '#0B3861',
+			legend: {position: 'none'},
+			width: '100%', height: '100%',
+			chartArea: {width: '100%', height: '100%'},
+			is3D: true
+		};
+
+		var gdata;
+
+		function notifyAPILoad() {
+			window.chartHandler.loadChart();
+		}
+		
+		function drawChart(data) {
+			var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+			gdata = google.visualization.arrayToDataTable(data);
+			// Create and draw the visualization.
+			chart.draw(gdata, options);
+		}
+		</script>
+	</head>
+
+	<body style="background-color: #0B3861;">
+		<!--Div that will hold the pie chart-->
+		<div style="width:'100%'; height:'100%'" id="chart_div"></div>
+	</body>
+</html>

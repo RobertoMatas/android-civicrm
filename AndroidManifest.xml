@@ -93,8 +93,7 @@
         <activity
             android:name="org.upsam.civicrm.calendar.CalendarTabs"
             android:label="@string/title_activity_calendario"
-            android:parentActivityName="org.upsam.civicrm.MainActivity" 
-            android:screenOrientation="portrait">
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.MainActivity" />
@@ -123,7 +122,7 @@
         </activity>
         <activity
             android:name="org.upsam.civicrm.charts.SybuntReportActivity"
-   
+            android:label="@string/title_activity_sybunt_report"
             android:parentActivityName="org.upsam.civicrm.charts.ReportSelectorActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -131,7 +130,7 @@
         </activity>
         <activity
             android:name="org.upsam.civicrm.charts.ReportSelectorActivity"
-            
+            android:label="@string/title_activity_report_selector"
             android:parentActivityName="org.upsam.civicrm.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

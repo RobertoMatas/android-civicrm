@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tags_groups"
+    style="@style/fondoBordeClaro"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="23dp"
-    style="@style/fondoActividad"
-    android:orientation="vertical" >
+    android:layout_margin="23dp">
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/groupList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:layout_margin="0dp" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tagsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupList"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="0dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</RelativeLayout>
