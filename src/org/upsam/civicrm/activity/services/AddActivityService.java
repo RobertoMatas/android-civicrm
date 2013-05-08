@@ -80,7 +80,7 @@ public class AddActivityService extends Service {
 	}
 
 	private void initializeContactFields() {
-		fields.add("nick_name", Utilities.getDataCivi(getApplicationContext(), true)
+		fields.add("nick_name", Utilities.getDataCivi(getApplicationContext())
 				.getUser_name());
 	}
 
