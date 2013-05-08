@@ -89,7 +89,6 @@ public class AddActivityService extends Service {
 		fields.add("activity_name", "Phone Call");
 		fields.add("status_id", "2");
 		fields.add("phone_number", phoneNumber);
-		fields.add("source_contact_id", Utilities.getContactId(this));
 	}
 
 	private void performContactRequest() {
