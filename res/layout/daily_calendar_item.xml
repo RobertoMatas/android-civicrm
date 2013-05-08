@@ -3,7 +3,8 @@
     android:id="@+id/daily_calendar_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    style="@style/separatorListView">
 
     <TextView
         android:id="@+id/activitySumaryName"

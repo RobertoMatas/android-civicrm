@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
+import org.upsam.civicrm.activity.model.ActivityHeader;
 import org.upsam.civicrm.activity.model.ActivitySummary;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.util.CiviCRMRequestHelper;
@@ -18,7 +19,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ProgressBar;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
@@ -28,32 +30,30 @@ import com.octo.android.robospice.request.listener.RequestProgress;
 import com.octo.android.robospice.request.listener.RequestProgressListener;
 import com.octo.android.robospice.request.listener.RequestStatus;
 
-
-
-public class DailyCalendarFragment extends CalendarFragment{
+public class DailyExpandableCalendarFragment extends CalendarFragment {
 	
-	private DailyCalendarAdapter adapter;
-	
+	private DailyExpandableCalendarAdapter adapter;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.daily_calendar, container, false);
-		setProgressBar((ProgressBar) view.findViewById(R.id.progressBarDailyCalendar));
+		View view = inflater.inflate(R.layout.daily_expandable_calendar, container, false);
+		setProgressBar((ProgressBar) view.findViewById(R.id.progressBarDailyExpandableCalendar));
 		return view;
 	}
 	
 	@Override
 	protected void initUIComponents() {
-		
 		setMonth(Calendar.getInstance());
 		
-		ListView dailyCalendar = (ListView) getView().findViewById(
-				R.id.dailyActivities);
+		ExpandableListView dailyCalendar = (ExpandableListView) getView().findViewById(
+				R.id.dailyExpandableActivities);
 
-		adapter = new DailyCalendarAdapter(getActivity(),
-				new ArrayList<ActivitySummary>());
+		adapter = new DailyExpandableCalendarAdapter(getActivity(),
+				new ArrayList<ActivityHeader>());
 		dailyCalendar.setAdapter(adapter);
-		
+		dailyCalendar.setOnGroupClickListener(groupClicked);
+
 	}
 
 	@Override
@@ -64,7 +64,8 @@ public class DailyCalendarFragment extends CalendarFragment{
 		getContentManager().execute(request, getLastRequestCacheKey(),
 					DurationInMillis.ONE_MINUTE, new ListActivitiesRequestListener());
 	}
-	
+
+
 	private class ListActivitiesRequestListener implements
 	RequestListener<ListActivtiesSummary>, RequestProgressListener {
 
@@ -105,14 +106,9 @@ public class DailyCalendarFragment extends CalendarFragment{
 				Collections.sort(todayActivities);
 			}
 			else {
-				ActivitySummary noActivitiesForToday = new ActivitySummary();
-				noActivitiesForToday.setName("No tiene actividades asignadas hoy");
-				noActivitiesForToday.setDateTime("15-03-2013 10:22:25");
-				noActivitiesForToday.setSubject("No tiene actividades asignadas hoy");
-				todayActivities = new ArrayList<ActivitySummary>(1);
-				todayActivities.add(noActivitiesForToday);
+
 			}
-			adapter.addAll(todayActivities);
+			adapter.setHeaders(FilterUtilities.filterScheduledActivitiesByHour(todayActivities));
 			adapter.notifyDataSetChanged();
 			getProgressBar().setVisibility(View.INVISIBLE);
 		}
@@ -129,5 +125,21 @@ public class DailyCalendarFragment extends CalendarFragment{
 			}
 	}
 }
-
+	
+	//our group listener
+	 private OnGroupClickListener groupClicked =  new OnGroupClickListener() {
+	 
+	  public boolean onGroupClick(ExpandableListView parent, View v,
+	    int groupPosition, long id) {
+		  	if (parent.isGroupExpanded(groupPosition)){
+		    	return  parent.expandGroup(groupPosition);
+		    }
+		    else {
+		    	return parent.collapseGroup(groupPosition);
+		    }
+		
+	    
+	  }
+	   
+	 };
 }
