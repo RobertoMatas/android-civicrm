@@ -282,14 +282,15 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	public void showEvents(View view) {
-		Intent intent = new Intent(this, CalendarTabs.class);
-		startActivity(intent);
+
+		Toast.makeText(getApplicationContext(), "En construccion EVENTOS",
+				Toast.LENGTH_LONG).show();
 
 	}
 
 	public void showActivities(View view) {
-		Toast.makeText(getApplicationContext(), "En construccion ACTIVIDADES",
-				Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this, CalendarTabs.class);
+		startActivity(intent);
 	}
 
 	public void showInformes(View view) {
