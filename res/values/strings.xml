@@ -4,23 +4,23 @@
     <!--
     ===============================================================
      NOMBRE APLICACION
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="app_name">Open Mobile CRM</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
+    <string name="hello_world">Hola Mundo!</string>
+    <string name="menu_settings">Configuración</string>
 
     <!--
     ===============================================================
      SPLAH
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="splash_description">Open Mobile CRM</string>
     <!--
     ===============================================================
      LOGIN
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="login_foot_test">Clik aquí para probar la aplicación</string>
     <string name="login_head_superior">Open Mobile</string>
@@ -55,7 +55,7 @@
     <!--
     ===============================================================
      HOME
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="home_contactos">Contactos</string>
     <string name="home_actividades">Actividades</string>
@@ -66,7 +66,7 @@
     <!--
     ===============================================================
      ACERCA DE
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="acerca_de_label">Acerca De</string>
     <string name="acerca_de_texto">Aplicación creada por Roberto, Jorge, Gonzalo y Fernando como proyecto final</string>
@@ -75,7 +75,7 @@
     <!--
     ===============================================================
      PREFERENCIAS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="preferencias_label">Configuracion</string>
     <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
@@ -111,13 +111,13 @@
     <!--
     ===============================================================
      MENSAJES PROGRESS BAR DE CARGA GENERICOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="progress_bar_msg_generico">Cargando&#8230;</string>
     <!--
     ===============================================================
      CONTACTOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
@@ -125,7 +125,7 @@
 
     <!--  -->
     <string name="contact_image">Contacto</string>
-    <string name="search">Search</string>
+    <string name="search">Buscar</string>
 
     <!-- menus izquierdo indice -->
     <string name="address">Direcciones</string>
@@ -163,26 +163,26 @@
     <string name="add_contact_email_hint">Email del contacto</string>
     <string name="add_contact_phone_hint">Teléfono del contacto</string>
     <string name="add_contact_create_btn">Crear</string>
-    <string name="title_activity_list_contacts_activities">ListContactsActivities</string>    
+    <string name="title_activity_list_contacts_activities">Listado Actividades Contactos</string>
     <!-- errores validacion -->
     <string name="mail_no_valido">Formato de e-mail no válido</string>
     <string name="telefono_invalido">El número de teléfono tiene un formato no válido</string>
     <string name="sin_informar_nombre">Debe introducir al menos el nombre del contacto</string>
     <string name="progress_bar_creando">Creando &#8230;</string>
-    <string name="error_creando_contacto">Erro al crear el contacto. Inténtelo de nuevo más tarde</string>
+    <string name="error_creando_contacto">Error al crear el contacto. Inténtelo de nuevo más tarde</string>
     <string name="contacto_creado">Contacto creado, ID </string>
 
     <!--
     ===============================================================
      CALENDARIO
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendario</string>
 
     <!--
     ===============================================================
      INFORMES
-    ===============================================================
+    ===============================================================
     -->
     <string name="menu_sybunt_report">SYBUNT</string>
     <string name="menu_activity_resolution_report">Resolución de actividades</string>
@@ -195,7 +195,7 @@
     <!--
     ===============================================================
      SINCRONIZACION
-    ===============================================================
+    ===============================================================
     -->
     <string name="sync_title_company">Organización</string>
     <string name="sync_title_notification">Open Mobile CRM</string>
@@ -210,12 +210,12 @@
     <string name="sync_preferencias_horas_title">Intervalo Ejecución</string>
     <string name="sync_preferencias_horas_summary">Intervalo en el que se ejecuta la sincronización</string>
     <string name="sync_preferencias_users_title">Contactos Exportar</string>
-    <string name="sync_preferencias_users_summary">contactos a incluir en la agenda</string>
+    <string name="sync_preferencias_users_summary">Contactos a incluir en la agenda</string>
 
     <!--
     ===============================================================
      ERROR SIN ACCESO A INTERNET
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="error_no_internet">PARA HACER USO DE ESTA APLICACIÓN ES NECESARIO TENER UNA CONEXIÓN DE INTERNET.</string>
     <string name="description_image_nointernet">Se requiere acceso a internet</string>
