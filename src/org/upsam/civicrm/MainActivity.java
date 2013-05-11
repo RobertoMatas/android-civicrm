@@ -305,28 +305,27 @@ public class MainActivity extends FragmentActivity {
 
 		Editor editor = prefs.edit();
 
-		/*
-		 * editor.putString("PREF_URL","http://www.proyectofinal.es/drupal7");
+		editor.putString("PREF_URL", "http://www.proyectofinal.es/drupal7");
+		editor.putString("PREF_SITE_KEY", "ad98d9cd2d3a364e3364b50f1db52c3c");
+		editor.putString("PREF_USER", "admin");
+		editor.putString("PREF_PASSWORD", "LnguZfXs");
+		editor.putString("PREF_USER_KEY",
+				"8b2ff408788c4baaa95147f4e16fd7a7ae96c49");
+		editor.putString("PREF_API_KEY", "test");
+		editor.putString("PREF_MAIL", "postmaster@proyectofinal.es");
+		editor.putString("PREF_CONTACTID", "102");
+
+		/**
+		 * editor.putString("PREF_URL",
+		 * "http://civicrm-upsam.heliohost.org/drupal");
 		 * editor.putString("PREF_SITE_KEY",
-		 * "ad98d9cd2d3a364e3364b50f1db52c3c");
-		 * editor.putString("PREF_USER","admin");
-		 * editor.putString("PREF_PASSWORD", "LnguZfXs");
+		 * "f56bad924425184e0dd5c562f953a87b"); editor.putString("PREF_USER",
+		 * "civicrm_admin"); editor.putString("PREF_PASSWORD", "4rf5tg7uj");
 		 * editor.putString("PREF_USER_KEY",
-		 * "8b2ff408788c4baaa95147f4e16fd7a7ae96c49");
-		 * editor.putString("PREF_API_KEY", "test");
-		 * editor.putString("PREF_MAIL","postmaster@proyectofinal.es");
+		 * "f56bad924425184e0dd5c562f953a87b"); editor.putString("PREF_API_KEY",
+		 * "test"); editor.putString("PREF_MAIL", "robertomatas@gmail.com");
 		 * editor.putString("PREF_CONTACTID", "102");
 		 */
-
-		editor.putString("PREF_URL",
-				"http://civicrm-upsam.heliohost.org/drupal");
-		editor.putString("PREF_SITE_KEY", "f56bad924425184e0dd5c562f953a87b");
-		editor.putString("PREF_USER", "civicrm_admin");
-		editor.putString("PREF_PASSWORD", "4rf5tg7uj");
-		editor.putString("PREF_USER_KEY", "f56bad924425184e0dd5c562f953a87b");
-		editor.putString("PREF_API_KEY", "test");
-		editor.putString("PREF_MAIL", "robertomatas@gmail.com");
-		editor.putString("PREF_CONTACTID", "102");
 
 		editor.commit();
 
