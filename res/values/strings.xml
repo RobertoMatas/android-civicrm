@@ -4,7 +4,7 @@
     <!--
     ===============================================================
      NOMBRE APLICACION
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="app_name">Open Mobile CRM</string>
     <string name="action_settings">Settings</string>
@@ -14,13 +14,13 @@
     <!--
     ===============================================================
      SPLAH
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="splash_description">Open Mobile CRM</string>
     <!--
     ===============================================================
      LOGIN
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="login_foot_test">Clik aquí para probar la aplicación</string>
     <string name="login_head_superior">Open Mobile</string>
@@ -55,7 +55,7 @@
     <!--
     ===============================================================
      HOME
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="home_contactos">Contactos</string>
     <string name="home_actividades">Actividades</string>
@@ -66,7 +66,7 @@
     <!--
     ===============================================================
      ACERCA DE
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="acerca_de_label">Acerca De</string>
     <string name="acerca_de_texto">Aplicación creada por Roberto, Jorge, Gonzalo y Fernando como proyecto final</string>
@@ -75,7 +75,7 @@
     <!--
     ===============================================================
      PREFERENCIAS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="preferencias_label">Configuracion</string>
     <string name="pref_title_acceso">DATOS ACCESO CIVICRM</string>
@@ -103,19 +103,21 @@
     <string name="pref_synchoursexecution_summary">Cada cuantas horas se ejecuta el proceso de sincronización</string>
     <string name="pref_syncusers_title">Usuarios</string>
     <string name="pref_syncusers_summary">Cuantos usuarios se van a exportar a la agenda de contactos</string>
+    <string name="pref_checkbox_title">Activar Sincronización</string>
+    <string name="pref_checkbox_summary">Sincronizar tu agenda con civicrm</string>
     <string name="pref_testingcontrol_label">Acceso en Pruebas</string>
     <string name="pref_testingcontrol_texto">Esta sección no esta permitida su acceso en modo pruebas. Cierre la aplicación en el botón superior de la barra y autentiquese</string>
     <string name="pref_testingcontrol_boton">Aceptar</string>
     <!--
     ===============================================================
      MENSAJES PROGRESS BAR DE CARGA GENERICOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="progress_bar_msg_generico">Cargando&#8230;</string>
     <!--
     ===============================================================
      CONTACTOS
-    ===============================================================                        
+    ===============================================================                        
     -->
     <!-- titulos actividades -->
     <string name="title_activity_contact_list">Listado contactos</string>
@@ -167,14 +169,14 @@
     <!--
     ===============================================================
      CALENDARIO
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendario</string>
 
     <!--
     ===============================================================
      INFORMES
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="menu_sybunt_report">SYBUNT</string>
     <string name="menu_activity_resolution_report">Resolución de actividades</string>
@@ -185,7 +187,7 @@
     <!--
     ===============================================================
      SINCRONIZACION
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="sync_title_company">Organización</string>
     <string name="sync_title_notification">Open Mobile CRM</string>
@@ -205,7 +207,7 @@
     <!--
     ===============================================================
      ERROR SIN ACCESO A INTERNET
-    ===============================================================                        
+    ===============================================================                        
     -->
     <string name="error_no_internet">PARA HACER USO DE ESTA APLICACIÓN ES NECESARIO TENER UNA CONEXIÓN DE INTERNET.</string>
     <string name="description_image_nointernet">Se requiere acceso a internet</string>

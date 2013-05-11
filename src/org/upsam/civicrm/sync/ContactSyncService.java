@@ -272,7 +272,7 @@ public class ContactSyncService extends IntentService
 
 		  
 
-		  if (Utilities.isInformationLoad(this))//comprobar no se ejecuta sin datos de autenticacion
+		  if (Utilities.isInformationLoad(this)  && SyncUtil.isActivateSync(this))//comprobar no se ejecuta sin datos de autenticacion
 
 		  {
 
