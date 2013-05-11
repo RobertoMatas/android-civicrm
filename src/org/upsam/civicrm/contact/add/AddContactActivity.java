@@ -94,13 +94,13 @@ public class AddContactActivity extends SpiceAwareActivity {
 					if (StringUtils.isNotBlank(mail)
 							&& !mail.matches(emailRegExp)) {
 						contactEmailTextView
-								.setError("Formato de e-mail no válido");
+								.setError(getString(R.string.mail_no_valido));
 						valid = false;
 					}
 					if (StringUtils.isNotBlank(phone)
 							&& !StringUtils.isNumeric(phone)) {
 						contactPhoneTextView
-								.setError("El número de teléfono tiene un formato no válido");
+								.setError(getString(R.string.telefono_invalido));
 						valid = false;
 					}
 
@@ -108,7 +108,7 @@ public class AddContactActivity extends SpiceAwareActivity {
 
 				} else {
 					Toast.makeText(getApplicationContext(),
-							"Debe introducir al menos el nombre del contacto",
+							getString(R.string.sin_informar_nombre),
 							Toast.LENGTH_LONG).show();
 					return false;
 				}
@@ -149,10 +149,10 @@ public class AddContactActivity extends SpiceAwareActivity {
 				DurationInMillis.ONE_DAY, new ListContactTypesListener());
 
 	}
-
+	
 	private void createContact(String name) {
 		progressDialog = Utilities.showLoadingProgressDialog(progressDialog,
-				this, "Creando...");
+				this, getString(R.string.progress_bar_creando));
 		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
 				2);
 		fields.add("contact_type", String.valueOf(this.contactTypeSelected));
@@ -191,14 +191,14 @@ public class AddContactActivity extends SpiceAwareActivity {
 		this.contactNameTextView.setText("");
 		this.contactPhoneTextView.setText("");
 		Toast.makeText(getApplicationContext(),
-				"Contacto creado, ID " + newContactId, Toast.LENGTH_LONG)
+				getString(R.string.contacto_creado) + newContactId, Toast.LENGTH_LONG)
 				.show();
 	}
 
 	private void notifyErrorOnCreateContact() {
 		Utilities.dismissProgressDialog(progressDialog);
 		Toast.makeText(getApplicationContext(),
-				"Erro al crear el contacto. Inténtelo de nuevo más tarde",
+				getString(R.string.error_creando_contacto),
 				Toast.LENGTH_LONG).show();
 	}
 
