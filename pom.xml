@@ -27,7 +27,7 @@
 		<!-- Available Android versions: 1.5_r3, 1.5_r4, 1.6_r2, 2.1.2, 2.1_r1, 2.2.1, 2.3.1, 2.3.3, 4.0.1.2, 4.1.1.4 -->
 		<org.codehaus.jackson-version>1.9.11</org.codehaus.jackson-version>
 		<robospice-spring-android.version>1.4.0</robospice-spring-android.version>
-		<dagger.version>0.9.1</dagger.version>
+		<dagger.version>1.0.0</dagger.version>
 	</properties>
 
 	<dependencies>
@@ -51,17 +51,23 @@
 			<version>${org.codehaus.jackson-version}</version>
 		</dependency>
 		
-			<!-- Dagger DI (Dependency Injection) -->
+		<!-- Dagger DI (Dependency Injection) -->
 		<dependency>
-			<groupId>com.squareup</groupId>
+			<groupId>com.squareup.dagger</groupId>
 			<artifactId>dagger</artifactId>
 			<version>${dagger.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.squareup</groupId>
+			<groupId>com.squareup.dagger</groupId>
 			<artifactId>dagger-compiler</artifactId>
 			<version>${dagger.version}</version>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>fest-android</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
 		</dependency>
 		
 		<!-- Roboelectric -->
