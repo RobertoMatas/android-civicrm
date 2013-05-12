@@ -22,7 +22,7 @@
      LOGIN
     ===============================================================                        
     -->
-    <string name="login_foot_test">Clik here to test the application</string>
+    <string name="login_foot_test">Click here to test the application</string>
     <string name="login_head_superior">Open Mobile</string>
     <string name="login_head_inferior">CRM</string>
     <string name="login_head_all">Open Mobile CRM</string>
@@ -187,7 +187,7 @@
     <string name="menu_sybunt_report">SYBUNT</string>
     <string name="menu_activity_resolution_report">Solving activities</string>
     <string name="title_activity_sybunt_report">Report SYBUNT</string>
-    <string name="title_activity_report_selector">Repots</string>
+    <string name="title_activity_report_selector">Reports</string>
     <string name="general_http_error">There was an error contacting the server. Please try again later</string>
     <string name="error_cargar_informe">There was an error loading the report. Please try again later</string>
     <string name="progress_bar_calculando">Calculating &#8230;</string>
