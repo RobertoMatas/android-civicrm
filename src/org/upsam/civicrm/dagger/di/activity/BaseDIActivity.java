@@ -1,15 +1,16 @@
-package org.upsam.civicrm.dagger.di;
+package org.upsam.civicrm.dagger.di.activity;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.upsam.civicrm.dagger.di.AppicationInjectionAware;
 import org.upsam.civicrm.dagger.modules.ActivityModule;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import dagger.ObjectGraph;
 
-public class BaseDIActivity extends Activity {
+public class BaseDIActivity extends FragmentActivity {
 	private ObjectGraph activityGraph;
 
 	@Override

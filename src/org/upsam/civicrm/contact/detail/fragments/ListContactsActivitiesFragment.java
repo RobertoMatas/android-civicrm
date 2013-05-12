@@ -5,16 +5,13 @@ import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
 import java.util.List;
 import java.util.Map;
 
-import org.upsam.civicrm.AbstractAsyncFragment;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.activity.model.ActivitySummary;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
-import org.upsam.civicrm.util.CiviCRMRequestHelper;
-import org.upsam.civicrm.util.Utilities;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.fragment.SpiceDIAwareFragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,24 +20,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
-
-	public ListContactsActivitiesFragment(SpiceManager contentManager,
-			Context activityContext) {
-		super(contentManager, activityContext);
-	}
+public class ListContactsActivitiesFragment extends SpiceDIAwareFragment {
 
 	public class ListActivtiesSummaryListener implements
 			RequestListener<ListActivtiesSummary> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -69,22 +60,23 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 		return view;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onStart() {
+		super.onStart();
 		executeRequest();
 	}
 
 	private void executeRequest() {
-		progressDialog = Utilities.showLoadingProgressDialog(progressDialog,
-				this.getActivity(),
-				getString(R.string.progress_bar_msg_generico));
+		progressDialog = getProgressDialogUtilities().showProgressDialog(
+				progressDialog, getString(R.string.progress_bar_msg_generico));
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
 		if (contactSummary != null) {
-			CiviCRMAsyncRequest<ListActivtiesSummary> req = CiviCRMRequestHelper
-					.requestActivitiesForContact(contactSummary.getId(),
-							this.getActivity());
-			contentManager.execute(req, req.createCacheKey(),
+			CiviCRMSpiceRequest<ListActivtiesSummary> req = getRequestBuilder()
+					.requestActivitiesForContact(contactSummary.getId());
+			getSpiceManager().execute(req, req.createCacheKey(),
 					DurationInMillis.ONE_HOUR,
 					new ListActivtiesSummaryListener());
 		}
@@ -96,7 +88,7 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 		for (ActivitySummary activitySummary : values) {
 			paintActivityRow(activitySummary);
 		}
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 	}
 
 	private void paintActivityRow(ActivitySummary activitySummary) {
@@ -111,11 +103,11 @@ public class ListContactsActivitiesFragment extends AbstractAsyncFragment {
 		TextView text3 = (TextView) row.findViewById(R.id.display_city);
 		TextView text4 = (TextView) row.findViewById(R.id.display_country);
 		imag.setImageResource(android.R.drawable.ic_menu_agenda);
-		title.setTextAppearance(activityContext, R.style.textoGreen);
-		text1.setTextAppearance(activityContext, R.style.textoDefault);
-		text2.setTextAppearance(activityContext, R.style.textoWhite);
-		text3.setTextAppearance(activityContext, R.style.textoWhite);
-		text4.setTextAppearance(activityContext, R.style.textoWhite);
+		title.setTextAppearance(getActivityContext(), R.style.textoGreen);
+		text1.setTextAppearance(getActivityContext(), R.style.textoDefault);
+		text2.setTextAppearance(getActivityContext(), R.style.textoWhite);
+		text3.setTextAppearance(getActivityContext(), R.style.textoWhite);
+		text4.setTextAppearance(getActivityContext(), R.style.textoWhite);
 
 		title.setText(activitySummary.getName());
 		text1.setText(activitySummary.getSubject());

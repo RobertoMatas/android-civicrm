@@ -1,16 +1,9 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCommunicationPreferencesByContactId;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestContactById;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestEmailsByContactId;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestPhonesByContactId;
-
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.util.StringUtils;
-import org.upsam.civicrm.AbstractAsyncFragment;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.detail.req.ContactImageRequest;
 import org.upsam.civicrm.contact.model.contact.Contact;
@@ -20,10 +13,10 @@ import org.upsam.civicrm.contact.model.email.ListEmails;
 import org.upsam.civicrm.contact.model.lang.PreferredLanguage;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.contact.model.telephone.Phone;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.fragment.SpiceDIAwareFragment;
 import org.upsam.civicrm.util.CiviCRMRequestHelper;
-import org.upsam.civicrm.util.Utilities;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -35,13 +28,11 @@ import android.widget.LinearLayout;
 import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-//@SuppressLint("ValidFragment")
-public class ContactDetailFragment extends AbstractAsyncFragment {
+public class ContactDetailFragment extends SpiceDIAwareFragment {
 	/**
 	 * Vista nombre de contacto
 	 */
@@ -75,13 +66,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 */
 	private boolean yetUpdateDemographics;
 
-	/**
-	 * 
-	 * @param contentManager
-	 */
-	public ContactDetailFragment(SpiceManager contentManager,
-			Context activityContext) {
-		super(contentManager, activityContext);
+	public ContactDetailFragment() {
 		this.yetUpdatedCommunicationPreferences = false;
 		this.yetUpdateDemographics = false;
 	}
@@ -98,6 +83,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.contact_details_layout,
 				container, false);
+		this.contactSummary = getArguments().getParcelable("contact");
 		this.displayName = (TextView) view.findViewById(R.id.display_name);
 		this.type = (TextView) view.findViewById(R.id.contact_type);
 		this.badge = (QuickContactBadge) view.findViewById(R.id.contac_img);
@@ -113,54 +99,32 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	 * 
 	 */
 	private void executeRequests() {
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, activityContext,
+		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
+				getProgressDialog(),
 				getString(R.string.progress_bar_msg_generico));
-		this.contactSummary = getArguments().getParcelable("contact");
 		int contactId = this.contactSummary.getId();
-		CiviCRMAsyncRequest<Contact> request = requestContactById(
-				activityContext, contactId);
-		contentManager.execute(request, request.createCacheKey(),
+		CiviCRMSpiceRequest<Contact> request = getRequestBuilder()
+				.requestContactById(contactId);
+		getSpiceManager().execute(request, request.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactDetailListener());
 		// peticionar emails y phones
-		CiviCRMAsyncRequest<ListEmails> emailsReq = requestEmailsByContactId(
-				activityContext, contactId);
-		CiviCRMAsyncRequest<ListPhones> phonesReq = requestPhonesByContactId(
-				activityContext, contactId);
-		contentManager.execute(emailsReq, emailsReq.createCacheKey(),
+		CiviCRMSpiceRequest<ListEmails> emailsReq = getRequestBuilder()
+				.requestEmailsByContactId(contactId);
+		CiviCRMSpiceRequest<ListPhones> phonesReq = getRequestBuilder()
+				.requestPhonesByContactId(contactId);
+		getSpiceManager().execute(emailsReq, emailsReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactEmailListener());
-		contentManager.execute(phonesReq, phonesReq.createCacheKey(),
+		getSpiceManager().execute(phonesReq, phonesReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactPhoneListener());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		executeRequests();
-	}
-
 	public void showCommunicationPreferences() {
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, activityContext,
+		getProgressDialogUtilities().showProgressDialog(getProgressDialog(),
 				getString(R.string.progress_bar_msg_generico));
-		CiviCRMAsyncRequest<PreferredLanguage> langReq = requestCommunicationPreferencesByContactId(
-				activityContext, this.contactSummary.getId());
-		contentManager.execute(langReq, langReq.createCacheKey(),
+		CiviCRMSpiceRequest<PreferredLanguage> langReq = getRequestBuilder()
+				.requestCommunicationPreferencesByContactId(
+						this.contactSummary.getId());
+		getSpiceManager().execute(langReq, langReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactLangListener());
 	}
 
@@ -172,6 +136,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 	@Override
 	public void onStart() {
 		super.onStart();
+		executeRequests();
 	}
 
 	private void refreshView(Contact result) {
@@ -179,8 +144,8 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		String img = this.contactDetails.getImage();
 		if (StringUtils.hasText(img)) {
 			ContactImageRequest request = new ContactImageRequest(img);
-			contentManager.execute(request, img, DurationInMillis.ONE_MINUTE,
-					new ContactImageListener());
+			getSpiceManager().execute(request, img,
+					DurationInMillis.ONE_MINUTE, new ContactImageListener());
 		} else {
 			refreshImageView(null);
 		}
@@ -214,10 +179,11 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 		textView2 = (TextView) view.findViewById(R.id.textView2);
 		imageView.setImageResource(iconResource);
 		textView1.setText(text1);
-		textView1.setTextAppearance(activityContext, R.style.textoDefault);
+		textView1.setTextAppearance(getActivityContext(), R.style.textoDefault);
 		if (StringUtils.hasText(text2)) {
 			textView2.setText(text2);
-			textView2.setTextAppearance(activityContext, R.style.textoWhite);
+			textView2.setTextAppearance(getActivityContext(),
+					R.style.textoWhite);
 		} else {
 			textView2.setVisibility(View.GONE);
 		}
@@ -249,7 +215,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 								: getString(R.string.telephone_detail));
 			}
 		}
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 	}
 
 	public void updateDemographics() {
@@ -300,14 +266,14 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 			}
 			this.yetUpdatedCommunicationPreferences = true;
 		}
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 	}
 
 	private class ContactDetailListener implements RequestListener<Contact> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			CiviCRMRequestHelper.notifyRequestError(activityContext,
+			CiviCRMRequestHelper.notifyRequestError(getActivityContext(),
 					progressDialog);
 		}
 
@@ -322,7 +288,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			CiviCRMRequestHelper.notifyRequestError(activityContext,
+			CiviCRMRequestHelper.notifyRequestError(getActivityContext(),
 					progressDialog);
 		}
 
@@ -338,7 +304,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			CiviCRMRequestHelper.notifyRequestError(activityContext,
+			CiviCRMRequestHelper.notifyRequestError(getActivityContext(),
 					progressDialog);
 		}
 
@@ -355,7 +321,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			CiviCRMRequestHelper.notifyRequestError(activityContext,
+			CiviCRMRequestHelper.notifyRequestError(getActivityContext(),
 					progressDialog);
 		}
 
@@ -373,7 +339,7 @@ public class ContactDetailFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			CiviCRMRequestHelper.notifyRequestError(activityContext,
+			CiviCRMRequestHelper.notifyRequestError(getActivityContext(),
 					progressDialog);
 		}
 

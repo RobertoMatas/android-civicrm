@@ -1,5 +1,6 @@
 package org.upsam.civicrm.rest.req;
 
+import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.contact.model.address.ListAddresses;
 import org.upsam.civicrm.contact.model.constant.Constant;
 import org.upsam.civicrm.contact.model.contact.Contact;
@@ -9,13 +10,12 @@ import org.upsam.civicrm.contact.model.custom.HumanReadableValue;
 import org.upsam.civicrm.contact.model.custom.ListCustomFields;
 import org.upsam.civicrm.contact.model.custom.ListCustomValues;
 import org.upsam.civicrm.contact.model.email.ListEmails;
+import org.upsam.civicrm.contact.model.groups.ListGroups;
 import org.upsam.civicrm.contact.model.lang.PreferredLanguage;
 import org.upsam.civicrm.contact.model.tags.ListTags;
 import org.upsam.civicrm.contact.model.tags.Tag;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
-
-import android.content.Context;
 
 public interface CiviCRMContactRequestBuilder {
 
@@ -23,8 +23,7 @@ public interface CiviCRMContactRequestBuilder {
 
 	CiviCRMSpiceRequest<ListEmails> requestEmailsByContactId(int contactId);
 
-	CiviCRMSpiceRequest<ListPhones> requestPhonesByContactId(Context ctx,
-			int contactId);
+	CiviCRMSpiceRequest<ListPhones> requestPhonesByContactId(int contactId);
 
 	CiviCRMSpiceRequest<PreferredLanguage> requestCommunicationPreferencesByContactId(
 			int contactId);
@@ -59,4 +58,8 @@ public interface CiviCRMContactRequestBuilder {
 
 	CiviCRMSpiceRequest<ListEmails> postRequestCreateEmail(int contactId,
 			String email);
+
+	CiviCRMSpiceRequest<ListGroups> requestGroupByContactId(int contactId);
+
+	CiviCRMSpiceRequest<ListActivtiesSummary> requestActivitiesForContact(int id);
 }

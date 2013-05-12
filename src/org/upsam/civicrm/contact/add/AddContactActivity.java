@@ -14,7 +14,7 @@ import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.contact.model.email.ListEmails;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
-import org.upsam.civicrm.dagger.di.SpiceDIAwareActivity;
+import org.upsam.civicrm.dagger.di.activity.SpiceDIAwareActivity;
 import org.upsam.civicrm.dagger.modules.ActivityModule;
 import org.upsam.civicrm.dagger.modules.AddContactActivityModule;
 

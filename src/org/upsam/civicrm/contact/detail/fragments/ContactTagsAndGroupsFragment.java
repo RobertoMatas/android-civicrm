@@ -1,23 +1,18 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestGroupByContactId;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestTagById;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestTagsByContactId;
 import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
 
 import java.util.List;
 
-import org.upsam.civicrm.AbstractAsyncFragment;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.groups.Group;
 import org.upsam.civicrm.contact.model.groups.ListGroups;
 import org.upsam.civicrm.contact.model.tags.ListTags;
 import org.upsam.civicrm.contact.model.tags.Tag;
-import org.upsam.civicrm.util.Utilities;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.fragment.SpiceDIAwareFragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,18 +22,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
+public class ContactTagsAndGroupsFragment extends SpiceDIAwareFragment {
 
 	public class TagListener implements RequestListener<Tag> {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -57,7 +51,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -77,7 +71,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -89,16 +83,6 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 			}
 			updateGroupsView(result);
 		}
-	}
-
-	/**
-	 * 
-	 * @param contentManager
-	 */
-
-	public ContactTagsAndGroupsFragment(SpiceManager contentManager,
-			Context activityContext) {
-		super(contentManager, activityContext);
 	}
 
 	/*
@@ -119,38 +103,27 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.d("ContactTagsAndGroupsFragment", "onCreate()");
+	public void onStart() {
+		super.onStart();
 		executeRequests();
 	}
 
 	private void executeRequests() {
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, activityContext,
+		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
+				getProgressDialog(),
 				getString(R.string.progress_bar_msg_generico));
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
 		int contactId = contactSummary.getId();
-		CiviCRMAsyncRequest<ListGroups> groupsReq = requestGroupByContactId(
-				activityContext, contactId);
-		CiviCRMAsyncRequest<ListTags> tagsReq = requestTagsByContactId(
-				activityContext, contactId);
-		contentManager.execute(groupsReq, groupsReq.createCacheKey(),
+		CiviCRMSpiceRequest<ListGroups> groupsReq = getRequestBuilder()
+				.requestGroupByContactId(contactId);
+		CiviCRMSpiceRequest<ListTags> tagsReq = getRequestBuilder()
+				.requestTagsByContactId(contactId);
+		getSpiceManager().execute(groupsReq, groupsReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactGroupsListener());
-		contentManager.execute(tagsReq, tagsReq.createCacheKey(),
+		getSpiceManager().execute(tagsReq, tagsReq.createCacheKey(),
 				DurationInMillis.ONE_MINUTE, new ContactTagsListener());
 	}
 
@@ -159,13 +132,13 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		if (tags != null && !tags.isEmpty()) {
 			putTitle(R.id.tagsList, getString(R.string.tags_literal));
 			for (Tag tag : tags) {
-				CiviCRMAsyncRequest<Tag> tagsReq = requestTagById(
-						activityContext, tag.getTagId());
-				contentManager.execute(tagsReq, tagsReq.createCacheKey(),
+				CiviCRMSpiceRequest<Tag> tagsReq = getRequestBuilder()
+						.requestTagById(tag.getTagId());
+				getSpiceManager().execute(tagsReq, tagsReq.createCacheKey(),
 						DurationInMillis.ONE_HOUR, new TagListener());
 			}
 		} else {
-			Utilities.dismissProgressDialog(progressDialog);
+			getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 		}
 
 	}
@@ -173,7 +146,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 	private void updateTagsView(Tag tag) {
 		paint(R.id.tagsList, android.R.drawable.star_big_off, tag.getName(),
 				tag.getDescription());
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 
 	}
 
@@ -199,7 +172,7 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		View view = (TextView) getLayoutInflater(null).inflate(
 				android.R.layout.simple_list_item_1, layout, false);
 		TextView textView = (TextView) view.findViewById(android.R.id.text1);
-		textView.setTextAppearance(activityContext, R.style.textoGreen);
+		textView.setTextAppearance(getActivityContext(), R.style.textoGreen);
 		textView.setText(title);
 		layout.addView(view);
 	}
@@ -214,8 +187,8 @@ public class ContactTagsAndGroupsFragment extends AbstractAsyncFragment {
 		TextView textView2 = (TextView) view.findViewById(R.id.textView2);
 
 		img.setImageResource(imgId);
-		textView1.setTextAppearance(activityContext, R.style.textoDefault);
-		textView2.setTextAppearance(activityContext, R.style.textoWhite);
+		textView1.setTextAppearance(getActivityContext(), R.style.textoDefault);
+		textView2.setTextAppearance(getActivityContext(), R.style.textoWhite);
 
 		textView1.setText(text1);
 		textView2.setText(text2);

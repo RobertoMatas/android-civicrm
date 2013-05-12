@@ -1,14 +1,9 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCustomFields;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCustomValuesByContactId;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestHumanReadableValue;
 import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
 
 import java.util.List;
 
-import org.upsam.civicrm.AbstractAsyncFragment;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.custom.CustomField;
@@ -16,9 +11,9 @@ import org.upsam.civicrm.contact.model.custom.CustomValue;
 import org.upsam.civicrm.contact.model.custom.HumanReadableValue;
 import org.upsam.civicrm.contact.model.custom.ListCustomFields;
 import org.upsam.civicrm.contact.model.custom.ListCustomValues;
-import org.upsam.civicrm.util.Utilities;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.fragment.SpiceDIAwareFragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +21,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-public class OtherInformationFragment extends AbstractAsyncFragment {
+public class OtherInformationFragment extends SpiceDIAwareFragment {
 
 	public class CustomHumanReadableValueListener implements
 			RequestListener<HumanReadableValue> {
@@ -44,7 +38,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -62,7 +56,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -81,7 +75,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -99,16 +93,6 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	 * Lista de campos custom
 	 */
 	private ListCustomFields customFields;
-
-	/**
-	 * 
-	 * @param contentManager
-	 */
-	public OtherInformationFragment(SpiceManager contentManager,
-			Context activityContext) {
-		super(contentManager, activityContext);
-		this.customFields = null;
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -133,25 +117,26 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, activityContext,
+		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
+				getProgressDialog(),
 				getString(R.string.progress_bar_msg_generico));
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onStart() {
+		super.onStart();
 		executeRequests();
 	}
 
 	private void executeRequests() {
-		CiviCRMAsyncRequest<ListCustomFields> customFieldsReq = requestCustomFields(activityContext);
-		contentManager.execute(customFieldsReq,
+		CiviCRMSpiceRequest<ListCustomFields> customFieldsReq = getRequestBuilder()
+				.requestCustomFields();
+		getSpiceManager().execute(customFieldsReq,
 				customFieldsReq.createCacheKey(), DurationInMillis.ONE_HOUR,
 				new CustomFieldsListener());
 	}
@@ -162,10 +147,11 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 			this.customFields = result;
 			ContactSummary contactSummary = getArguments().getParcelable(
 					"contact");
-			CiviCRMAsyncRequest<ListCustomValues> customValues = requestCustomValuesByContactId(
-					activityContext, contactSummary.getId());
-			contentManager.execute(customValues, customValues.createCacheKey(),
-					DurationInMillis.ONE_HOUR, new CustomValuesListener());
+			CiviCRMSpiceRequest<ListCustomValues> customValues = getRequestBuilder()
+					.requestCustomValuesByContactId(contactSummary.getId());
+			getSpiceManager().execute(customValues,
+					customValues.createCacheKey(), DurationInMillis.ONE_HOUR,
+					new CustomValuesListener());
 		}
 
 	}
@@ -173,17 +159,17 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 	private void loadValues(ListCustomValues result) {
 		List<CustomValue> customValues = result.getValues();
 		if (customValues != null && !customValues.isEmpty()) {
-			CiviCRMAsyncRequest<HumanReadableValue> request = null;
+			CiviCRMSpiceRequest<HumanReadableValue> request = null;
 			CustomField customField = null;
 			putTitle();
 			for (CustomValue customValue : customValues) {
 				customField = this.customFields.getFieldById(customValue
 						.getId());
 				if (customField.getOptionGroupId() != 0) {
-					request = requestHumanReadableValue(activityContext,
+					request = getRequestBuilder().requestHumanReadableValue(
 							customField.getOptionGroupId(),
 							customValue.getValue());
-					contentManager.execute(
+					getSpiceManager().execute(
 							request,
 							request.createCacheKey(),
 							DurationInMillis.ONE_HOUR,
@@ -196,7 +182,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 				}
 			}
 		}
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 	}
 
 	private void putTitle() {
@@ -205,7 +191,7 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 		View view = (TextView) getLayoutInflater(null).inflate(
 				android.R.layout.simple_list_item_1, layout, false);
 		TextView textView = (TextView) view.findViewById(android.R.id.text1);
-		textView.setTextAppearance(activityContext, R.style.textoGreen);
+		textView.setTextAppearance(getActivityContext(), R.style.textoGreen);
 		textView.setText(getString(R.string.constituent_information));
 		layout.addView(view);
 	}
@@ -218,8 +204,8 @@ public class OtherInformationFragment extends AbstractAsyncFragment {
 
 		TextView textView1 = (TextView) view.findViewById(R.id.textView1);
 		TextView textView2 = (TextView) view.findViewById(R.id.textView2);
-		textView1.setTextAppearance(activityContext, R.style.textoDefault);
-		textView2.setTextAppearance(activityContext, R.style.textoWhite);
+		textView1.setTextAppearance(getActivityContext(), R.style.textoDefault);
+		textView2.setTextAppearance(getActivityContext(), R.style.textoWhite);
 		textView1.setText(result.getLabel());
 		textView2.setText(label);
 		layout.addView(view);

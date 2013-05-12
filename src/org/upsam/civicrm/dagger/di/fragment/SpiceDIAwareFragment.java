@@ -1,15 +1,26 @@
-package org.upsam.civicrm.dagger.di.activity;
+package org.upsam.civicrm.dagger.di.fragment;
 
 import javax.inject.Inject;
 
+import org.upsam.civicrm.dagger.annotations.ForActivity;
+import org.upsam.civicrm.dagger.di.activity.BaseDIActivity;
 import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilities;
 import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilder;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.octo.android.robospice.SpiceManager;
 
-public class SpiceDIAwareActivity extends BaseDIActivity {
+public class SpiceDIAwareFragment extends Fragment {
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		((BaseDIActivity) getActivity()).inject(this);
+	}
 
 	@Inject
 	SpiceManager spiceManager;
@@ -20,19 +31,11 @@ public class SpiceDIAwareActivity extends BaseDIActivity {
 	@Inject
 	ProgressDialogUtilities progressDialogUtilities;
 
+	@Inject
+	@ForActivity
+	Context activityContext;
+
 	protected ProgressDialog progressDialog;
-
-	@Override
-	protected void onStart() {
-		spiceManager.start(this);
-		super.onStart();
-	}
-
-	@Override
-	protected void onStop() {
-		spiceManager.shouldStop();
-		super.onStop();
-	}
 
 	/**
 	 * @return the spiceManager
@@ -60,6 +63,13 @@ public class SpiceDIAwareActivity extends BaseDIActivity {
 	 */
 	protected ProgressDialogUtilities getProgressDialogUtilities() {
 		return progressDialogUtilities;
+	}
+
+	/**
+	 * @return the activityContext
+	 */
+	protected Context getActivityContext() {
+		return activityContext;
 	}
 
 }

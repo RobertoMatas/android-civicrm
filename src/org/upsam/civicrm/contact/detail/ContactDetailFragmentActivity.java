@@ -8,6 +8,7 @@ import org.upsam.civicrm.contact.detail.fragments.ListContactsActivitiesFragment
 import org.upsam.civicrm.contact.detail.fragments.OtherInformationFragment;
 import org.upsam.civicrm.contact.detail.menu.MenuOrganizationFragment.OnMenuItemSelectedListener;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.dagger.di.activity.SpiceDIAwareActivity;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
@@ -18,14 +19,14 @@ import android.view.MenuItem;
 
 import com.slidingmenu.lib.SlidingMenu;
 
-public class ContactDetailFragmentActivity extends
-		SpiceAndSliceMenuAwareFragmentActivity
+public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 		implements
 		OnMenuItemSelectedListener,
 		org.upsam.civicrm.contact.detail.menu.MenuIndividualFragment.OnMenuItemSelectedListener {
 
 	private static final String CONTACT_KEY = "contact";
 	private ContactSummary contact;
+	private SlidingMenu menu;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -35,26 +36,26 @@ public class ContactDetailFragmentActivity extends
 				&& savedInstanceState.containsKey(CONTACT_KEY)) {
 			this.contact = (ContactSummary) savedInstanceState.get(CONTACT_KEY);
 		} else {
-			this.contact = (ContactSummary) getIntent().getExtras()
-					.get(CONTACT_KEY);
+			this.contact = (ContactSummary) getIntent().getExtras().get(
+					CONTACT_KEY);
 		}
 		setContentView(R.layout.activity_contact_details);
 
-		if (contact != null
-				&& contact.getType() != null
-				&& (contact.getType().startsWith("Org") || contact.getType()
-						.startsWith("org"))) {
-			setBehindContentView(R.layout.slide_menu_organization);
-		} else {
-			setBehindContentView(R.layout.slide_menu_individual);
-		}
-		setSlidingActionBarEnabled(false);
-		SlidingMenu menu = getSlidingMenu();
+		menu = new SlidingMenu(this);
 		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 		menu.setShadowWidthRes(R.dimen.shadow_width);
 		menu.setShadowDrawable(R.drawable.shadow);
 		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
 		menu.setFadeDegree(0.35f);
+		menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+		if (contact != null
+				&& contact.getType() != null
+				&& (contact.getType().startsWith("Org") || contact.getType()
+						.startsWith("org"))) {
+			menu.setMenu(R.layout.slide_menu_organization);
+		} else {
+			menu.setMenu(R.layout.slide_menu_individual);
+		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Show the Up button in the action bar.
 			getActionBar().setDisplayHomeAsUpEnabled(false);
@@ -65,8 +66,7 @@ public class ContactDetailFragmentActivity extends
 			if (savedInstanceState != null) {
 				return;
 			}
-			ContactDetailFragment contactDetailFragment = new ContactDetailFragment(
-					contentManager, this);
+			ContactDetailFragment contactDetailFragment = new ContactDetailFragment();
 			Bundle params = new Bundle();
 			params.putParcelable("contact", this.contact);
 			contactDetailFragment.setArguments(params);
@@ -87,54 +87,50 @@ public class ContactDetailFragmentActivity extends
 	}
 
 	private void addAddressFragment() {
-		ContactAddressFragment addressFragment = new ContactAddressFragment(
-				contentManager, this);
+		ContactAddressFragment addressFragment = new ContactAddressFragment();
 		addressFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.FrameLayout2, addressFragment).commit();
-		getSlidingMenu().toggle();
+		menu.toggle();
 	}
 
 	private void addOtherInfoFragment() {
-		OtherInformationFragment otherInformationFragment = new OtherInformationFragment(
-				contentManager, this);
+		OtherInformationFragment otherInformationFragment = new OtherInformationFragment();
 		otherInformationFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.FrameLayout2, otherInformationFragment).commit();
-		getSlidingMenu().toggle();
+		menu.toggle();
 	}
 
 	private void updateCommunicationPreferences() {
 		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager()
 				.findFragmentByTag("contactDetails");
 		fragment.showCommunicationPreferences();
-		getSlidingMenu().toggle();
+		menu.toggle();
 	}
 
 	private void updateDemographics() {
 		ContactDetailFragment fragment = (ContactDetailFragment) getSupportFragmentManager()
 				.findFragmentByTag("contactDetails");
 		fragment.updateDemographics();
-		getSlidingMenu().toggle();
+		menu.toggle();
 	}
 
 	private void addActivitiesFragment() {
-		ListContactsActivitiesFragment activitiesFragment = new ListContactsActivitiesFragment(
-				contentManager, this);
+		ListContactsActivitiesFragment activitiesFragment = new ListContactsActivitiesFragment();
 		activitiesFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.FrameLayout2, activitiesFragment).commit();
-		getSlidingMenu().toggle();
+		menu.toggle();
 
 	}
 
 	private void addGroupsAndTagsFragment() {
-		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment(
-				contentManager, this);
+		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment();
 		tagsAndGroupsFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.FrameLayout2, tagsAndGroupsFragment).commit();
-		getSlidingMenu().toggle();
+		menu.toggle();
 	}
 
 	@Override
