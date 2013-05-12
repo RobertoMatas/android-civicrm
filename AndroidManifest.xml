@@ -24,7 +24,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CiviTheme" >
+        android:theme="@style/CiviTheme"
+        android:name="org.upsam.civicrm.dagger.di.CiviCRMApplication" >
 
         <!-- SPLASH -->
         <activity

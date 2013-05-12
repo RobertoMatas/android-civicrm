@@ -1,20 +1,17 @@
 package org.upsam.civicrm.contact.add;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
-import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
-import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.R;
-import org.upsam.civicrm.SpiceAwareActivity;
 import org.upsam.civicrm.contact.model.contact.ListContactType;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.contact.model.email.ListEmails;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.SpiceDIAwareActivity;
 import org.upsam.civicrm.util.Utilities;
 
+import android.app.ActionBar;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -33,7 +30,7 @@ import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-public class AddContactActivity extends SpiceAwareActivity {
+public class AddContactActivity extends SpiceDIAwareActivity {
 
 	private static final String emailRegExp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*"
 			+ "@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -67,7 +64,7 @@ public class AddContactActivity extends SpiceAwareActivity {
 	private String contactTypeSelected;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_contact);
 		this.contactNameTextView = (TextView) findViewById(R.id.contact_name);
@@ -115,7 +112,7 @@ public class AddContactActivity extends SpiceAwareActivity {
 			}
 		});
 		this.contactTypeSpinner = (Spinner) findViewById(R.id.contact_type);
-		this.spinnerAdapter = new ContactTypesAdapter(getApplicationContext(),
+		this.spinnerAdapter = new ContactTypesAdapter(this,
 				null);
 		this.spinnerAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -134,18 +131,31 @@ public class AddContactActivity extends SpiceAwareActivity {
 					public void onNothingSelected(AdapterView<?> parent) {
 					}
 				});
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			// Show the Up button in the action bar.
+			ActionBar actionBar = getActionBar();
+			if (actionBar != null) {
+				actionBar.setDisplayHomeAsUpEnabled(true);
+			}
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.upsam.civicrm.contact.add.SpiceDIAwareActivity#onStart()
+	 */
+	@Override
+	public void onStart() {
+		super.onStart();
 		requestContactTypes();
-		// Show the Up button in the action bar.
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void requestContactTypes() {
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(1);
-		params.add("is_reserved", "1");
-		CiviCRMAsyncRequest<ListContactType> req = new CiviCRMAsyncRequest<ListContactType>(
-				getApplicationContext(), ListContactType.class, ACTION.get,
-				ENTITY.ContactType, params);
-		contentManager.execute(req, req.createCacheKey(),
+		CiviCRMSpiceRequest<ListContactType> req = getRequestBuilder()
+				.requestContactTypes();
+		getSpiceManager().execute(req, req.createCacheKey(),
 				DurationInMillis.ONE_DAY, new ListContactTypesListener());
 
 	}
@@ -153,17 +163,9 @@ public class AddContactActivity extends SpiceAwareActivity {
 	private void createContact(String name) {
 		progressDialog = Utilities.showLoadingProgressDialog(progressDialog,
 				this, "Creando...");
-		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
-				2);
-		fields.add("contact_type", String.valueOf(this.contactTypeSelected));
-		if ("Individual".equalsIgnoreCase(contactTypeSelected))
-			fields.add("first_name", name);
-		else
-			fields.add(contactTypeSelected.toLowerCase() + "_name", name);
-		CiviCRMAsyncRequest<ListContacts> createContactReq = new CiviCRMAsyncRequest<ListContacts>(
-				getApplicationContext(), ListContacts.class, ACTION.create,
-				ENTITY.Contact, METHOD.post, fields);
-		contentManager.execute(createContactReq, new ContactCreateListener());
+		CiviCRMSpiceRequest<ListContacts> createContactReq = getRequestBuilder()
+				.postRequestCreateContact(contactTypeSelected, name);
+		getSpiceManager().execute(createContactReq, new ContactCreateListener());
 
 	}
 
@@ -172,14 +174,14 @@ public class AddContactActivity extends SpiceAwareActivity {
 		final String mail = contactEmailTextView.getText().toString();
 		int newContactId = result.getValues().get(0).getId();
 		if (StringUtils.isNotBlank(phone)) {
-			CiviCRMAsyncRequest<ListPhones> createPhonesReq = buildPhoneCreateRequest(
-					newContactId, phone);
-			contentManager.execute(createPhonesReq, new PhoneCreateListener());
+			CiviCRMSpiceRequest<ListPhones> createPhonesReq = getRequestBuilder()
+					.postRequestCreatePhone(newContactId, phone);
+			getSpiceManager().execute(createPhonesReq, new PhoneCreateListener());
 		}
 		if (StringUtils.isNotBlank(mail)) {
-			CiviCRMAsyncRequest<ListEmails> createPhonesReq = buildEmailCreateRequest(
-					newContactId, mail);
-			contentManager.execute(createPhonesReq, new EmailCreateListener());
+			CiviCRMSpiceRequest<ListEmails> createPhonesReq = getRequestBuilder()
+					.postRequestCreateEmail(newContactId, mail);
+			getSpiceManager().execute(createPhonesReq, new EmailCreateListener());
 		}
 		finishContactCreation(newContactId);
 
@@ -202,26 +204,6 @@ public class AddContactActivity extends SpiceAwareActivity {
 				Toast.LENGTH_LONG).show();
 	}
 
-	private CiviCRMAsyncRequest<ListEmails> buildEmailCreateRequest(
-			int contactId, String mail) {
-		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
-				2);
-		fields.add("contact_id", String.valueOf(contactId));
-		fields.add("email", mail);
-		return new CiviCRMAsyncRequest<ListEmails>(this, ListEmails.class,
-				ACTION.create, ENTITY.Email, METHOD.post, fields);
-	}
-
-	private CiviCRMAsyncRequest<ListPhones> buildPhoneCreateRequest(
-			int contactId, String phone) {
-		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
-				2);
-		fields.add("contact_id", String.valueOf(contactId));
-		fields.add("phone", phone);
-		return new CiviCRMAsyncRequest<ListPhones>(this, ListPhones.class,
-				ACTION.create, ENTITY.Phone, METHOD.post, fields);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -239,7 +221,7 @@ public class AddContactActivity extends SpiceAwareActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class ListContactTypesListener implements
+	public class ListContactTypesListener implements
 			RequestListener<ListContactType> {
 
 		@Override
@@ -253,6 +235,12 @@ public class AddContactActivity extends SpiceAwareActivity {
 			if (result == null)
 				return;
 			spinnerAdapter.clear();
+			/*
+			List<ContactType> values = result.getValues();
+			for (ContactType contactType : values) {
+				spinnerAdapter.add(contactType);
+			}
+			*/
 			spinnerAdapter.addAll(result.getValues());
 			spinnerAdapter.notifyDataSetChanged();
 		}
@@ -270,7 +258,7 @@ public class AddContactActivity extends SpiceAwareActivity {
 		public void onRequestSuccess(ListContacts result) {
 			if (result == null)
 				return;
-			//contentManager.removeAllDataFromCache();
+			// getSpiceManager().removeAllDataFromCache();
 			createEmailAndPhone(result);
 		}
 
