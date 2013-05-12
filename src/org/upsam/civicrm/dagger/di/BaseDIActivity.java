@@ -21,8 +21,7 @@ public class BaseDIActivity extends Activity {
 		AppicationInjectionAware application = (AppicationInjectionAware) getApplication();
 		ObjectGraph applicationGraph = application.getApplicationGraph();
 		if (applicationGraph != null) {
-		activityGraph = applicationGraph.plus(
-				getModules().toArray());
+			activityGraph = applicationGraph.plus(getModules().toArray());
 		} else {
 			activityGraph = ObjectGraph.create(getModules().toArray());
 		}
@@ -55,10 +54,5 @@ public class BaseDIActivity extends Activity {
 	public void inject(Object object) {
 		activityGraph.inject(object);
 	}
-	
-	public void inject(ObjectGraph graph) {
-		graph.inject(this);
-	}
-	
-	
+
 }

@@ -1,5 +1,12 @@
 package org.upsam.civicrm.contact.add;
 
+import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ListContactType;
@@ -8,7 +15,8 @@ import org.upsam.civicrm.contact.model.email.ListEmails;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
 import org.upsam.civicrm.dagger.di.SpiceDIAwareActivity;
-import org.upsam.civicrm.util.Utilities;
+import org.upsam.civicrm.dagger.modules.ActivityModule;
+import org.upsam.civicrm.dagger.modules.AddContactActivityModule;
 
 import android.app.ActionBar;
 import android.os.Build;
@@ -32,8 +40,6 @@ import com.octo.android.robospice.request.listener.RequestListener;
 
 public class AddContactActivity extends SpiceDIAwareActivity {
 
-	private static final String emailRegExp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*"
-			+ "@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	/**
 	 * 
 	 */
@@ -63,6 +69,20 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 	 */
 	private String contactTypeSelected;
 
+	@Inject
+	AddContactValidator validator;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.upsam.civicrm.dagger.di.BaseDIActivity#getModules()
+	 */
+	@Override
+	protected List<Object> getModules() {
+		return Arrays.asList(new ActivityModule(this),
+				new AddContactActivityModule());
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,38 +98,32 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 				final String name = contactNameTextView.getText().toString();
 				final String phone = contactPhoneTextView.getText().toString();
 				final String mail = contactEmailTextView.getText().toString();
-				boolean isValid = validate(name, phone, mail);
-				if (isValid) {
-					createContact(name);
-				}
-			}
-
-			private boolean validate(final String name, final String phone,
-					final String mail) {
-				if (StringUtils.isNotBlank(name)) {
-					boolean valid = true;
-					if (StringUtils.isNotBlank(mail)
-							&& !mail.matches(emailRegExp)) {
-						contactEmailTextView
-								.setError(getString(R.string.mail_no_valido));
-						valid = false;
-					}
-					if (StringUtils.isNotBlank(phone)
-							&& !StringUtils.isNumeric(phone)) {
-						contactPhoneTextView
-								.setError(getString(R.string.telefono_invalido));
-						valid = false;
-					}
-
-					return valid;
-
-				} else {
+				boolean isValid = true;
+				if (!validator.isValidName(name)) {
 					Toast.makeText(getApplicationContext(),
 							getString(R.string.sin_informar_nombre),
 							Toast.LENGTH_LONG).show();
-					return false;
+					isValid = false;
+
+				} else {
+					if (!validator.isValidEmail(mail)) {
+						contactEmailTextView
+								.setError(getString(R.string.mail_no_valido));
+						isValid = false;
+					}
+
+					if (!validator.isValidPhone(phone)) {
+						contactPhoneTextView
+								.setError(getString(R.string.telefono_invalido));
+						isValid = false;
+					}
 				}
+				if (isValid) {
+					createContact(name);
+				}
+
 			}
+
 		});
 		this.contactTypeSpinner = (Spinner) findViewById(R.id.contact_type);
 		this.spinnerAdapter = new ContactTypesAdapter(this, null);
@@ -128,6 +142,8 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 
 					@Override
 					public void onNothingSelected(AdapterView<?> parent) {
+						contactTypeSelected = spinnerAdapter.getItem(0)
+								.getName();
 					}
 				});
 
@@ -160,10 +176,12 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 	}
 
 	private void createContact(String name) {
-		progressDialog = Utilities.showLoadingProgressDialog(progressDialog,
-				this, getString(R.string.progress_bar_creando));
+		progressDialog = getProgressDialogUtilities().showProgressDialog(
+				progressDialog, getString(R.string.progress_bar_creando));
 		CiviCRMSpiceRequest<ListContacts> createContactReq = getRequestBuilder()
-				.postRequestCreateContact(contactTypeSelected, name);
+				.postRequestCreateContact(
+						contactTypeSelected != null ? contactTypeSelected
+								: spinnerAdapter.getItem(0).getName(), name);
 		getSpiceManager()
 				.execute(createContactReq, new ContactCreateListener());
 	}
@@ -189,17 +207,17 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 	}
 
 	private void finishContactCreation(int newContactId) {
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 		this.contactEmailTextView.setText("");
 		this.contactNameTextView.setText("");
 		this.contactPhoneTextView.setText("");
-		Toast.makeText(getApplicationContext(),
+		Toast.makeText(this,
 				getString(R.string.contacto_creado) + newContactId,
 				Toast.LENGTH_LONG).show();
 	}
 
 	private void notifyErrorOnCreateContact() {
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 		Toast.makeText(getApplicationContext(),
 				getString(R.string.error_creando_contacto), Toast.LENGTH_LONG)
 				.show();
@@ -227,7 +245,7 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			// TODO Auto-generated method stub
+			notifyRequestError(AddContactActivity.this, progressDialog);
 
 		}
 
@@ -236,10 +254,6 @@ public class AddContactActivity extends SpiceDIAwareActivity {
 			if (result == null)
 				return;
 			spinnerAdapter.clear();
-			/*
-			 * List<ContactType> values = result.getValues(); for (ContactType
-			 * contactType : values) { spinnerAdapter.add(contactType); }
-			 */
 			spinnerAdapter.addAll(result.getValues());
 			spinnerAdapter.notifyDataSetChanged();
 		}

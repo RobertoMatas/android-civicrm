@@ -5,6 +5,8 @@ import javax.inject.Singleton;
 import org.upsam.civicrm.contact.add.AddContactActivity;
 import org.upsam.civicrm.dagger.annotations.ForActivity;
 import org.upsam.civicrm.dagger.di.BaseDIActivity;
+import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilities;
+import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilitiesImpl;
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
 import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilder;
 import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilderImpl;
@@ -21,7 +23,7 @@ import dagger.Provides;
  * activity. We can safely create singletons using the activity instance because
  * ths entire object graph will only ever exist inside of that activity.
  */
-@Module(entryPoints = AddContactActivity.class)
+@Module(injects = AddContactActivity.class)
 public class ActivityModule {
 	private final BaseDIActivity activity;
 
@@ -51,5 +53,11 @@ public class ActivityModule {
 	@Singleton
 	SpiceManager provideSpiceManager() {
 		return new SpiceManager(CiviCRMAndroidSpiceService.class);
+	}
+	
+	@Provides
+	@Singleton
+	ProgressDialogUtilities provideProgressDialogUtilities() {
+		return new ProgressDialogUtilitiesImpl(activity);
 	}
 }

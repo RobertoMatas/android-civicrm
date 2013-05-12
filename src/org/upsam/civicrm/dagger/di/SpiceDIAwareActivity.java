@@ -2,6 +2,7 @@ package org.upsam.civicrm.dagger.di;
 
 import javax.inject.Inject;
 
+import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilities;
 import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilder;
 
 import android.app.ProgressDialog;
@@ -15,6 +16,9 @@ public class SpiceDIAwareActivity extends BaseDIActivity {
 
 	@Inject
 	CiviCRMContactRequestBuilder requestBuilder;
+
+	@Inject
+	ProgressDialogUtilities progressDialogUtilities;
 
 	protected ProgressDialog progressDialog;
 
@@ -49,6 +53,13 @@ public class SpiceDIAwareActivity extends BaseDIActivity {
 	 */
 	protected ProgressDialog getProgressDialog() {
 		return progressDialog;
+	}
+
+	/**
+	 * @return the progressDialogUtilities
+	 */
+	protected ProgressDialogUtilities getProgressDialogUtilities() {
+		return progressDialogUtilities;
 	}
 
 }
