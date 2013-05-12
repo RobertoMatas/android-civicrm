@@ -1,12 +1,16 @@
-package org.upsam.civicrm.test.fake;
+package org.upsam.civicrm.rest.req;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.upsam.civicrm.CiviCRMAsyncRequest;
+import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
+import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
+import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.contact.model.address.ListAddresses;
 import org.upsam.civicrm.contact.model.constant.Constant;
 import org.upsam.civicrm.contact.model.contact.Contact;
-import org.upsam.civicrm.contact.model.contact.ContactType;
 import org.upsam.civicrm.contact.model.contact.ListContactType;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.contact.model.custom.HumanReadableValue;
@@ -18,12 +22,22 @@ import org.upsam.civicrm.contact.model.tags.ListTags;
 import org.upsam.civicrm.contact.model.tags.Tag;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
 import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
-import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilder;
 
 import android.content.Context;
 
-public class CiviCRMContactRequestBuilderFake implements
+public class CiviCRMContactRequestBuilderImpl implements
 		CiviCRMContactRequestBuilder {
+
+	private final Context ctx;
+
+	/**
+	 * @param ctx
+	 */
+	@Inject
+	public CiviCRMContactRequestBuilderImpl(Context ctx) {
+		super();
+		this.ctx = ctx;
+	}
 
 	@Override
 	public CiviCRMSpiceRequest<Contact> requestContactById(int contactId) {
@@ -112,47 +126,46 @@ public class CiviCRMContactRequestBuilderFake implements
 
 	@Override
 	public CiviCRMSpiceRequest<ListContactType> requestContactTypes() {
-		final String[] types = { "Individual", "Organization", "Household" };
-		final List<ContactType> values = new ArrayList<ContactType>(3);
-		ContactType ct = null;
-		for (int i = 0; i < types.length; i++) {
-			ct = new ContactType();
-			ct.setId(i + 1);
-			ct.setLabel(types[i]);
-			ct.setName(types[i]);
-			values.add(ct);
-		}
-		return new CiviCRMAsyncRequestFake<ListContactType>(
-				ListContactType.class) {
-
-			@Override
-			public ListContactType loadDataFromNetwork() throws Exception {
-				ListContactType result = new ListContactType();
-				result.setValues(values);
-				return result;
-			}
-		};
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				1);
+		params.add("is_reserved", "1");
+		return new CiviCRMAsyncRequest<ListContactType>(ctx,
+				ListContactType.class, ACTION.get, ENTITY.ContactType, params);
 	}
 
 	@Override
 	public CiviCRMSpiceRequest<ListContacts> postRequestCreateContact(
 			String contactTypeSelected, String name) {
-		// TODO Auto-generated method stub
-		return null;
+		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
+				2);
+		fields.add("contact_type", String.valueOf(contactTypeSelected));
+		if ("Individual".equalsIgnoreCase(contactTypeSelected))
+			fields.add("first_name", name);
+		else
+			fields.add(contactTypeSelected.toLowerCase() + "_name", name);
+		return new CiviCRMAsyncRequest<ListContacts>(ctx, ListContacts.class,
+				ACTION.create, ENTITY.Contact, METHOD.post, fields);
 	}
 
 	@Override
 	public CiviCRMSpiceRequest<ListPhones> postRequestCreatePhone(
 			int contactId, String phone) {
-		// TODO Auto-generated method stub
-		return null;
+		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
+				2);
+		fields.add("contact_id", String.valueOf(contactId));
+		fields.add("phone", phone);
+		return new CiviCRMAsyncRequest<ListPhones>(ctx, ListPhones.class,
+				ACTION.create, ENTITY.Phone, METHOD.post, fields);
 	}
 
 	@Override
 	public CiviCRMSpiceRequest<ListEmails> postRequestCreateEmail(
 			int contactId, String email) {
-		// TODO Auto-generated method stub
-		return null;
+		MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>(
+				2);
+		fields.add("contact_id", String.valueOf(contactId));
+		fields.add("email", email);
+		return new CiviCRMAsyncRequest<ListEmails>(ctx, ListEmails.class,
+				ACTION.create, ENTITY.Email, METHOD.post, fields);
 	}
-
 }

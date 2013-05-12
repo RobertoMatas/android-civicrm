@@ -27,6 +27,7 @@
 		<!-- Available Android versions: 1.5_r3, 1.5_r4, 1.6_r2, 2.1.2, 2.1_r1, 2.2.1, 2.3.1, 2.3.3, 4.0.1.2, 4.1.1.4 -->
 		<org.codehaus.jackson-version>1.9.11</org.codehaus.jackson-version>
 		<robospice-spring-android.version>1.4.0</robospice-spring-android.version>
+		<dagger.version>0.9.1</dagger.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +50,37 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${org.codehaus.jackson-version}</version>
 		</dependency>
+		
+			<!-- Dagger DI (Dependency Injection) -->
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>dagger</artifactId>
+			<version>${dagger.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.squareup</groupId>
+			<artifactId>dagger-compiler</artifactId>
+			<version>${dagger.version}</version>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- Roboelectric -->
+        <!-- Make sure this is below the android dependencies -->
+        <!-- 
+        <dependency>
+            <groupId>com.pivotallabs</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>1.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+         -->
 	</dependencies>
 
 	<repositories>

@@ -91,4 +91,7 @@ public class ActivitySummary implements Comparable<ActivitySummary>{
 		return this.dateTime.compareTo(another.getDateTime());
 	}
 
+
+	
+
 }

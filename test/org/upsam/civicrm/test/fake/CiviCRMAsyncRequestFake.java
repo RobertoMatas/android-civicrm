@@ -1,6 +1,6 @@
 package org.upsam.civicrm.test.fake;
 
-import org.upsam.civicrm.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
 
 public abstract class CiviCRMAsyncRequestFake<RESULT> extends CiviCRMSpiceRequest<RESULT> {
 

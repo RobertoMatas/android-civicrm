@@ -94,7 +94,7 @@ public class SybuntReportActivity extends SpiceAwareActivity {
 		Utilities.dismissProgressDialog(progressDialog);
 		Toast.makeText(
 				getApplicationContext(),
-				"Hubo un error al cargar el informe. Inténtelo de nuevo más tarde",
+				getString(R.string.error_cargar_informe),
 				Toast.LENGTH_LONG).show();
 	}
 

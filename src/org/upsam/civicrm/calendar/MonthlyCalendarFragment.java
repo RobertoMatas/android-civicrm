@@ -9,6 +9,7 @@ import org.upsam.civicrm.activity.model.ActivitySummary;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.util.CiviCRMRequestHelper;
 import org.upsam.civicrm.util.FilterUtilities;
+import org.upsam.civicrm.util.Utilities;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -17,6 +18,7 @@ import com.octo.android.robospice.request.listener.RequestProgress;
 import com.octo.android.robospice.request.listener.RequestProgressListener;
 import com.octo.android.robospice.request.listener.RequestStatus;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,8 +57,14 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				
+				TextView dayView = (TextView)view.findViewById(R.id.date);
+				String day = dayView.getText().toString();
+				if (day.length()==1){
+					day = "0"+day;
+				}
+				getActivity().getIntent().putExtra("selectedDay",""+android.text.format.DateFormat.format("yyyyMM", getMonth())+day);
+				ActionBar bar = getActivity().getActionBar();
+				bar.selectTab(bar.getTabAt(2));
 			}
 			
 			
@@ -97,7 +105,7 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 	@Override
 	protected void performRequest() {
 		getProgressBar().setVisibility(View.VISIBLE);
-		CiviCRMAsyncRequest<ListActivtiesSummary> request = CiviCRMRequestHelper.requestActivitiesForContact(102, this.getActivity());
+		CiviCRMAsyncRequest<ListActivtiesSummary> request = CiviCRMRequestHelper.requestActivitiesForContact(Integer.valueOf(Utilities.getContactId(getActivity())), this.getActivity());
 		setLastRequestCacheKey(request.createCacheKey());
 		getContentManager().execute(request, getLastRequestCacheKey(),
 					DurationInMillis.ONE_MINUTE, new ListActivitiesRequestListener());
@@ -147,7 +155,7 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 			} else if (RequestStatus.WRITING_TO_CACHE.equals(status)) {
 				Log.e("Activity ------>", "Writing from cache");
 			}
+		}
 	}
-}
 	
 }

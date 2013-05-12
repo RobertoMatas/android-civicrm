@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+    ===============================================================
+     NOMBRE APLICACION
+    ===============================================================                        
+    -->
+    <string name="app_name">Open Mobile CRM</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+
+    <!--
+    ===============================================================
+     SPLAH
+    ===============================================================                        
+    -->
+    <string name="splash_description">Open Mobile CRM</string>
+    <!--
+    ===============================================================
+     LOGIN
+    ===============================================================                        
+    -->
+    <string name="login_foot_test">Click here to test the application</string>
+    <string name="login_head_superior">Open Mobile</string>
+    <string name="login_head_inferior">CRM</string>
+    <string name="login_head_all">Open Mobile CRM</string>
+    <string name="login_footer">All rights reserved by Open Mobile CRM</string>
+    <string name="login_url">Url  civicrm</string>
+    <string name="login_key_site">Key  site</string>
+    <string name="login_user_name">User name</string>
+    <string name="login_user_password">Password</string>
+    <string name="login_button_login">Login system</string>
+    <string name="login_error_url_obligatoria">Url is a required field</string>
+    <string name="login_error_url_novalida">Url is not valid</string>
+    <string name="login_error_sitekey_obligatoria">Site key is a required field</string>
+    <string name="login_error_user_obligatoria">User name is a required field</string>
+    <string name="login_error_password_obligatoria">Password is a required field</string>
+    <string name="login_validando_title">Validating &#8230;</string>
+    <string name="login_validando_msg">Please wait &#8230;</string>
+    <string name="login_validando_ok_title">Correct validation</string>
+    <string name="login_validando_ok_msg">Welcome to OPEN MOBILE CRM</string>
+    <string name="login_validando_ok_button">Accept</string>
+    <string name="login_validando_ko_title">Validationg wrong</string>
+    <string name="login_validando_ko_msg">Some fields are not right</string>
+    <string name="login_validando_ko_button">Accept</string>
+    <string name="login_validando_error_title">Validating error</string>
+    <string name="login_validando_error_msg">Some fields are not right</string>
+    <string name="login_validando_error_button">Accept</string>
+    <string name="login_validando_error_drupal_msg">Failed to authenticate on the portal</string>
+    <string name="login_validando_drupal_ko_msg">Some of the fields entered on the site are not valid</string>
+    <string name="login_validando_error_ufmatch_msg">Unable to obtain your username. Contact Manager</string>
+    <string name="button_exit">Exit</string>
+    <!--
+    ===============================================================
+     HOME
+    ===============================================================                        
+    -->
+    <string name="home_contactos">Contacts</string>
+    <string name="home_actividades">Activities</string>
+    <string name="home_eventos">Events</string>
+    <string name="home_informes">Reports</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_acercade">About</string>
+    <!--
+    ===============================================================
+     ACERCA DE
+    ===============================================================                        
+    -->
+    <string name="acerca_de_label">About</string>
+    <string name="acerca_de_texto">Created by Roberto, Jorge, Gonzalo y Fernando as final project</string>
+    <string name="acerca_de_boton">Accept</string>
+
+    <!--
+    ===============================================================
+     PREFERENCIAS
+    ===============================================================                        
+    -->
+    <string name="preferencias_label">Setting</string>
+    <string name="pref_title_acceso">DATA ACCESS CIVICRM</string>
+    <string name="pref_title_usuario">USER DATA</string>
+    <string name="pref_title_generales">GENERAL INFORMATION</string>
+    <string name="pref_url_title">URL to access CIVICRM</string>
+    <string name="pref_url_summary">Connection with uri</string>
+    <string name="pref_keysite_title">KEY site provided by an administrator</string>
+    <string name="pref_keysite_summary">Necessary to connect</string>
+    <string name="pref_user_title">User name in CIVICRM</string>
+    <string name="pref_user_summary">Necessary to connect</string>
+    <string name="pref_password_title">User Password</string>
+    <string name="pref_password_summary">Necessary to connect</string>
+    <string name="pref_apikey_title">API KEY server</string>
+    <string name="pref_apikey_summary">Necessary to connect</string>
+    <string name="pref_userkey_title">USER KEY from user</string>
+    <string name="pref_userkey_summary">Necessary to connect</string>
+    <string name="pref_mail_title">Mail registered user</string>
+    <string name="pref_mail_summary">Required for user activities</string>
+    <string name="pref_idcontact_title">Contact id in CiviCrm</string>
+    <string name="pref_idcontact_summary">Necessary to obtain information from the CRM</string>
+    <!-- DATOS PARA SINCRONIZACION -->
+    <string name="pref_title_sync">SYNCRONIZATION</string>
+    <string name="pref_synchoursexecution_title">Repetition</string>
+    <string name="pref_synchoursexecution_summary">Every few hours running the synchronization process</string>
+    <string name="pref_syncusers_title">Users</string>
+    <string name="pref_syncusers_summary">Many users will be exported to the contacts</string>
+    <string name="pref_checkbox_title">Enable sync</string>
+    <string name="pref_checkbox_summary">Synchronize your calendar with civicrm</string>
+    <string name="pref_testingcontrol_label">Access Testing</string>
+    <string name="pref_testingcontrol_texto">This section is not allowed access in test mode. Close the application in the top bar button and authenticate</string>
+    <string name="pref_testingcontrol_boton">Accept</string>
+    <!--
+    ===============================================================
+     MENSAJES PROGRESS BAR DE CARGA GENERICOS
+    ===============================================================                        
+    -->
+    <string name="progress_bar_msg_generico">Loading&#8230;</string>
+    <!--
+    ===============================================================
+     CONTACTOS
+    ===============================================================                        
+    -->
+    <!-- titulos actividades -->
+    <string name="title_activity_contact_list">List contacts</string>
+    <string name="title_activity_contact_details">Contact Detail</string>
+
+    <!--  -->
+    <string name="contact_image">Contact</string>
+    <string name="search">Search</string>
+
+    <!-- menus izquierdo indice -->
+    <string name="address">Address</string>
+    <string name="communication_preferences">Comunication</string>
+    <string name="demographics">Demography</string>
+    <string name="constituent_information">Other Information</string>
+    <string name="tags_and_groups">Tags and Groups</string>
+    <string name="contact_activities">Activities</string>
+
+    <!-- detalle del contacto -->
+    <string name="email_detail">E-mail</string>
+    <string name="email_detail_ppal">Primary Email</string>
+    <string name="telephone_detail">phone</string>
+    <string name="address_literal">Address</string>
+    <string name="groups_literal">Groups</string>
+    <string name="tags_literal">Tags</string>
+    <string name="activity_assigned_literal">Assigned to me</string>
+    <string name="activity_target_literal">Target</string>
+    <string name="activity_created_literal">Created by my</string>
+    <string name="telephone_detail_ppal">Main phone</string>
+    <string name="do_not_phone">Do not call</string>
+    <string name="do_not_trade">No sales</string>
+    <string name="do_not_email">Do not send emails</string>
+    <string name="do_not_sms">Do not send messages SMS</string>
+    <string name="gender_detail">Gender</string>
+    <string name="birthdate_detail">Birthday</string>
+    <string name="deceased_detail">Contact deceased</string>
+    <string name="language_detail">preferred Language</string>
+    <string name="since_detail">From</string>
+    <string name="by_detail">by</string>
+    <!-- Añadir contacto -->
+    <string name="title_activity_add_contact">Create Contact</string>
+    <string name="add_contact">New contact</string>
+    <string name="add_contact_name_hint">Contact Name</string>
+    <string name="add_contact_email_hint">Contact Email</string>
+    <string name="add_contact_phone_hint">Contact phone</string>
+    <string name="add_contact_create_btn">Create</string>
+    <string name="title_activity_list_contacts_activities">List Contacts Activities</string>
+    <!-- errores validacion -->
+    <string name="mail_no_valido">Email format is not valid</string>
+    <string name="telefono_invalido">The phone number has an invalid format</string>
+    <string name="sin_informar_nombre">You must enter at least the name of the contact</string>
+    <string name="progress_bar_creando">Creating &#8230;</string>
+    <string name="error_creando_contacto">Failed to create the contact. Please try again later</string>
+    <string name="contacto_creado">Contact created, ID </string>
+
+    <!--
+    ===============================================================
+     CALENDARIO
+    ===============================================================                        
+    -->
+    <string name="title_activity_calendario">Calendar</string>
+
+    <!--
+    ===============================================================
+     INFORMES
+    ===============================================================
+    -->
+    <string name="menu_sybunt_report">SYBUNT</string>
+    <string name="menu_activity_resolution_report">Solving activities</string>
+    <string name="title_activity_sybunt_report">Report SYBUNT</string>
+    <string name="title_activity_report_selector">Reports</string>
+    <string name="general_http_error">There was an error contacting the server. Please try again later</string>
+    <string name="error_cargar_informe">There was an error loading the report. Please try again later</string>
+    <string name="progress_bar_calculando">Calculating &#8230;</string>
+    <string name="title_activity_activity_resolution_column_chart">Resolution activities</string>
+    <!--
+    ===============================================================
+     SINCRONIZACION
+    ===============================================================
+    -->
+    <string name="sync_title_company">Organization</string>
+    <string name="sync_title_notification">Open Mobile CRM</string>
+    <string name="sync_text_notification_ok">The contacts have been synchronized</string>
+    <string name="sync_text_notification_ko">The synchronization could not be performed.</string>
+    <string name="sync_ko_rest_notification">CiviCrm seems to have no contact services available. Please contact the administrator</string>
+    <string name="sync_error_notification">The synchronization could not be performed. Please contact the administrator</string>
+    <string name="sync_ok_notification">The synchronization has been made. It has taken </string>
+    <string name="sync_internet_notification">The synchronization could not be done by not having internet connection</string>
+    <string name="sync_ok_min_notification">minutes</string>
+    <string name="sync_preferencias_all">All</string>
+    <string name="sync_preferencias_horas_title">Execution Interval</string>
+    <string name="sync_preferencias_horas_summary">Interval in which synchronization runs</string>
+    <string name="sync_preferencias_users_title">Export Contacts</string>
+    <string name="sync_preferencias_users_summary">Contacts to include in the agenda</string>
+
+    <!--
+    ===============================================================
+     ERROR SIN ACCESO A INTERNET
+    ===============================================================                        
+    -->
+    <string name="error_no_internet">TO USE THIS APPLICATION IS NECESSARY TO HAVE AN INTERNET CONNECTION.</string>
+    <string name="description_image_nointernet">Internet access is required</string>
+
+</resources>

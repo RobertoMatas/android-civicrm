@@ -44,8 +44,8 @@ public class CalendarTabs extends Activity{
 		bar.addTab(tab);
 		
 		tab = bar.newTab().setText(DAY)
-				.setTabListener(new TabListener<DailyCalendarFragment>(this,
-						DAY, DailyCalendarFragment.class));
+				.setTabListener(new TabListener<DailyExpandableCalendarFragment>(this,
+						DAY, DailyExpandableCalendarFragment.class));
 		bar.addTab(tab);
 
 		bar.selectTab(bar.getTabAt(0));

@@ -13,6 +13,7 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
 
 import android.content.Context;
 import android.util.Log;
@@ -109,7 +110,7 @@ public class ContactAutoCompleteListAdapter extends BaseAdapter implements
 					params.add("return[contact_sub_type]", "1");
 					Log.d("ContactAutoCompleteListAdapter", "query: "
 							+ query.toString().replace(" ", "+"));
-					CiviCRMAsyncRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(
+					CiviCRMSpiceRequest<ListContacts> req = new CiviCRMAsyncRequest<ListContacts>(
 							activityContext, ListContacts.class, ACTION.get,
 							ENTITY.Contact, params);
 					Log.d("ContactAutoCompleteListAdapter",
