@@ -2,7 +2,6 @@ package org.upsam.civicrm.dagger.di.fragment;
 
 import javax.inject.Inject;
 
-import org.upsam.civicrm.dagger.annotations.ForActivity;
 import org.upsam.civicrm.dagger.di.activity.BaseDIActivity;
 import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilities;
 import org.upsam.civicrm.rest.req.CiviCRMContactRequestBuilder;
@@ -20,6 +19,7 @@ public class SpiceDIAwareFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		((BaseDIActivity) getActivity()).inject(this);
+		this.activityContext = getActivity();
 	}
 
 	@Inject
@@ -31,8 +31,8 @@ public class SpiceDIAwareFragment extends Fragment {
 	@Inject
 	ProgressDialogUtilities progressDialogUtilities;
 
-	@Inject
-	@ForActivity
+	//@Inject
+	//@ForActivity
 	Context activityContext;
 
 	protected ProgressDialog progressDialog;

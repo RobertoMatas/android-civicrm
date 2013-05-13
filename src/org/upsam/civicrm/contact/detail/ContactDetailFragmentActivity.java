@@ -11,6 +11,7 @@ import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.dagger.di.activity.SpiceDIAwareActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,11 +58,23 @@ public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 			menu.setMenu(R.layout.slide_menu_individual);
 		}
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// Show the Up button in the action bar.
-			getActionBar().setDisplayHomeAsUpEnabled(false);
-			getActionBar().setDisplayShowCustomEnabled(true);
-			getActionBar().setIcon(R.drawable.ic_slide);
+			ActionBar actionBar = getActionBar();
+			if (actionBar != null) {
+				actionBar.setDisplayHomeAsUpEnabled(false);
+				actionBar.setDisplayShowCustomEnabled(true);
+				actionBar.setIcon(R.drawable.ic_slide);
+			}
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onPostCreate(android.os.Bundle)
+	 */
+	@Override
+	public void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
 		if (findViewById(R.id.FrameLayout1) != null) {
 			if (savedInstanceState != null) {
 				return;
@@ -75,7 +88,6 @@ public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 					.add(R.id.FrameLayout1, contactDetailFragment,
 							"contactDetails").commit();
 		}
-
 	}
 
 	@Override

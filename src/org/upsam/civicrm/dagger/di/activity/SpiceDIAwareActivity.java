@@ -23,7 +23,7 @@ public class SpiceDIAwareActivity extends BaseDIActivity {
 	protected ProgressDialog progressDialog;
 
 	@Override
-	protected void onStart() {
+	public void onStart() {
 		spiceManager.start(this);
 		super.onStart();
 	}
