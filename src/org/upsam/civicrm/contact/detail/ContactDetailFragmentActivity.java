@@ -102,15 +102,18 @@ public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 		ContactAddressFragment addressFragment = new ContactAddressFragment();
 		addressFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.FrameLayout2, addressFragment).commit();
+				.replace(R.id.FrameLayout2, addressFragment, "contactAddress")
+				.commit();
 		menu.toggle();
 	}
 
 	private void addOtherInfoFragment() {
 		OtherInformationFragment otherInformationFragment = new OtherInformationFragment();
 		otherInformationFragment.setArguments(getIntent().getExtras());
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.FrameLayout2, otherInformationFragment).commit();
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.FrameLayout2, otherInformationFragment,
+						"contactOtherInformation").commit();
 		menu.toggle();
 	}
 
@@ -132,7 +135,8 @@ public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 		ListContactsActivitiesFragment activitiesFragment = new ListContactsActivitiesFragment();
 		activitiesFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.FrameLayout2, activitiesFragment).commit();
+				.replace(R.id.FrameLayout2, activitiesFragment,
+						"contactActivities").commit();
 		menu.toggle();
 
 	}
@@ -141,7 +145,8 @@ public class ContactDetailFragmentActivity extends SpiceDIAwareActivity
 		ContactTagsAndGroupsFragment tagsAndGroupsFragment = new ContactTagsAndGroupsFragment();
 		tagsAndGroupsFragment.setArguments(getIntent().getExtras());
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.FrameLayout2, tagsAndGroupsFragment).commit();
+				.replace(R.id.FrameLayout2, tagsAndGroupsFragment,
+						"contactTagsAndGroups").commit();
 		menu.toggle();
 	}
 

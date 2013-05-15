@@ -30,14 +30,35 @@
 		<dagger.version>1.0.0</dagger.version>
 	</properties>
 
-	<dependencies>
+	<dependencies>        
 		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>${com.google.android-version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+		<!-- Roboelectric -->
+        <!-- Make sure this is below the android dependencies -->    
+        <!--       
+        <dependency>
+            <groupId>com.pivotallabs</groupId>
+            <artifactId>robolectric</artifactId>
+            <version>1.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.2</version>
+            <scope>test</scope>
+        </dependency>
+         -->
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>support-v4</artifactId>
+			<version>r7</version>
+			<scope>provided</scope>
+		</dependency>		
 		<dependency>
 			<groupId>com.octo.android.robospice</groupId>
 			<artifactId>robospice-spring-android</artifactId>
@@ -68,25 +89,7 @@
 			<artifactId>fest-android</artifactId>
 			<version>1.0.4</version>
 			<scope>test</scope>
-		</dependency>
-		
-		<!-- Roboelectric -->
-        <!-- Make sure this is below the android dependencies -->
-        <!-- 
-        <dependency>
-            <groupId>com.pivotallabs</groupId>
-            <artifactId>robolectric</artifactId>
-            <version>1.2</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
-            <scope>test</scope>
-        </dependency>
-         -->
+		</dependency>        
 	</dependencies>
 
 	<repositories>

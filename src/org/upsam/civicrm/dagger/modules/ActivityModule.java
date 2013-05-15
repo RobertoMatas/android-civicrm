@@ -2,13 +2,14 @@ package org.upsam.civicrm.dagger.modules;
 
 import javax.inject.Singleton;
 
-import org.upsam.civicrm.contact.add.AddContactActivity;
 import org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity;
 import org.upsam.civicrm.contact.detail.fragments.ContactAddressFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactDetailFragment;
 import org.upsam.civicrm.contact.detail.fragments.ContactTagsAndGroupsFragment;
 import org.upsam.civicrm.contact.detail.fragments.ListContactsActivitiesFragment;
 import org.upsam.civicrm.contact.detail.fragments.OtherInformationFragment;
+import org.upsam.civicrm.contact.list.ContactListFragment;
+import org.upsam.civicrm.contact.list.ContactListTabs;
 import org.upsam.civicrm.dagger.annotations.ForActivity;
 import org.upsam.civicrm.dagger.di.activity.BaseDIActivity;
 import org.upsam.civicrm.dagger.utilities.ProgressDialogUtilities;
@@ -29,10 +30,11 @@ import dagger.Provides;
  * activity. We can safely create singletons using the activity instance because
  * ths entire object graph will only ever exist inside of that activity.
  */
-@Module(injects = { AddContactActivity.class,
-		ContactDetailFragmentActivity.class, ContactDetailFragment.class,
-		ContactAddressFragment.class, ContactTagsAndGroupsFragment.class,
-		ListContactsActivitiesFragment.class, OtherInformationFragment.class })
+@Module(injects = { ContactDetailFragmentActivity.class,
+		ContactDetailFragment.class, ContactAddressFragment.class,
+		ContactTagsAndGroupsFragment.class,
+		ListContactsActivitiesFragment.class, OtherInformationFragment.class,
+		ContactListTabs.class, ContactListFragment.class }, library = true)
 public class ActivityModule {
 	private final BaseDIActivity activity;
 

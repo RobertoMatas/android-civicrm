@@ -9,7 +9,7 @@ import android.content.Context;
 import dagger.Module;
 import dagger.Provides;
 
-@Module
+@Module(library = true)
 public class AndroidModule {
 	private final CiviCRMApplication application;
 

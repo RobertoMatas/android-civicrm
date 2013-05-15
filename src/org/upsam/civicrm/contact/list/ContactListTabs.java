@@ -5,6 +5,7 @@ import org.upsam.civicrm.contact.add.AddContactActivity;
 import org.upsam.civicrm.contact.detail.ContactDetailFragmentActivity;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
+import org.upsam.civicrm.dagger.di.activity.SpiceDIAwareActivity;
 import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
 
 import android.annotation.SuppressLint;
@@ -24,13 +25,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
-import android.widget.Toast;
 
 /**
  * This demonstrates the use of action bar tabs and how they interact with other
  * action bar features.
  */
-public class ContactListTabs extends Activity {
+public class ContactListTabs extends SpiceDIAwareActivity {
 
 	private static final String ALL = "All";
 	private static final String INDIVIDUAL = "Individual";
@@ -46,42 +46,44 @@ public class ContactListTabs extends Activity {
 
 	private void configureTabs(Bundle savedInstanceState) {
 		ActionBar bar = getActionBar();
-		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-		bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
-		Bundle args = new Bundle();
-		args.putString("contact_type", ORGANIZATION);
-		Tab tab = bar
-				.newTab()
-				.setText(ORGANIZATION)
-				.setTabListener(
-						new TabListener<ContactListFragment>(this,
-								ORGANIZATION, ContactListFragment.class, args));
-		bar.addTab(tab);
-
-		args = new Bundle();
-		args.putString("contact_type", INDIVIDUAL);
-		tab = bar
-				.newTab()
-				.setText(INDIVIDUAL)
-				.setTabListener(
-						new TabListener<ContactListFragment>(this, INDIVIDUAL,
-								ContactListFragment.class, args));
-		bar.addTab(tab);
-
-		args = new Bundle();
-		args.putString("contact_type", "");
-		tab = bar
-				.newTab()
-				.setText(ALL)
-				.setTabListener(
-						new TabListener<ContactListFragment>(this, ALL,
-								ContactListFragment.class, args));
-		bar.addTab(tab);
-
-		bar.selectTab(bar.getTabAt(2));
-
-		if (savedInstanceState != null) {
-			bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 2));
+		if (bar != null) {
+			bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+			bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
+			Bundle args = new Bundle();
+			args.putString("contact_type", ORGANIZATION);
+			Tab tab = bar
+					.newTab()
+					.setText(ORGANIZATION)
+					.setTabListener(
+							new TabListener<ContactListFragment>(this,
+									ORGANIZATION, ContactListFragment.class, args));
+			bar.addTab(tab);
+	
+			args = new Bundle();
+			args.putString("contact_type", INDIVIDUAL);
+			tab = bar
+					.newTab()
+					.setText(INDIVIDUAL)
+					.setTabListener(
+							new TabListener<ContactListFragment>(this, INDIVIDUAL,
+									ContactListFragment.class, args));
+			bar.addTab(tab);
+	
+			args = new Bundle();
+			args.putString("contact_type", "");
+			tab = bar
+					.newTab()
+					.setText(ALL)
+					.setTabListener(
+							new TabListener<ContactListFragment>(this, ALL,
+									ContactListFragment.class, args));
+			bar.addTab(tab);
+	
+			bar.selectTab(bar.getTabAt(2));
+	
+			if (savedInstanceState != null) {
+				bar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 2));
+			}
 		}
 	}
 
@@ -105,7 +107,6 @@ public class ContactListTabs extends Activity {
 		return super.onMenuItemSelected(featureId, item);
 	}
 
-	// @SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_contact_list, menu);
@@ -208,8 +209,6 @@ public class ContactListTabs extends Activity {
 			}
 		}
 
-		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			Toast.makeText(mActivity, "Reselected!", Toast.LENGTH_SHORT).show();
-		}
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {	}
 	}
 }

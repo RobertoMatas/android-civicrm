@@ -172,8 +172,8 @@ public class ContactDetailFragment extends SpiceDIAwareFragment {
 		ImageView imageView = null;
 		TextView textView1 = null;
 		TextView textView2 = null;
-		view = getLayoutInflater(null).inflate(R.layout.contact_detail_row,
-				contactData, false);
+		view = LayoutInflater.from(getActivityContext()).inflate(
+				R.layout.contact_detail_row, contactData, false);
 		imageView = (ImageView) view.findViewById(R.id.imageView1);
 		textView1 = (TextView) view.findViewById(R.id.textView1);
 		textView2 = (TextView) view.findViewById(R.id.textView2);

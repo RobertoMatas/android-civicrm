@@ -97,8 +97,8 @@ public class ContactAddressFragment extends SpiceDIAwareFragment {
 			Constant locationTypes) {
 		LinearLayout listLayout = (LinearLayout) getView().findViewById(
 				R.id.addressList);
-		View row = getLayoutInflater(null).inflate(R.layout.row_address_layout,
-				listLayout, false);
+		View row = LayoutInflater.from(getActivityContext()).inflate(
+				R.layout.row_address_layout, listLayout, false);
 		TextView displayAddressType = (TextView) row
 				.findViewById(R.id.addressType);
 		TextView displayAddress = (TextView) row

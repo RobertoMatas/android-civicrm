@@ -112,19 +112,6 @@ public class OtherInformationFragment extends SpiceDIAwareFragment {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
-				getProgressDialog(),
-				getString(R.string.progress_bar_msg_generico));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
@@ -134,6 +121,9 @@ public class OtherInformationFragment extends SpiceDIAwareFragment {
 	}
 
 	private void executeRequests() {
+		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
+				getProgressDialog(),
+				getString(R.string.progress_bar_msg_generico));
 		CiviCRMSpiceRequest<ListCustomFields> customFieldsReq = getRequestBuilder()
 				.requestCustomFields();
 		getSpiceManager().execute(customFieldsReq,
@@ -188,8 +178,8 @@ public class OtherInformationFragment extends SpiceDIAwareFragment {
 	private void putTitle() {
 		LinearLayout layout = (LinearLayout) getView().findViewById(
 				R.id.other_info);
-		View view = (TextView) getLayoutInflater(null).inflate(
-				android.R.layout.simple_list_item_1, layout, false);
+		View view = (TextView) LayoutInflater.from(getActivityContext())
+				.inflate(android.R.layout.simple_list_item_1, layout, false);
 		TextView textView = (TextView) view.findViewById(android.R.id.text1);
 		textView.setTextAppearance(getActivityContext(), R.style.textoGreen);
 		textView.setText(getString(R.string.constituent_information));
@@ -199,7 +189,7 @@ public class OtherInformationFragment extends SpiceDIAwareFragment {
 	public void refreshView(HumanReadableValue result, String label) {
 		LinearLayout layout = (LinearLayout) getView().findViewById(
 				R.id.other_info);
-		View view = getLayoutInflater(null).inflate(
+		View view = LayoutInflater.from(getActivityContext()).inflate(
 				R.layout.contact_tags_and_groups_row, layout, false);
 
 		TextView textView1 = (TextView) view.findViewById(R.id.textView1);

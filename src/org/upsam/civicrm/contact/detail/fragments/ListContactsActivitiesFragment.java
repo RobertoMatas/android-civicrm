@@ -60,7 +60,9 @@ public class ListContactsActivitiesFragment extends SpiceDIAwareFragment {
 		return view;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
@@ -94,8 +96,8 @@ public class ListContactsActivitiesFragment extends SpiceDIAwareFragment {
 	private void paintActivityRow(ActivitySummary activitySummary) {
 		LinearLayout listLayout = (LinearLayout) getView().findViewById(
 				R.id.addressList);
-		View row = getLayoutInflater(null).inflate(R.layout.row_address_layout,
-				listLayout, false);
+		View row = LayoutInflater.from(getActivityContext()).inflate(
+				R.layout.row_address_layout, listLayout, false);
 		ImageView imag = (ImageView) row.findViewById(R.id.imageView1);
 		TextView title = (TextView) row.findViewById(R.id.addressType);
 		TextView text1 = (TextView) row.findViewById(R.id.display_address);

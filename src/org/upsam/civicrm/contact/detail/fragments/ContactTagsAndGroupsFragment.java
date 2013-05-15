@@ -169,8 +169,8 @@ public class ContactTagsAndGroupsFragment extends SpiceDIAwareFragment {
 
 	private void putTitle(int layoutId, String title) {
 		LinearLayout layout = (LinearLayout) getView().findViewById(layoutId);
-		View view = (TextView) getLayoutInflater(null).inflate(
-				android.R.layout.simple_list_item_1, layout, false);
+		View view = (TextView) LayoutInflater.from(getActivityContext())
+				.inflate(android.R.layout.simple_list_item_1, layout, false);
 		TextView textView = (TextView) view.findViewById(android.R.id.text1);
 		textView.setTextAppearance(getActivityContext(), R.style.textoGreen);
 		textView.setText(title);
@@ -179,7 +179,7 @@ public class ContactTagsAndGroupsFragment extends SpiceDIAwareFragment {
 
 	private void paint(int layoutId, int imgId, String text1, String text2) {
 		LinearLayout layout = (LinearLayout) getView().findViewById(layoutId);
-		View view = getLayoutInflater(null).inflate(
+		View view = LayoutInflater.from(getActivityContext()).inflate(
 				R.layout.contact_tags_and_groups_row, layout, false);
 
 		ImageView img = (ImageView) view.findViewById(R.id.imageView1);
