@@ -113,7 +113,7 @@ public class ActivityResolutionReportActivity extends SpiceAwareActivity {
 		Utilities.dismissProgressDialog(progressDialog);
 		Toast.makeText(
 				getApplicationContext(),
-				"Hubo un error al cargar el informe. Inténtelo de nuevo más tarde",
+				getString(R.string.error_cargar_informe),
 				Toast.LENGTH_LONG).show();
 	}
 
@@ -132,7 +132,7 @@ public class ActivityResolutionReportActivity extends SpiceAwareActivity {
 	private void executeRequests() {
 		webView.setVisibility(View.GONE);
 		this.progressDialog = Utilities.showLoadingProgressDialog(
-				progressDialog, this, "Calculando...");
+				progressDialog, this, getString(R.string.progress_bar_calculando));
 		CiviCRMAsyncRequest<ListActivityStatus> req = CiviCRMRequestHelper
 				.requestActivitiesStatus(this);
 		contentManager.execute(req, req.createCacheKey(),

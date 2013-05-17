@@ -24,6 +24,7 @@
             android:layout_height="80dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/borde_home"
+            android:onClick="showContacts"
             android:orientation="vertical" >
 
             <ImageView
@@ -33,8 +34,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_contactos"
                 android:clickable="true"
-                android:contentDescription="@string/home_contactos"
-                android:onClick="showContacts" />
+                android:contentDescription="@string/home_contactos" />
 
             <TextView
                 android:id="@+id/textContactos"
@@ -52,6 +52,7 @@
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:background="@drawable/borde_home"
+            android:onClick="showEvents"
             android:orientation="vertical" >
 
             <ImageView
@@ -61,8 +62,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_eventos"
                 android:clickable="true"
-                android:contentDescription="@string/home_eventos"
-                android:onClick="showEvents" />
+                android:contentDescription="@string/home_eventos" />
 
             <TextView
                 android:id="@+id/textEventos"
@@ -91,6 +91,7 @@
             android:layout_height="80dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/borde_home"
+            android:onClick="showActivities"
             android:orientation="vertical" >
 
             <ImageView
@@ -100,8 +101,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_actividades"
                 android:clickable="true"
-                android:contentDescription="@string/home_actividades"
-                android:onClick="showActivities" />
+                android:contentDescription="@string/home_actividades" />
 
             <TextView
                 android:id="@+id/textActividades"
@@ -119,6 +119,7 @@
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:background="@drawable/borde_home"
+            android:onClick="showInformes"
             android:orientation="vertical" >
 
             <ImageView
@@ -128,8 +129,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_reporting"
                 android:clickable="true"
-                android:contentDescription="@string/home_informes"
-                android:onClick="showInformes" />
+                android:contentDescription="@string/home_informes" />
 
             <TextView
                 android:id="@+id/textReporting"
@@ -157,6 +157,7 @@
             android:layout_height="80dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/borde_home"
+            android:onClick="loadPreference"
             android:orientation="vertical" >
 
             <ImageView
@@ -166,8 +167,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_settings"
                 android:clickable="true"
-                android:contentDescription="@string/home_settings"
-                android:onClick="loadPreference" />
+                android:contentDescription="@string/home_settings" />
 
             <TextView
                 android:id="@+id/textSettings"
@@ -185,6 +185,7 @@
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:background="@drawable/borde_home"
+            android:onClick="acercaDe"
             android:orientation="vertical" >
 
             <ImageView
@@ -194,8 +195,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/ic_info"
                 android:clickable="true"
-                android:contentDescription="@string/home_acercade"
-                android:onClick="acercaDe" />
+                android:contentDescription="@string/home_acercade" />
 
             <TextView
                 android:id="@+id/textacercade"

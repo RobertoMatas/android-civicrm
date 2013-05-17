@@ -281,6 +281,13 @@ public class SyncUtil {
 		return Integer.parseInt(value);
 	}
 	
+	public static boolean isActivateSync(Context applicationContext)
+	{
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		boolean value = prefs.getBoolean("PREF_ACTIVATE_SYNC", Boolean.FALSE);				
+		return value;
+	}
+	
 	public static void insertTimeStamp(HandlerData handlerData,Date timeStamp)
 	{
 		List<ExecutionValue> listExecution = handlerData.getExecutionDAO().getAllRecords();

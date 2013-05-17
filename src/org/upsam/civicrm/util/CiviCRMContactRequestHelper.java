@@ -9,6 +9,7 @@ import org.upsam.civicrm.contact.model.address.ListAddresses;
 import org.upsam.civicrm.contact.model.constant.Constant;
 import org.upsam.civicrm.contact.model.contact.Contact;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
+import org.upsam.civicrm.contact.model.contact.ListContactType;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
 import org.upsam.civicrm.contact.model.custom.HumanReadableValue;
 import org.upsam.civicrm.contact.model.custom.ListCustomFields;
@@ -19,6 +20,7 @@ import org.upsam.civicrm.contact.model.lang.PreferredLanguage;
 import org.upsam.civicrm.contact.model.tags.ListTags;
 import org.upsam.civicrm.contact.model.tags.Tag;
 import org.upsam.civicrm.contact.model.telephone.ListPhones;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
 
 import android.content.Context;
 
@@ -143,8 +145,9 @@ public class CiviCRMContactRequestHelper {
 				HumanReadableValue.class, ACTION.getsingle, ENTITY.OptionValue,
 				params);
 	}
-	
-	public static CiviCRMAsyncRequest<ListContacts> requestListContact(Context ctx, int page, String type) {
+
+	public static CiviCRMAsyncRequest<ListContacts> requestListContact(
+			Context ctx, int page, String type) {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
 				5);
 		if (page != 1) {
@@ -156,8 +159,16 @@ public class CiviCRMContactRequestHelper {
 		if (type != null && !"".equals(type)) {
 			params.add("contact_type", type);
 		}
-		return new CiviCRMAsyncRequest<ListContacts>(
-				ctx, ListContacts.class, ACTION.get,
-				ENTITY.Contact, params);
+		return new CiviCRMAsyncRequest<ListContacts>(ctx, ListContacts.class,
+				ACTION.get, ENTITY.Contact, params);
+	}
+
+	public static CiviCRMSpiceRequest<ListContactType> requestContactTypes(
+			Context ctx) {
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				1);
+		params.add("is_reserved", "1");
+		return new CiviCRMAsyncRequest<ListContactType>(ctx,
+				ListContactType.class, ACTION.get, ENTITY.ContactType, params);
 	}
 }

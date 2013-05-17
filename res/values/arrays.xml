@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <array name="slide_organization_menu">
+    <string-array name="slide_organization_menu">
         <item>@string/address</item>
         <item>@string/communication_preferences</item>
         <item>@string/tags_and_groups</item>
         <item>@string/contact_activities</item>
-    </array>
-    <array name="slide_individual_menu">
+    </string-array>
+    <string-array name="slide_individual_menu">
         <item>@string/address</item>
         <item>@string/communication_preferences</item>
         <item>@string/demographics</item>
         <item>@string/constituent_information</item>
         <item>@string/tags_and_groups</item>
         <item>@string/contact_activities</item>
-    </array>
+    </string-array>
     <!-- SINCRONIZACION DE CONTACTOS -->
     <string-array name="horasExecution">
         <item>1</item>

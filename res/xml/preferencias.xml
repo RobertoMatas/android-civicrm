@@ -48,6 +48,12 @@
     <PreferenceCategory
         android:layout="@layout/pref_datos_sync"
         android:title="@string/pref_title_sync" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="PREF_ACTIVATE_SYNC"
+            android:summary="@string/pref_checkbox_summary"
+            android:title="@string/pref_checkbox_title" />
+
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/horasExecution"

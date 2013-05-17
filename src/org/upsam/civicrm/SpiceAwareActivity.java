@@ -10,14 +10,13 @@ import com.octo.android.robospice.SpiceManager;
 /**
  * Clase padre de todas las actividades
  * 
- * @author Equipo 7
- * Universidad Pontificia de Salamanca
- * v1.0
- *
+ * @author Equipo 7 Universidad Pontificia de Salamanca v1.0
+ * 
  */
 public class SpiceAwareActivity extends Activity {
 
-	protected SpiceManager contentManager = new SpiceManager(CiviCRMAndroidSpiceService.class);
+	protected SpiceManager contentManager = new SpiceManager(
+			CiviCRMAndroidSpiceService.class);
 
 	protected ProgressDialog progressDialog;
 
@@ -44,5 +43,20 @@ public class SpiceAwareActivity extends Activity {
 		super.onDestroy();
 		this.destroyed = Boolean.TRUE;
 	}
-	
+
+	/**
+	 * @return the contentManager
+	 */
+	public SpiceManager getContentManager() {
+		return contentManager;
+	}
+
+	/**
+	 * @param contentManager
+	 *            the contentManager to set
+	 */
+	public void setContentManager(SpiceManager contentManager) {
+		this.contentManager = contentManager;
+	}
+
 }

@@ -9,13 +9,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.beans.DataCivi;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
 import org.upsam.civicrm.util.Utilities;
 
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
-
-import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
 
 /**
  * Peticiones Rest
@@ -31,8 +30,7 @@ import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceReques
  * @author Equipo 7 Universidad Pontificia de Salamanca v1.0
  * 
  */
-public class CiviCRMAsyncRequest<RESULT> extends
-		SpringAndroidSpiceRequest<RESULT> {
+public class CiviCRMAsyncRequest<RESULT> extends CiviCRMSpiceRequest<RESULT> {
 	/**
 	 * 
 	 */
@@ -262,14 +260,25 @@ public class CiviCRMAsyncRequest<RESULT> extends
 		return uri.toString() + "&uf_name=" + datacivi.getMail();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.upsam.civicrm.CiviCRMSpiceRequest#createCacheKey()
+	 */
+	@Override
 	public String createCacheKey() {
 		return Integer.toString(this.uriReq.hashCode());
 	}
 
+	/* (non-Javadoc)
+	 * @see org.upsam.civicrm.CiviCRMSpiceRequest#getUriReq()
+	 */
+	@Override
 	public String getUriReq() {
 		return this.uriReq;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.upsam.civicrm.CiviCRMSpiceRequest#loadDataFromNetwork()
+	 */
 	@Override
 	public RESULT loadDataFromNetwork() throws Exception {
 		Log.d("ContactTagsAndGroupsFragment", "loadDataFromNetwork() -> "

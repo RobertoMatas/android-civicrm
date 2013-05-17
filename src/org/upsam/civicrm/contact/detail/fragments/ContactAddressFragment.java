@@ -1,23 +1,18 @@
 package org.upsam.civicrm.contact.detail.fragments;
 
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestContactAddresses;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestCountries;
-import static org.upsam.civicrm.util.CiviCRMContactRequestHelper.requestLocationTypes;
 import static org.upsam.civicrm.util.CiviCRMRequestHelper.notifyRequestError;
 
 import java.util.List;
 
 import org.springframework.util.StringUtils;
-import org.upsam.civicrm.AbstractAsyncFragment;
-import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.contact.model.address.Address;
 import org.upsam.civicrm.contact.model.address.ListAddresses;
 import org.upsam.civicrm.contact.model.constant.Constant;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
-import org.upsam.civicrm.util.Utilities;
+import org.upsam.civicrm.dagger.di.CiviCRMSpiceRequest;
+import org.upsam.civicrm.dagger.di.fragment.SpiceDIAwareFragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,21 +20,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.octo.android.robospice.SpiceManager;
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
 
-public class ContactAddressFragment extends AbstractAsyncFragment {
-
-	/**
-	 * 
-	 * @param contentManager
-	 */
-	public ContactAddressFragment(SpiceManager contentManager,
-			Context activityContext) {
-		super(contentManager, activityContext);
-	}
+public class ContactAddressFragment extends SpiceDIAwareFragment {
 
 	/*
 	 * (non-Javadoc)
@@ -53,56 +38,47 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.contact_address_layout,
 				container, false);
-
 		return view;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 * @see android.support.v4.app.Fragment#onStart()
 	 */
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		this.progressDialog = Utilities.showLoadingProgressDialog(
-				this.progressDialog, activityContext,
+	public void onStart() {
+		super.onStart();
+		this.progressDialog = getProgressDialogUtilities().showProgressDialog(
+				getProgressDialog(),
 				getString(R.string.progress_bar_msg_generico));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		getCountries();
 	}
 
 	private void getCountries() {
-		CiviCRMAsyncRequest<Constant> reqCountries = requestCountries(activityContext);
-		contentManager.execute(reqCountries, reqCountries.createCacheKey(),
+		CiviCRMSpiceRequest<Constant> reqCountries = getRequestBuilder()
+				.requestCountries();
+		getSpiceManager().execute(reqCountries, reqCountries.createCacheKey(),
 				DurationInMillis.ONE_HOUR, new CountriesListener());
 
 	}
 
 	private void getLocationTypes(Constant countries) {
-		CiviCRMAsyncRequest<Constant> reqLocations = requestLocationTypes(activityContext);
-		contentManager
+		CiviCRMSpiceRequest<Constant> reqLocations = getRequestBuilder()
+				.requestLocationTypes();
+		getSpiceManager()
 				.execute(reqLocations, reqLocations.createCacheKey(),
-						DurationInMillis.ONE_HOUR, new LocationTypesListener(
-								countries));
+						DurationInMillis.ONE_HOUR,
+						new LocationTypesListener(countries));
 	}
 
 	private void executeRequests(Constant countries, Constant locationTypes) {
 		ContactSummary contactSummary = getArguments().getParcelable("contact");
-		CiviCRMAsyncRequest<ListAddresses> request = requestContactAddresses(
-				activityContext, contactSummary);
-		contentManager.execute(request, request.createCacheKey(),
-				DurationInMillis.ONE_MINUTE, new ContactAddressListener(
-						countries, locationTypes));
+		CiviCRMSpiceRequest<ListAddresses> request = getRequestBuilder()
+				.requestContactAddresses(contactSummary.getId());
+		getSpiceManager().execute(request, request.createCacheKey(),
+				DurationInMillis.ONE_MINUTE,
+				new ContactAddressListener(countries, locationTypes));
 	}
 
 	private void refreshView(ListAddresses result, Constant countries,
@@ -113,7 +89,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 				paintAddressRow(address, countries, locationTypes);
 			}
 		}
-		Utilities.dismissProgressDialog(progressDialog);
+		getProgressDialogUtilities().dismissProgressDialog(progressDialog);
 
 	}
 
@@ -121,8 +97,8 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 			Constant locationTypes) {
 		LinearLayout listLayout = (LinearLayout) getView().findViewById(
 				R.id.addressList);
-		View row = getLayoutInflater(null).inflate(R.layout.row_address_layout,
-				listLayout, false);
+		View row = LayoutInflater.from(getActivityContext()).inflate(
+				R.layout.row_address_layout, listLayout, false);
 		TextView displayAddressType = (TextView) row
 				.findViewById(R.id.addressType);
 		TextView displayAddress = (TextView) row
@@ -132,13 +108,15 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 		TextView displayCity = (TextView) row.findViewById(R.id.display_city);
 		TextView displayCountry = (TextView) row
 				.findViewById(R.id.display_country);
-		displayAddressType.setTextAppearance(activityContext,
+		displayAddressType.setTextAppearance(getActivityContext(),
 				R.style.textoGreen);
-		displayAddress.setTextAppearance(activityContext, R.style.textoDefault);
-		displaySuppAddress.setTextAppearance(activityContext,
+		displayAddress.setTextAppearance(getActivityContext(),
+				R.style.textoDefault);
+		displaySuppAddress.setTextAppearance(getActivityContext(),
 				R.style.textoWhite);
-		displayCity.setTextAppearance(activityContext, R.style.textoWhite);
-		displayCountry.setTextAppearance(activityContext, R.style.textoWhite);
+		displayCity.setTextAppearance(getActivityContext(), R.style.textoWhite);
+		displayCountry.setTextAppearance(getActivityContext(),
+				R.style.textoWhite);
 
 		displayAddressType.setText(locationTypes.getValues().get(
 				address.getLocationTypeId())
@@ -157,7 +135,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 		}
 
 		@Override
@@ -181,7 +159,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 
@@ -208,7 +186,7 @@ public class ContactAddressFragment extends AbstractAsyncFragment {
 
 		@Override
 		public void onRequestFailure(SpiceException spiceException) {
-			notifyRequestError(activityContext, progressDialog);
+			notifyRequestError(getActivityContext(), progressDialog);
 
 		}
 

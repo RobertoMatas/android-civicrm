@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -13,14 +14,13 @@ import org.upsam.civicrm.activity.model.ActivityHeader;
 import org.upsam.civicrm.activity.model.ActivitySummary;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 
-import android.text.format.DateFormat;
 import android.util.Log;
 
 public class FilterUtilities {
 	
 	public static MultiValueMap<String, ActivitySummary> filterScheduledActivitiesByDates(ListActivtiesSummary listActivitiesSummary, String contactId){
 		MultiValueMap<String, ActivitySummary> activitiesFiltered = new LinkedMultiValueMap<String, ActivitySummary>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",new Locale("es_ES"));
 		
 		Date dateKey = null;
 		List<ActivitySummary> activitiesSummary = listActivitiesSummary.getValues();
@@ -40,7 +40,7 @@ public class FilterUtilities {
 	
 	public static List<ActivityHeader> filterScheduledActivitiesByHour(List<ActivitySummary> todayActivities){
 		MultiValueMap<String, ActivitySummary> activitiesFiltered = new LinkedMultiValueMap<String, ActivitySummary>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",new Locale("es_ES"));
 		Date dateKey = null;
 		List<ActivityHeader> headers = new ArrayList<ActivityHeader>();
 		ActivityHeader header = null;
@@ -79,7 +79,7 @@ public class FilterUtilities {
 	
 	public static int getNumberOfActivitiesByHour(List<ActivitySummary> todayActivities, String hour){
 		MultiValueMap<String, ActivitySummary> activitiesFiltered = new LinkedMultiValueMap<String, ActivitySummary>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss",new Locale("es_ES"));
 		Date dateKey = null;
 		int numberOfActivities = 0;
 		if (todayActivities != null){
