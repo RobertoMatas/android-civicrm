@@ -10,6 +10,7 @@ import org.upsam.civicrm.activity.model.ActivityCounter;
 import org.upsam.civicrm.activity.model.ListActivityStatus;
 import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.charts.model.ListOfContribution;
+import org.upsam.civicrm.event.model.ListEventsSummary;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,6 +32,15 @@ public class CiviCRMRequestHelper {
 		params.add("contact_id", String.valueOf(contactId));
 		return new CiviCRMAsyncRequest<ListActivtiesSummary>(ctx,
 				ListActivtiesSummary.class, ACTION.get, ENTITY.Activity, params);
+	}
+	
+	public static CiviCRMAsyncRequest<ListEventsSummary> requestEventsForContact(
+			int contactId, Context ctx) {
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>(
+				1);
+		params.add("contact_id", String.valueOf(contactId));
+		return new CiviCRMAsyncRequest<ListEventsSummary>(ctx,
+				ListEventsSummary.class, ACTION.get, ENTITY.Participant, params);
 	}
 
 	public static CiviCRMAsyncRequest<ListActivityStatus> requestActivitiesStatus(

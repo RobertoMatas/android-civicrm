@@ -42,7 +42,7 @@ public class CiviCRMAsyncRequest<RESULT> extends CiviCRMSpiceRequest<RESULT> {
 	 * 
 	 */
 	public static enum ENTITY {
-		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity, Contribution, Constant
+		Phone, Contact, ContactType, Email, Address, GroupContact, EntityTag, Tag, CustomField, CustomValue, OptionValue, Activity, Contribution, Constant, Participant
 	};
 
 	/**

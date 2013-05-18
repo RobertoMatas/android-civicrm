@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -54,6 +55,9 @@ public class DailyCalendarFragment extends CalendarFragment{
 				new ArrayList<ActivitySummary>());
 		dailyCalendar.setAdapter(adapter);
 		
+	    TextView title  = (TextView) this.getView().findViewById(R.id.dailyExpandableTitle);
+	    title.setText(android.text.format.DateFormat.format("DDDD MMMM yyyy", getMonth()));
+		
 	}
 
 	@Override
@@ -83,7 +87,7 @@ public class DailyCalendarFragment extends CalendarFragment{
 				Log.e("ERROR --------->", "Actividades vac’as!!!");
 				return;
 			}
-			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, "102"));
+			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, Utilities.getContactId(getActivity())));
 			Bundle extras = getActivity().getIntent().getExtras();
 			String selectedDay = extras != null?extras.getString("selectedDay"):null;
 			List<ActivitySummary> todayActivities = null;

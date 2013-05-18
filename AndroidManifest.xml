@@ -139,6 +139,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.upsam.civicrm.MainActivity" />
         </activity>
+        
+        <activity
+            android:name="org.upsam.civicrm.event.list.EventsListActivity"
+            android:label="@string/title_activity_events_list"
+            android:parentActivityName="org.upsam.civicrm.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.upsam.civicrm.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

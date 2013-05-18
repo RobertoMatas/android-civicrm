@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="3dp"
         android:paddingLeft="35sp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -20,6 +21,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
+        android:layout_marginTop="3dp"
         android:gravity="center"
         android:layout_toRightOf="@id/hour"
         android:paddingLeft="35sp"

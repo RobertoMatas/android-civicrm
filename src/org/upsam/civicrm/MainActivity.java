@@ -25,6 +25,7 @@ import org.upsam.civicrm.beans.DataCivi;
 import org.upsam.civicrm.calendar.CalendarTabs;
 import org.upsam.civicrm.charts.ReportSelectorActivity;
 import org.upsam.civicrm.contact.list.ContactListTabs;
+import org.upsam.civicrm.event.list.EventsListActivity;
 import org.upsam.civicrm.login.ControlTesting;
 import org.upsam.civicrm.login.FragmentHome;
 import org.upsam.civicrm.login.FragmentLogin;
@@ -283,8 +284,8 @@ public class MainActivity extends FragmentActivity {
 
 	public void showEvents(View view) {
 
-		Toast.makeText(getApplicationContext(), "En construccion EVENTOS",
-				Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this,EventsListActivity.class);
+		startActivity(intent);
 
 	}
 

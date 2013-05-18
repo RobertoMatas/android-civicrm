@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ProgressBar;
 
@@ -53,6 +54,19 @@ public class DailyExpandableCalendarFragment extends CalendarFragment {
 				new ArrayList<ActivityHeader>());
 		dailyCalendar.setAdapter(adapter);
 		dailyCalendar.setOnGroupClickListener(groupClicked);
+		
+	    TextView title  = (TextView) this.getView().findViewById(R.id.dailyExpandableTitle);
+		Bundle extras = getActivity().getIntent().getExtras();
+		if (extras!= null){
+			String selectedDay = extras.getString("selectedDay");
+			if (selectedDay != null){
+				int day = Integer.valueOf(selectedDay.substring(6, 8));
+				int month = Integer.valueOf(selectedDay.substring(4, 6))-1;
+				int year = Integer.valueOf(selectedDay.substring(0, 4));
+				getMonth().set(year,month,day);
+			}
+		}
+	    title.setText(android.text.format.DateFormat.format("EEEE, dd MMMM yyyy", getMonth()));
 
 	}
 
@@ -84,7 +98,7 @@ public class DailyExpandableCalendarFragment extends CalendarFragment {
 				Log.e("ERROR --------->", "Actividades vac’as!!!");
 				return;
 			}
-			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, "102"));
+			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, Utilities.getContactId(getActivity())));
 			Bundle extras = getActivity().getIntent().getExtras();
 			String selectedDay = extras != null?extras.getString("selectedDay"):null;
 			List<ActivitySummary> todayActivities = null;

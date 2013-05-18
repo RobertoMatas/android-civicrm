@@ -76,7 +76,7 @@ public class DailyExpandableCalendarAdapter extends BaseExpandableListAdapter {
 		displayName.setText(activitySummary.getName());
 
 		TextView dateTime = (TextView) view.findViewById(R.id.activitySumaryDateTime);
-		dateTime.setText(activitySummary.getDateTime());
+		dateTime.setText(activitySummary.getDateTime().split(" ")[1]);
 		
 		TextView subject = (TextView) view.findViewById(R.id.ActivitySummarySubject);
 		subject.setText(activitySummary.getSubject());

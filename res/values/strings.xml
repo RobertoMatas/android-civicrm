@@ -219,5 +219,14 @@
     -->
     <string name="error_no_internet">PARA HACER USO DE ESTA APLICACIÓN ES NECESARIO TENER UNA CONEXIÓN DE INTERNET.</string>
     <string name="description_image_nointernet">Se requiere acceso a internet</string>
-
+	
+    <!--
+    ===============================================================
+     EVENTOS
+    ===============================================================                        
+    -->
+    <string name="sin_eventos">Actualmente no está registrado en ningún evento.</string>
+    <string name="title_activity_events_list">Mis Eventos</string>
+    
+    
 </resources>

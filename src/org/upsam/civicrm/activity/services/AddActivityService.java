@@ -7,8 +7,9 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.activity.model.ListActivities;
+import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
-import org.upsam.civicrm.rest.CiviCRMAndroidSpiceService;
+import org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService;
 import org.upsam.civicrm.util.Utilities;
 
 import android.app.Service;
@@ -16,7 +17,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.octo.android.robospice.SpiceManager;
@@ -30,9 +30,12 @@ import com.octo.android.robospice.request.listener.RequestStatus;
 public class AddActivityService extends Service {
 
 	private SpiceManager contentManager = new SpiceManager(
-			CiviCRMAndroidSpiceService.class);
+			CiviCRMAndroidPostSpiceService.class);
 
 	MultiValueMap<String, String> fields = new LinkedMultiValueMap<String, String>();
+	boolean entrante = true;
+	String phoneNumber = null;
+	ContactSummary contact = null;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -55,8 +58,9 @@ public class AddActivityService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		Log.w("DEBUG-------->", "Dentro de onStartCommand");
-		// performContactRequest();
-		performActivityRequest(intent);
+		
+		performContactRequest(intent);
+		//performActivityRequest(intent);
 
 		return Service.START_NOT_STICKY;
 	}
@@ -70,22 +74,30 @@ public class AddActivityService extends Service {
 		Log.w("DEBUG------->", "Dentro de onDestroy()");
 	}
 
-	private void initializeActivityFields(Intent intent) {
+	private void initializeActivityFields() {
+		initializePhoneCallParams();
+	}
+
+	private void initializeContactFields(Intent intent) {
+		String phoneNumber = null;
 		Bundle extras = intent.getExtras();
-		String phoneNumber = extras
-				.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-		if (!TextUtils.isEmpty(phoneNumber)) {
-			initializePhoneCallParams(phoneNumber);
+		if (extras.getString(TelephonyManager.EXTRA_INCOMING_NUMBER)!=null){
+			phoneNumber = extras.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 		}
+		else if (extras.getString(Intent.EXTRA_PHONE_NUMBER)!=null){
+			entrante = false;
+			phoneNumber = extras.getString(Intent.EXTRA_PHONE_NUMBER);
+		}
+		fields.add("phone_number",phoneNumber);
 	}
 
-	private void initializeContactFields() {
-		fields.add("nick_name", Utilities.getDataCivi(getApplicationContext(), true)
-				.getUser_name());
-	}
-
-	private void initializePhoneCallParams(String phoneNumber) {
-		fields.add("subject", "Llamada del cliente con nœmero: " + phoneNumber);
+	private void initializePhoneCallParams() {
+		if (entrante){
+			fields.add("subject", "Llamada del cliente: " + contact.getName());
+		}
+		else{
+			fields.add("subject", "Llamada al cliente: " + contact.getName());
+		}
 		fields.add("activity_name", "Phone Call");
 		fields.add("status_id", "2");
 		fields.add("phone_number", phoneNumber);
@@ -93,8 +105,8 @@ public class AddActivityService extends Service {
 
 	}
 
-	private void performContactRequest() {
-		initializeContactFields();
+	private void performContactRequest(Intent intent) {
+		initializeContactFields(intent);
 		CiviCRMAsyncRequest<ListContacts> request = new CiviCRMAsyncRequest<ListContacts>(
 				this, ListContacts.class, ACTION.get, ENTITY.Contact,
 				METHOD.get, fields);
@@ -102,8 +114,8 @@ public class AddActivityService extends Service {
 				DurationInMillis.ONE_MINUTE, new ContactRequestListener());
 	}
 
-	private void performActivityRequest(Intent intent) {
-		initializeActivityFields(intent);
+	private void performActivityRequest() {
+		initializeActivityFields();
 		CiviCRMAsyncRequest<ListActivities> request = new CiviCRMAsyncRequest<ListActivities>(
 				this, ListActivities.class, ACTION.create, ENTITY.Activity,
 				METHOD.post, fields);
@@ -127,7 +139,7 @@ public class AddActivityService extends Service {
 			// doesn't return anything.
 			if (activities == null) {
 				stopSelf();
-				Log.e("ERROR --------->", "Actividad creada!!!!");
+				Log.e("ERROR --------->", "Actividad no creada!!!!");
 				return;
 			}
 			stopSelf();
@@ -168,9 +180,14 @@ public class AddActivityService extends Service {
 				Log.e("ERROR --------->", "Contacto recuperado!!!!");
 				return;
 			}
-			fields = new LinkedMultiValueMap<String, String>();
-			fields.add("source_contact_id",
-					String.valueOf(contacts.getValues().get(0).getId()));
+			if (contacts.getValues()!=null && !contacts.getValues().isEmpty()){
+				
+				contact = contacts.getValues().get(0);
+				fields = new LinkedMultiValueMap<String, String>();
+				performActivityRequest();
+
+			}
+
 
 		}
 

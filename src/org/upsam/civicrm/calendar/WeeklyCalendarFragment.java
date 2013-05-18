@@ -71,9 +71,22 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 			
 			
 		});
+/*		Bundle extras = getActivity().getIntent().getExtras();
+
+		if (extras!= null){
+			String selectedDay = extras.getString("selectedDay");
+			if (selectedDay != null){
+				int day = Integer.valueOf(selectedDay.substring(6, 8));
+				int month = Integer.valueOf(selectedDay.substring(4, 6))-1;
+				int year = Integer.valueOf(selectedDay.substring(0, 4));
+				getMonth().set(year,month,day);
+			}
+		}*/
+		
+		
 		
 	    TextView title  = (TextView) this.getView().findViewById(R.id.weekTitle);
-	    title.setText("Semana "+ getMonth().get(Calendar.WEEK_OF_MONTH) + " de "+android.text.format.DateFormat.format("MMMM yyyy", getMonth()));
+	    title.setText(getMonth().get(Calendar.WEEK_OF_MONTH) + "a Semana de "+android.text.format.DateFormat.format("MMMM yyyy", getMonth()));
 		
 /*	    TextView previous = (TextView) getView().findViewById(R.id.previousWeek);
 		previous.setOnClickListener(new OnClickListener() {
@@ -202,7 +215,7 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 				Log.e("ERROR --------->", "Actividades vac’as!!!");
 				return;
 			}
-			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, "102"));
+			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, Utilities.getContactId(getActivity())));
 			initializeWeeklyCalendar();
 			
 			getProgressBar().setVisibility(View.INVISIBLE);

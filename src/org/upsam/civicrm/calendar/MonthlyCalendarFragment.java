@@ -139,8 +139,9 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 				Log.e("ERROR --------->", "Actividades vac’as!!!");
 				return;
 			}
-			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, "102"));
+			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, Utilities.getContactId(getActivity())));
 			adapter.setActivitiesPerDay(getActivitiesPerDay());
+			adapter.refreshDays();
 			adapter.notifyDataSetChanged();
 			getProgressBar().setVisibility(View.INVISIBLE);
 		}

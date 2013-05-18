@@ -29,7 +29,8 @@ public class CalendarAdapter extends BaseAdapter {
     	month.set(Calendar.DAY_OF_MONTH, 1);
     	mContext = context;
     	this.activitiesPerDay = activitiesPerDay;
-        refreshDays();
+    	//days = new String[month.get];
+        //refreshDays();
 	}
 
 
@@ -89,7 +90,7 @@ public class CalendarAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return days.length;
+		return days!=null?days.length:0;
 	}
 
 
