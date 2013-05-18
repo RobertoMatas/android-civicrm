@@ -17,7 +17,6 @@ import static org.upsam.civicrm.test.fake.CiviCRMContactRequestBuilderFake.CONTA
 import javax.inject.Inject;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
@@ -47,7 +46,6 @@ import dagger.ObjectGraph;
  * 
  */
 @RunWith(CustomTestRunner.class)
-@Ignore
 public class AddContactActivityTests {
 
 	private static final String TEXT_NAME = "Test Name";
