@@ -219,5 +219,12 @@
     -->
     <string name="error_no_internet">TO USE THIS APPLICATION IS NECESSARY TO HAVE AN INTERNET CONNECTION.</string>
     <string name="description_image_nointernet">Internet access is required</string>
+    <!--
+    ===============================================================
+     EVENTOS
+    ===============================================================                        
+    -->
+    <string name="sin_eventos">Currently not registered in any event.</string>
+    <string name="title_activity_events_list">My Events</string>
 
 </resources>
