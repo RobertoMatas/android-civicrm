@@ -15,11 +15,16 @@ public class Phone implements Comparable<Phone> {
 	 */
 	@JsonProperty("is_primary")
 	private String primaryStr;
+	
+	@JsonProperty("contact_id")
+	private String contactId;
 	/**
 	 * Indica si es el principal
 	 */
 	@JsonIgnore
 	private boolean isPrimary;
+	
+
 
 	/**
 	 * @return the isPrimary
@@ -56,6 +61,22 @@ public class Phone implements Comparable<Phone> {
 	public void setPrimaryStr(String primaryStr) {
 		this.primaryStr = primaryStr;
 		this.isPrimary = primaryStr != null && primaryStr.equals("1") ? true : false;
+	}
+	
+	
+
+	/**
+	 * @return the contactId
+	 */
+	public String getContactId() {
+		return contactId;
+	}
+
+	/**
+	 * @param contactId the contactId to set
+	 */
+	public void setContactId(String contactId) {
+		this.contactId = contactId;
 	}
 
 	@Override

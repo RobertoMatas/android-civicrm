@@ -12,6 +12,18 @@ public class EventSummary implements Comparable<EventSummary>{
 	
 	@JsonProperty("event_start_date")
 	private String startDate;
+	
+	
+	
+	public EventSummary() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public EventSummary(String title) {
+		super();
+		this.title = title;
+	}
 
 	/**
 	 * @return the title

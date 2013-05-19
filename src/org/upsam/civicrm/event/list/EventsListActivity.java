@@ -1,6 +1,7 @@
 package org.upsam.civicrm.event.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
@@ -77,12 +78,12 @@ public class EventsListActivity extends SpiceAwareActivity {
 		@Override
 		public void onRequestSuccess(ListEventsSummary listEvents) {
 			if (listEvents == null || listEvents.getValues() == null || listEvents.getValues().isEmpty()) {
-				Toast.makeText(getApplicationContext(),
-						getString(R.string.sin_eventos), Toast.LENGTH_LONG)
-						.show();
+				eventsListAdapter.addAll(new EventSummary(getString(R.string.sin_eventos)));
+				eventsListAdapter.notifyDataSetChanged();
 				progressBar.setVisibility(View.GONE);
 				return;
 			}
+			Collections.sort(listEvents.getValues());
 			eventsListAdapter.addAll(listEvents.getValues());
 			eventsListAdapter.notifyDataSetChanged();
 			progressBar.setVisibility(View.GONE);

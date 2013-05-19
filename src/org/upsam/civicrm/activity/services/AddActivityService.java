@@ -9,6 +9,8 @@ import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
 import org.upsam.civicrm.activity.model.ListActivities;
 import org.upsam.civicrm.contact.model.contact.ContactSummary;
 import org.upsam.civicrm.contact.model.contact.ListContacts;
+import org.upsam.civicrm.contact.model.telephone.ListPhones;
+import org.upsam.civicrm.contact.model.telephone.Phone;
 import org.upsam.civicrm.rest.CiviCRMAndroidPostSpiceService;
 import org.upsam.civicrm.util.Utilities;
 
@@ -36,6 +38,7 @@ public class AddActivityService extends Service {
 	boolean entrante = true;
 	String phoneNumber = null;
 	ContactSummary contact = null;
+	Phone phone = null;
 
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -59,9 +62,7 @@ public class AddActivityService extends Service {
 		// TODO Auto-generated method stub
 		Log.w("DEBUG-------->", "Dentro de onStartCommand");
 		
-		performContactRequest(intent);
-		//performActivityRequest(intent);
-
+		performPhoneRequest(intent);
 		return Service.START_NOT_STICKY;
 	}
 
@@ -77,8 +78,8 @@ public class AddActivityService extends Service {
 	private void initializeActivityFields() {
 		initializePhoneCallParams();
 	}
-
-	private void initializeContactFields(Intent intent) {
+	
+	private void initializePhoneFields(Intent intent) {
 		String phoneNumber = null;
 		Bundle extras = intent.getExtras();
 		if (extras.getString(TelephonyManager.EXTRA_INCOMING_NUMBER)!=null){
@@ -88,7 +89,12 @@ public class AddActivityService extends Service {
 			entrante = false;
 			phoneNumber = extras.getString(Intent.EXTRA_PHONE_NUMBER);
 		}
-		fields.add("phone_number",phoneNumber);
+		fields.add("phone",phoneNumber);
+	}
+	
+	private void initializeContactFields() {
+		
+		fields.add("contact_id",phone.getContactId());
 	}
 
 	private void initializePhoneCallParams() {
@@ -104,9 +110,18 @@ public class AddActivityService extends Service {
 		fields.add("source_contact_id", Utilities.getContactId(this));
 
 	}
+	
+	private void performPhoneRequest(Intent intent) {
+		initializePhoneFields(intent);
+		CiviCRMAsyncRequest<ListPhones> request = new CiviCRMAsyncRequest<ListPhones>(
+				this, ListPhones.class, ACTION.get, ENTITY.Phone,
+				METHOD.get, fields);
+		contentManager.execute(request, request.createCacheKey(),
+				DurationInMillis.ONE_MINUTE, new PhoneRequestListener());
+	}
 
-	private void performContactRequest(Intent intent) {
-		initializeContactFields(intent);
+	private void performContactRequest() {
+		initializeContactFields();
 		CiviCRMAsyncRequest<ListContacts> request = new CiviCRMAsyncRequest<ListContacts>(
 				this, ListContacts.class, ACTION.get, ENTITY.Contact,
 				METHOD.get, fields);
@@ -191,6 +206,8 @@ public class AddActivityService extends Service {
 
 		}
 
+	
+		
 		@Override
 		public void onRequestProgressUpdate(RequestProgress progress) {
 			RequestStatus status = progress.getStatus();
@@ -203,6 +220,49 @@ public class AddActivityService extends Service {
 			}
 
 		}
+
+	}
+	
+	private class PhoneRequestListener implements
+	RequestListener<ListPhones>, RequestProgressListener {
+
+@Override
+public void onRequestFailure(SpiceException e) {
+	Log.e("DEBUG -------->", "Error during request: " + e.getMessage());
+	stopSelf();
+}
+
+@Override
+public void onRequestSuccess(ListPhones phones) {
+	// listTweets could be null just if contentManager.getFromCache(...)
+	// doesn't return anything.
+	if (phones == null) {
+		Log.e("ERROR --------->", "Contacto recuperado!!!!");
+		return;
+	}
+	if (phones.getValues()!=null && !phones.getValues().isEmpty()){
+		
+		phone = phones.getValues().get(0);
+		fields = new LinkedMultiValueMap<String, String>();
+		performContactRequest();
+
+	}
+
+
+}
+
+@Override
+public void onRequestProgressUpdate(RequestProgress progress) {
+	RequestStatus status = progress.getStatus();
+	if (RequestStatus.LOADING_FROM_NETWORK.equals(status)) {
+		Log.e("Activity ------>", "Loading from network");
+	} else if (RequestStatus.READING_FROM_CACHE.equals(status)) {
+		Log.e("Activity ------>", "Reading from cache");
+	} else if (RequestStatus.WRITING_TO_CACHE.equals(status)) {
+		Log.e("Activity ------>", "Writing from cache");
+	}
+
+}
 
 	}
 

@@ -32,17 +32,17 @@ public class EventsListAdapter extends ArrayAdapter<EventSummary> {
 
 
 		if (view == null) {
-			view = layoutInflater.inflate(R.layout.daily_calendar_item, parent, false);
+			view = layoutInflater.inflate(R.layout.event_item, parent, false);
 		}
 
 				
-		TextView displayName = (TextView) view.findViewById(R.id.activitySumaryName);
+		TextView displayName = (TextView) view.findViewById(R.id.eventSumaryName);
 		displayName.setText(eventSummary.getType());
 
-		TextView dateTime = (TextView) view.findViewById(R.id.activitySumaryDateTime);
+		TextView dateTime = (TextView) view.findViewById(R.id.eventSummarySubject);
 		dateTime.setText(eventSummary.getStartDate());
 		
-		TextView subject = (TextView) view.findViewById(R.id.ActivitySummarySubject);
+		TextView subject = (TextView) view.findViewById(R.id.eventSumaryDateTime);
 		subject.setText(eventSummary.getTitle());
 		return view;
 	}

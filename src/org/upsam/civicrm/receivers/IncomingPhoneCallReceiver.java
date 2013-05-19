@@ -16,7 +16,6 @@ public class IncomingPhoneCallReceiver extends BroadcastReceiver {
 		Bundle extras = intent.getExtras();
 		if (extras != null) {
 			String state = extras.getString(TelephonyManager.EXTRA_STATE);
-			Log.w("DEBUG-------->", state);
 			if (TelephonyManager.EXTRA_STATE_RINGING.equalsIgnoreCase(state)||
 				extras.getString(Intent.EXTRA_PHONE_NUMBER)!=null) {
 				Intent activityServiceIntent = new Intent(context,
