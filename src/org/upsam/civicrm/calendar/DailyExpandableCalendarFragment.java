@@ -14,15 +14,21 @@ import org.upsam.civicrm.util.CiviCRMRequestHelper;
 import org.upsam.civicrm.util.FilterUtilities;
 import org.upsam.civicrm.util.Utilities;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
@@ -54,6 +60,7 @@ public class DailyExpandableCalendarFragment extends CalendarFragment {
 				new ArrayList<ActivityHeader>());
 		dailyCalendar.setAdapter(adapter);
 		dailyCalendar.setOnGroupClickListener(groupClicked);
+		dailyCalendar.setOnChildClickListener(childClicked);
 		
 	    TextView title  = (TextView) this.getView().findViewById(R.id.dailyExpandableTitle);
 		Bundle extras = getActivity().getIntent().getExtras();
@@ -145,6 +152,10 @@ public class DailyExpandableCalendarFragment extends CalendarFragment {
 	 
 	  public boolean onGroupClick(ExpandableListView parent, View v,
 	    int groupPosition, long id) {
+		  	
+		  	if (adapter.getHeaders().get(groupPosition).getActivitiesPerHour().size()==0){
+		  		return false;
+		  	}
 		  	if (parent.isGroupExpanded(groupPosition)){
 		    	return  parent.expandGroup(groupPosition);
 		    }
@@ -154,6 +165,53 @@ public class DailyExpandableCalendarFragment extends CalendarFragment {
 		
 	    
 	  }
-	   
-	 };
+	  
+	  };
+	  
+	  private OnChildClickListener childClicked = new OnChildClickListener() {
+		
+		@Override
+		public boolean onChildClick(ExpandableListView parent, View v,
+				int groupPosition, int childPosition, long id) {
+			
+			
+			
+			final Dialog dialog = new Dialog(getActivity());
+			dialog.setContentView(R.layout.activity_dialog);
+			dialog.setTitle(getString(R.string.activity_dialog_title));
+			
+			ActivitySummary activitySummary = adapter.getHeaders().get(groupPosition).getActivitiesPerHour().get(childPosition);
+			
+			// set the custom dialog components - text, image and button
+			TextView displayName = (TextView) dialog.findViewById(R.id.dialogActivityDescription);
+			displayName.setText(getString(R.string.detail));
+			displayName.setTextAppearance(getActivity(), R.style.textoGreen);
+			TextView dateTime = (TextView) dialog.findViewById(R.id.dialogActivityDetail);
+			dateTime.setText(Html.fromHtml(activitySummary.getDetails()));
+			dateTime.setTextAppearance(getActivity(), R.style.textoWhite);
+			
+			ImageView imageActivity = (ImageView) dialog.findViewById(R.id.dialogImageActivity);
+			String name = activitySummary.getName();
+			if ("Phone Call".equals(name)){
+				imageActivity.setImageResource(R.drawable.mobile);
+			}
+			else if("Interview".equals(name)){
+				imageActivity.setImageResource(R.drawable.interview);
+			}else if("Meeting".equals(name)){
+				imageActivity.setImageResource(R.drawable.meeting);
+			}
+			
+			ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.imageButtonClose);
+			// if button is clicked, close the custom dialog
+			dialogButton.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+				}
+			});
+			
+			dialog.show();
+			return true;
+		}
+	};
 }

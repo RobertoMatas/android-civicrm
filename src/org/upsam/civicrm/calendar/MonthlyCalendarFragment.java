@@ -2,6 +2,7 @@ package org.upsam.civicrm.calendar;
 
 import java.util.Calendar;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
 import org.upsam.civicrm.R;
@@ -10,13 +11,6 @@ import org.upsam.civicrm.activity.model.ListActivtiesSummary;
 import org.upsam.civicrm.util.CiviCRMRequestHelper;
 import org.upsam.civicrm.util.FilterUtilities;
 import org.upsam.civicrm.util.Utilities;
-
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.listener.RequestProgress;
-import com.octo.android.robospice.request.listener.RequestProgressListener;
-import com.octo.android.robospice.request.listener.RequestStatus;
 
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -30,6 +24,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.octo.android.robospice.persistence.DurationInMillis;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+import com.octo.android.robospice.request.listener.RequestProgress;
+import com.octo.android.robospice.request.listener.RequestProgressListener;
+import com.octo.android.robospice.request.listener.RequestStatus;
 
 public class MonthlyCalendarFragment extends CalendarFragment {
 	
@@ -59,6 +60,9 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 					int position, long id) {
 				TextView dayView = (TextView)view.findViewById(R.id.date);
 				String day = dayView.getText().toString();
+				if (StringUtils.EMPTY.equals(day)){
+					return;
+				}
 				if (day.length()==1){
 					day = "0"+day;
 				}
@@ -119,7 +123,39 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 		adapter.notifyDataSetChanged();				
 
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", getMonth()));
+		//initializeDaysRow();
 	}
+	
+    private void initializeDaysRow(){
+    	int firstDayOfWeek = getMonth().getFirstDayOfWeek();
+		TextView one  = (TextView) this.getView().findViewById(R.id.day1);
+		TextView two  = (TextView) this.getView().findViewById(R.id.day2);
+		TextView three  = (TextView) this.getView().findViewById(R.id.day3);
+		TextView four  = (TextView) this.getView().findViewById(R.id.day4);
+		TextView five  = (TextView) this.getView().findViewById(R.id.day5);
+		TextView six  = (TextView) this.getView().findViewById(R.id.day6);
+		TextView seven  = (TextView) this.getView().findViewById(R.id.day7);
+    	if (firstDayOfWeek==1){
+    		one.setText(getString(R.string.sunday));
+    		two.setText(getString(R.string.monday));
+    		three.setText(getString(R.string.tuesday));
+    		four.setText(getString(R.string.wednesday));
+    		five.setText(getString(R.string.thursday));
+    		six.setText(getString(R.string.friday));
+    		seven.setText(getString(R.string.saturday));
+
+    	}
+    	else{
+    		one.setText(getString(R.string.monday));
+    		two.setText(getString(R.string.tuesday));
+    		three.setText(getString(R.string.wednesday));
+    		four.setText(getString(R.string.thursday));
+    		five.setText(getString(R.string.friday));
+    		six.setText(getString(R.string.saturday)); 
+    		seven.setText(getString(R.string.sunday));
+    	}
+    	this.getView().findViewById(R.id.daysTableLayout).setVisibility(View.VISIBLE);
+    }
 
 	private class ListActivitiesRequestListener implements
 	RequestListener<ListActivtiesSummary>, RequestProgressListener {
@@ -144,6 +180,7 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 			adapter.refreshDays();
 			adapter.notifyDataSetChanged();
 			getProgressBar().setVisibility(View.INVISIBLE);
+			initializeDaysRow();
 		}
 		
 		@Override
@@ -158,5 +195,7 @@ public class MonthlyCalendarFragment extends CalendarFragment {
 			}
 		}
 	}
+	
+	
 	
 }

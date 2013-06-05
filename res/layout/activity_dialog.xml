@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activityDialog"
+    style="@style/fondoActividad"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/dialogImageActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/dialogActivityDescription"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/dialogActivityDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/dialogImageActivity"
+        android:layout_below="@+id/imageButtonClose"
+        android:paddingLeft="5sp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/detail"
+        style="@style/fondoBordeClaro"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dialogActivityDescription"
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="13dp"
+        android:layout_toRightOf="@+id/dialogImageActivity"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/dialogActivityDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButtonClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/background"
+        android:src="@drawable/button_delete_blue" />
+
+</RelativeLayout>

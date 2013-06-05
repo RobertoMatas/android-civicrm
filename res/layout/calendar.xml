@@ -70,6 +70,100 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/daysTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" 
+        android:layout_below="@+id/header"
+        android:visibility="invisible">
+
+        <TableRow
+            android:id="@+id/tableRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/day1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+        		android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold"  >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+        		android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/day5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/day7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+        </TableRow>
+    </TableLayout>
 
     <ProgressBar
         android:id="@+id/progressBarCalendar"
@@ -83,7 +177,7 @@
         android:id="@+id/calendar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/daysTableLayout"
         android:gravity="center"
         android:horizontalSpacing="2dp"
         android:numColumns="7"

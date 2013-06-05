@@ -178,7 +178,15 @@
     ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendario</string>
-
+    <string name="sunday">Dom.</string>
+    <string name="monday">Lun.</string>
+    <string name="tuesday">Mar.</string>
+    <string name="wednesday">Mie.</string>
+    <string name="thursday">Jue.</string>
+    <string name="friday">Vie.</string>
+    <string name="saturday">Sab.</string>
+    <string name="weekOf">Semana de</string>
+    
     <!--
     ===============================================================
      INFORMES
@@ -219,7 +227,7 @@
     -->
     <string name="error_no_internet">PARA HACER USO DE ESTA APLICACIÓN ES NECESARIO TENER UNA CONEXIÓN DE INTERNET.</string>
     <string name="description_image_nointernet">Se requiere acceso a internet</string>
-	
+
     <!--
     ===============================================================
      EVENTOS
@@ -227,6 +235,19 @@
     -->
     <string name="sin_eventos">Actualmente no está registrado en ningún evento.</string>
     <string name="title_activity_events_list">Mis Eventos</string>
+    
+        <!--
+    ===============================================================
+     Actividades
+    ===============================================================                        
+    -->
+  
+    <string name="incoming_call">Llamada del cliente: </string>
+    <string name="outgoing_call">Llamada al cliente: </string>
+    <string name="activities"> Actividades</string>
+    <string name="activity"> Actividad</string>
+    <string name="activity_dialog_title">Detalle de la Actividad</string>
+    <string name="detail">Detalle:</string>         
     
     
 </resources>

@@ -3,6 +3,7 @@ package org.upsam.civicrm.calendar;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.activity.model.ActivitySummary;
@@ -12,10 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CalendarAdapter extends BaseAdapter {
-	static final int FIRST_DAY_OF_WEEK =1; // Sunday = 0, Monday = 1
+	static final int FIRST_DAY_OF_WEEK =0; // Sunday = 0, Monday = 1
 	
     private Calendar month;
     private Calendar selectedDate;
@@ -49,15 +51,20 @@ public class CalendarAdapter extends BaseAdapter {
         if(days[position].equals("")) {
         	dayView.setClickable(false);
         	dayView.setFocusable(false);
+        	dayView.setEnabled(false);
+        	v.setClickable(false);
+        	v.setFocusable(false);
+        	v.setEnabled(false);
+        	v.setBackgroundResource(R.drawable.item_background_focused);
         }
         else {
         	// mark current day as focused
         	if(month.get(Calendar.YEAR)== selectedDate.get(Calendar.YEAR) && month.get(Calendar.MONTH)== selectedDate.get(Calendar.MONTH) && days[position].equals(""+selectedDate.get(Calendar.DAY_OF_MONTH))) {
         		//v.setBackgroundColor(R.color.background);
-        		v.setBackgroundResource(R.drawable.item_background_focused);
+        		v.setBackgroundResource(R.drawable.item_background_focused_green);
         	}
         	else {
-        		v.setBackgroundResource(R.drawable.item_background);
+        		v.setBackgroundResource(R.drawable.item_background_focused);
         	}
         }
         dayView.setText(days[position]);
@@ -74,16 +81,27 @@ public class CalendarAdapter extends BaseAdapter {
     	}
     	String yearStr = ""+month.get(Calendar.YEAR);
         // show icon if date is not empty and it exists in the items array
-        TextView numberOfActivities = (TextView)v.findViewById(R.id.num_events_per_day);
+        ImageView numberOfActivities = (ImageView)v.findViewById(R.id.activities);
         List<ActivitySummary> listActivitiesPerDay = activitiesPerDay.get(yearStr+monthStr+date);
         if (listActivitiesPerDay != null){
-        	numberOfActivities.setText(""+listActivitiesPerDay.size()+" Act" );
+        	numberOfActivities.setVisibility(View.VISIBLE);
         }
         else{
-        	numberOfActivities.setText("");        	
+        	numberOfActivities.setVisibility(View.INVISIBLE);       	
         }
         
         return v;
+	}
+
+	
+
+	/* (non-Javadoc)
+	 * @see android.widget.BaseAdapter#isEnabled(int)
+	 */
+	@Override
+	public boolean isEnabled(int position) {
+		// TODO Auto-generated method stub
+		return days!=null?!StringUtils.EMPTY.equals(days[position]):false;
 	}
 
 
@@ -124,28 +142,29 @@ public class CalendarAdapter extends BaseAdapter {
     	
     	int lastDay = month.getActualMaximum(Calendar.DAY_OF_MONTH);
         int firstDay = (int)month.get(Calendar.DAY_OF_WEEK);
-        
+        int firstDayOfWeek = month.getFirstDayOfWeek();
+        int multiplo = firstDayOfWeek==1?0:1;
         // figure size of the array
         if(firstDay==1){
-        	days = new String[lastDay+(FIRST_DAY_OF_WEEK*6)];
+        	days = new String[lastDay+(multiplo*6)];
         }
         else {
-        	days = new String[lastDay+firstDay-(FIRST_DAY_OF_WEEK+1)];
+        	days = new String[lastDay+firstDay-(multiplo+1)];
         }
         
-        int j=FIRST_DAY_OF_WEEK;
+        int j=multiplo;
         
         // populate empty days before first real day
         if(firstDay>1) {
-	        for(j=0;j<firstDay-FIRST_DAY_OF_WEEK;j++) {
+	        for(j=0;j<firstDay-multiplo;j++) {
 	        	days[j] = "";
 	        }
         }
 	    else {
-	    	for(j=0;j<FIRST_DAY_OF_WEEK*6;j++) {
+	    	for(j=0;j<multiplo*6;j++) {
 	        	days[j] = "";
 	        }
-	    	j=FIRST_DAY_OF_WEEK*6+1; // sunday => 1, monday => 7
+	    	j=multiplo*6+1; // sunday => 1, monday => 7
 	    }
         
         // populate days
@@ -154,7 +173,7 @@ public class CalendarAdapter extends BaseAdapter {
         	days[i] = ""+dayNumber;
         	dayNumber++;
         }
+
     }
-	
 	
 }

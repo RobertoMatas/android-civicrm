@@ -178,7 +178,16 @@
     ===============================================================                        
     -->
     <string name="title_activity_calendario">Calendar</string>
-
+    <string name="sunday">Sun.</string>
+    <string name="monday">Mon.</string>
+    <string name="tuesday">Tue.</string>
+    <string name="wednesday">Wed.</string>
+    <string name="thursday">Thu.</string>
+    <string name="friday">Fri.</string>
+    <string name="saturday">Sat.</string>
+    <string name="weekOf">Week of</string>
+    
+    
     <!--
     ===============================================================
      INFORMES
@@ -227,4 +236,17 @@
     <string name="sin_eventos">Currently not registered in any event.</string>
     <string name="title_activity_events_list">My Events</string>
 
+        <!--
+    ===============================================================
+     Actividades
+    ===============================================================                        
+    -->
+  
+    <string name="incoming_call">Incoming phone call from: </string>
+    <string name="outgoing_call">Outgoing phone call to: </string>    
+    <string name="activities"> Actividades</string>
+    <string name="activity"> Actividad</string> 
+    <string name="activity_dialog_title">Activity\'s details</string>
+    <string name="detail">Details:</string>         
+    
 </resources>

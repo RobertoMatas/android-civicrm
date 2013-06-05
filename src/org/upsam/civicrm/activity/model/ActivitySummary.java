@@ -31,6 +31,8 @@ public class ActivitySummary implements Comparable<ActivitySummary>{
 	 * Contactos asignados
 	 */
 	private Map<String, String> asignees;
+	
+	private String details;
 
 	/**
 	 * @return the name
@@ -85,6 +87,20 @@ public class ActivitySummary implements Comparable<ActivitySummary>{
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
+	
+	/**
+	 * @return the details
+	 */
+	public String getDetails() {
+		return details;
+	}
+
+	/**
+	 * @param details the details to set
+	 */
+	public void setDetails(String details) {
+		this.details = details;
+	}
 
 	@Override
 	public int compareTo(ActivitySummary another) {
@@ -92,6 +108,7 @@ public class ActivitySummary implements Comparable<ActivitySummary>{
 	}
 
 
-	
+
+
 
 }

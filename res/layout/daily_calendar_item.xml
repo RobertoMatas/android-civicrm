@@ -1,41 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/daily_calendar_item"
+    style="@style/separatorListView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" 
-    style="@style/separatorListView">
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/imageActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/activitySumaryName"
+        android:layout_marginLeft="10dp" 
+        android:paddingLeft="5sp"/>
 
     <TextView
         android:id="@+id/activitySumaryName"
-        style="@style/textoWhite.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageActivity"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="17dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:paddingLeft="5sp"
+       	android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
+        <TextView
         android:id="@+id/activitySumaryDateTime"
-        style="@style/textoWhite.bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="17dp"
-        android:layout_toRightOf="@+id/activitySumaryName"
+        android:layout_toRightOf="@+id/imageActivity"
+        android:layout_below="@+id/activitySumaryName"
+		android:paddingLeft="5sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    
     <TextView
         android:id="@+id/ActivitySummarySubject"
-        style="@style/textoWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/activitySumaryName"
-        android:layout_marginTop="6dp"
-        android:layout_marginLeft="17dp"
+        android:layout_alignLeft="@+id/activitySumaryDateTime"
+        android:layout_below="@+id/activitySumaryDateTime"
+        android:paddingLeft="5sp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+     <ImageView
+        android:id="@+id/ImageActivityDetailsInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/activitySumaryName"
+        android:layout_toRightOf="@+id/activitySumaryDateTime"
+        android:padding="3sp" 
+		android:src="@drawable/details_info"
+		android:maxWidth="50px"/>
+
+
 
 </RelativeLayout>

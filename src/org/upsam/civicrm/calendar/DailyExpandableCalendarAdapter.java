@@ -2,6 +2,7 @@ package org.upsam.civicrm.calendar;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.upsam.civicrm.R;
 import org.upsam.civicrm.activity.model.ActivityHeader;
 import org.upsam.civicrm.activity.model.ActivitySummary;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class DailyExpandableCalendarAdapter extends BaseExpandableListAdapter {
@@ -70,17 +72,38 @@ public class DailyExpandableCalendarAdapter extends BaseExpandableListAdapter {
 			LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = layoutInflater.inflate(R.layout.daily_calendar_item, parent, false);
 		}
-
-				
+		
+		
 		TextView displayName = (TextView) view.findViewById(R.id.activitySumaryName);
 		displayName.setText(activitySummary.getName());
-
+		displayName.setTextAppearance(getContext(), R.style.textoGreen);
 		TextView dateTime = (TextView) view.findViewById(R.id.activitySumaryDateTime);
 		dateTime.setText(activitySummary.getDateTime().split(" ")[1]);
-		
+		dateTime.setTextAppearance(getContext(), R.style.textoWhite);
 		TextView subject = (TextView) view.findViewById(R.id.ActivitySummarySubject);
 		subject.setText(activitySummary.getSubject());
-		view.setBackgroundResource(R.drawable.item_background);
+		subject.setTextAppearance(getContext(), R.style.textoWhite);
+		
+		ImageView imageActivity = (ImageView) view.findViewById(R.id.imageActivity);
+		String name = activitySummary.getName();
+		if ("Phone Call".equals(name)){
+			imageActivity.setImageResource(R.drawable.mobile);
+		}
+		else if("Interview".equals(name)){
+			imageActivity.setImageResource(R.drawable.interview);
+		}else if("Meeting".equals(name)){
+			imageActivity.setImageResource(R.drawable.meeting);
+		}
+		
+		ImageView imageActivityDetails = (ImageView) view.findViewById(R.id.ImageActivityDetailsInfo);
+		if (StringUtils.isEmpty(activitySummary.getDetails())){
+			imageActivityDetails.setVisibility(View.INVISIBLE);
+		}
+		else{
+			imageActivityDetails.setVisibility(View.VISIBLE);
+		}
+		
+		view.setBackgroundResource(R.drawable.item_background_focused);
 		return view;
 	}
 
@@ -118,12 +141,29 @@ public class DailyExpandableCalendarAdapter extends BaseExpandableListAdapter {
 		  
 		TextView numberOfActivitiesPerHour = (TextView) view.findViewById(R.id.numberOfActivitiesPerHour);
 		int numberPerHour = group.getActivitiesPerHour().size();
-		numberOfActivitiesPerHour.setText(numberPerHour != 0 ?numberPerHour+" Actividades":"");
-		if (numberPerHour == 0){
+		if (numberPerHour!=0){
+			numberOfActivitiesPerHour.setText(numberPerHour != 1 ?numberPerHour+context.getString(R.string.activities):numberPerHour+context.getString(R.string.activity));
+		}
+		else{
+			numberOfActivitiesPerHour.setText("");
 			view.setClickable(false);
+			view.setFocusable(false);
+			view.setEnabled(false);
 		}
 		return view;
 	}
+	
+	
+
+	/* (non-Javadoc)
+	 * @see android.widget.BaseExpandableListAdapter#areAllItemsEnabled()
+	 */
+	@Override
+	public boolean areAllItemsEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 	@Override
 	public boolean hasStableIds() {
@@ -132,7 +172,7 @@ public class DailyExpandableCalendarAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public boolean isChildSelectable(int arg0, int arg1) {
-		return false;
+		return !StringUtils.isEmpty(headers.get(arg0).getActivitiesPerHour().get(arg1).getDetails());
 	}
 
 }

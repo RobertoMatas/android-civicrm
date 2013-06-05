@@ -3,6 +3,7 @@ package org.upsam.civicrm.activity.services;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.upsam.civicrm.CiviCRMAsyncRequest;
+import org.upsam.civicrm.R;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ACTION;
 import org.upsam.civicrm.CiviCRMAsyncRequest.ENTITY;
 import org.upsam.civicrm.CiviCRMAsyncRequest.METHOD;
@@ -99,10 +100,10 @@ public class AddActivityService extends Service {
 
 	private void initializePhoneCallParams() {
 		if (entrante){
-			fields.add("subject", "Llamada del cliente: " + contact.getName());
+			fields.add("subject", getString(R.string.incoming_call) + contact.getName());
 		}
 		else{
-			fields.add("subject", "Llamada al cliente: " + contact.getName());
+			fields.add("subject", getString(R.string.outgoing_call) + contact.getName());
 		}
 		fields.add("activity_name", "Phone Call");
 		fields.add("status_id", "2");
@@ -159,7 +160,6 @@ public class AddActivityService extends Service {
 			}
 			stopSelf();
 			Log.d("DEBUG --------->", "Actividad creada!!!!");
-			Log.d("DEBUG --------->", activities.getIsError());
 
 		}
 

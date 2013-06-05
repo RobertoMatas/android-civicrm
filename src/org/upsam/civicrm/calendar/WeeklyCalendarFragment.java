@@ -71,50 +71,14 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 			
 			
 		});
-/*		Bundle extras = getActivity().getIntent().getExtras();
 
-		if (extras!= null){
-			String selectedDay = extras.getString("selectedDay");
-			if (selectedDay != null){
-				int day = Integer.valueOf(selectedDay.substring(6, 8));
-				int month = Integer.valueOf(selectedDay.substring(4, 6))-1;
-				int year = Integer.valueOf(selectedDay.substring(0, 4));
-				getMonth().set(year,month,day);
-			}
-		}*/
 		
 		
 		
 	    TextView title  = (TextView) this.getView().findViewById(R.id.weekTitle);
-	    title.setText(getMonth().get(Calendar.WEEK_OF_MONTH) + "a Semana de "+android.text.format.DateFormat.format("MMMM yyyy", getMonth()));
+	    title.setText(getMonth().get(Calendar.WEEK_OF_MONTH) + " "+getString(R.string.weekOf)+android.text.format.DateFormat.format("MMMM yyyy", getMonth()));
 		
-/*	    TextView previous = (TextView) getView().findViewById(R.id.previousWeek);
-		previous.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				if(getMonth().get(Calendar.WEEK_OF_YEAR)== getMonth().getActualMinimum(Calendar.WEEK_OF_YEAR)) {				
-					getMonth().set((getMonth().get(Calendar.YEAR)-1),getMonth().getActualMaximum(Calendar.MONTH),1);
-				} else {
-					getMonth().set(Calendar.MONTH,getMonth().get(Calendar.MONTH)-1);
-				}
-				refreshCalendar();
-			}
-		});
-		TextView next = (TextView) getView().findViewById(R.id.nextWeek);
-		next.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(getMonth().get(Calendar.WEEK_OF_YEAR)== getMonth().getActualMaximum(Calendar.WEEK_OF_YEAR)) {				
-					getMonth().set((getMonth().get(Calendar.YEAR)+1),getMonth().getActualMinimum(Calendar.MONTH),1);
-				} else {
-					getMonth().set(Calendar.MONTH,getMonth().get(Calendar.MONTH)+1);
-				}
-				refreshCalendar();
-
-			}
-		});*/
 		
 	}
 
@@ -127,31 +91,35 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 					DurationInMillis.ONE_MINUTE, new ListActivitiesRequestListener());
 	}
 
-	private void refreshCalendar()
-	{
-/*		TextView title  = (TextView) this.getView().findViewById(R.id.title);
 
-		adapter.refreshDays();
-		adapter.notifyDataSetChanged();				
-
-		title.setText(android.text.format.DateFormat.format("MMMM yyyy", getMonth()));*/
-	}
 	
 	private void initializeWeeklyCalendar(){
 		List<WeeklyCalendarItem> items = new ArrayList<WeeklyCalendarItem>(24*7);
 	    String[] weekDays = new String[7];
 		int dayOfWeek= getMonth().get(Calendar.DAY_OF_WEEK);
-		if (dayOfWeek == 1){
-			dayOfWeek = 6;
+		int firstDayOfWeek = getMonth().getFirstDayOfWeek();
+		if (firstDayOfWeek==2){
+			if (dayOfWeek == 1){
+				dayOfWeek = 6;
+			}
+			else{
+				dayOfWeek = dayOfWeek - 2;
+			}
 		}
-		else{
-			dayOfWeek = dayOfWeek -2;
+		else {
+			if (dayOfWeek == 1){
+				dayOfWeek = 0;
+			}
+			else{
+				dayOfWeek = dayOfWeek - 1;
+			}
 		}
+
 		int dayOfMonth = getMonth().get(Calendar.DAY_OF_MONTH);
 		int daysOfMonth = getMonth().getMaximum(Calendar.DAY_OF_MONTH);
 		weekDays[dayOfWeek] = ""+dayOfMonth;
 		for (int i = dayOfWeek+1;i<weekDays.length;i++){
-			if (Integer.valueOf(weekDays[i-1])+1 > daysOfMonth){
+			if ("".equals(weekDays[i-1]) || Integer.valueOf(weekDays[i-1])+1 > daysOfMonth){
 				weekDays[i] = "";
 			}
 			else {
@@ -159,7 +127,7 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 			}
 		}
 		for (int i = dayOfWeek-1;i>=0;i--){
-			if (Integer.valueOf(weekDays[i+1])+1<1){
+			if ("".equals(weekDays[i+1]) || Integer.valueOf(weekDays[i+1])+1<3){
 				weekDays[i] = "";
 			}
 			else {
@@ -180,22 +148,62 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 		Integer numOfActivities;
 		int fila = 0;
 		int columna = 0;
-		for(int i = 0 ; i<24*7; i++){
+		for(int i = 0 ; i<24*8; i++){
 				numOfActivities = 0;
-				columna = i%7;
-				fila = i/7;
-				day = new String(weekDays[columna].length()==1?"0"+weekDays[columna]:weekDays[columna]);
+				columna = i%8;
+				fila = i/8;
+				if (columna==0){
+					day="d";
+				}
+				else{
+					day = new String(weekDays[columna-1].length()==1?"0"+weekDays[columna-1]:weekDays[columna-1]);
+				}
+				
 				hour = new String(fila<10?"0"+(fila):""+fila);
 				listActivitiesPerDay = getActivitiesPerDay().get(yearStr+monthStr+day);
 		        if (listActivitiesPerDay != null){
 		        	numOfActivities = FilterUtilities.getNumberOfActivitiesByHour(listActivitiesPerDay, hour);
 		        }
-		        item = new WeeklyCalendarItem(hour, weekDays[columna], numOfActivities, fila==0, columna==0);
+		        item = new WeeklyCalendarItem(hour, day, numOfActivities, fila==0, columna==0);
 				items.add(item);
 		}
 		adapter.addAll(items);
 		adapter.notifyDataSetChanged();
+		initializeDaysRow(weekDays);
+
 	}
+	
+    private void initializeDaysRow(String[] days){
+    	int firstDayOfWeek = getMonth().getFirstDayOfWeek();
+		TextView one  = (TextView) this.getView().findViewById(R.id.day1W);
+		TextView two  = (TextView) this.getView().findViewById(R.id.day2W);
+		TextView three  = (TextView) this.getView().findViewById(R.id.day3W);
+		TextView four  = (TextView) this.getView().findViewById(R.id.day4W);
+		TextView five  = (TextView) this.getView().findViewById(R.id.day5W);
+		TextView six  = (TextView) this.getView().findViewById(R.id.day6W);
+		TextView seven  = (TextView) this.getView().findViewById(R.id.day7W);
+    	if (firstDayOfWeek==1){
+    		one.setText(getString(R.string.sunday)+days[0]);
+    		two.setText(getString(R.string.monday)+days[1]);
+    		three.setText(getString(R.string.tuesday)+days[2]);
+    		four.setText(getString(R.string.wednesday)+days[3]);
+    		five.setText(getString(R.string.thursday)+days[4]);
+    		six.setText(getString(R.string.friday)+days[5]);
+    		seven.setText(getString(R.string.saturday)+days[6]);
+
+    	}
+    	else{
+    		one.setText(getString(R.string.monday)+days[0]);
+    		two.setText(getString(R.string.tuesday)+days[1]);
+    		three.setText(getString(R.string.wednesday)+days[2]);
+    		four.setText(getString(R.string.thursday)+days[3]);
+    		five.setText(getString(R.string.friday)+days[4]);
+    		six.setText(getString(R.string.saturday)+days[5]); 
+    		seven.setText(getString(R.string.sunday)+days[6]);
+    	}
+    	this.getView().findViewById(R.id.daysWTableLayout).setVisibility(View.VISIBLE);
+    }
+	
 	
 	private class ListActivitiesRequestListener implements
 	RequestListener<ListActivtiesSummary>, RequestProgressListener {
@@ -217,7 +225,6 @@ public class WeeklyCalendarFragment extends CalendarFragment {
 			}
 			setActivitiesPerDay(FilterUtilities.filterScheduledActivitiesByDates(activities, Utilities.getContactId(getActivity())));
 			initializeWeeklyCalendar();
-			
 			getProgressBar().setVisibility(View.INVISIBLE);
 		}
 		

@@ -13,26 +13,7 @@
         android:background="@drawable/header_background"
         android:orientation="horizontal" >
 
- <!--        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left" >
 
-            <TextView
-                android:id="@+id/previousWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:clickable="true"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:paddingLeft="5dp"
-                android:text="&lt;&lt;"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout> -->
 
         <TextView
             android:id="@+id/weekTitle"
@@ -47,29 +28,117 @@
             android:textSize="14sp"
             android:textStyle="bold" />
 
-<!--         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/weekTitle"
-            android:gravity="right" >
 
-            <TextView
-                android:id="@+id/nextWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:clickable="true"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                android:paddingLeft="5dp"
-                android:text=">>"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout> -->
     </RelativeLayout>
 
+        <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/daysWTableLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" 
+        android:layout_below="@+id/weeklyHeader"
+        android:visibility="invisible"
+        android:showDividers="beginning">
+
+        <TableRow
+            android:id="@+id/tableRowW"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/dayEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold"
+        		android:text="Emp." 
+        		android:visibility="invisible">
+            </TextView>            
+      
+            <TextView
+                android:id="@+id/day1W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day2W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+        		android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day3W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold"  >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day4W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+        		android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/day5W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/day6W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/day7W"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="6"
+                android:gravity="center"
+                android:textColor="@color/white"
+        		android:textSize="14sp"
+        		android:textStyle="bold" >
+            </TextView>
+        </TableRow>
+    </TableLayout>
 
     <ProgressBar
         android:id="@+id/progressBarWeeklyCalendar"
@@ -83,10 +152,10 @@
         android:id="@+id/weeklyCalendar"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/weeklyHeader"
+        android:layout_below="@+id/daysWTableLayout"
         android:gravity="center"
         android:horizontalSpacing="2dp"
-        android:numColumns="7"
+        android:numColumns="8"
         android:stretchMode="columnWidth"
         android:verticalSpacing="2dp" />
 

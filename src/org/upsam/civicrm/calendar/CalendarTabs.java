@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class CalendarTabs extends Activity{
 	
@@ -112,7 +111,6 @@ public class CalendarTabs extends Activity{
 	        }
 
 	        public void onTabReselected(Tab tab, FragmentTransaction ft) {
-	            Toast.makeText(mActivity, "Reselected!", Toast.LENGTH_SHORT).show();
 	        }
 	    }
 	

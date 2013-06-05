@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="60px"
-    android:padding="8dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
     android:orientation="vertical"
-    
-    android:background="@drawable/list_item_background"    
-    >
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/date"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    
-		    android:textSize="14sp"
-		    android:textStyle="bold"
-		    android:textColor="@color/text_color"
-		    >
-</TextView>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/num_events_per_day"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:gravity="right"
-		    android:textSize="10sp"
-		    android:textStyle="bold"
-		    android:textColor="@color/text_color"
-		    />
-</LinearLayout>
+    android:padding="8dp" >
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold" 
+        android:layout_alignParentTop="true"
+        android:padding="3sp">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/activities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/date"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/task"/>
+</RelativeLayout>
