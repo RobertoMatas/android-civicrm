@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:background="@drawable/list_item_background"    
     >
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
 			android:id="@+id/dayOfWeek"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
 		    android:layout_alignParentTop="true"
 		    android:layout_alignParentRight="true"
 		    />
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView
 			android:id="@+id/hourOfDay"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
@@ -27,14 +27,12 @@
 		    android:layout_alignParentTop="true"
 		    android:layout_alignParentLeft="true"
 		    />
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-			android:id="@+id/num_events_per_hour"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:padding="5sp"
-		    android:gravity="right"
-		    android:src="@drawable/task"
-		    android:layout_alignParentBottom="true"
-		    android:layout_toRightOf="@id/hourOfDay"
-		    />
+
+	<ImageView
+	    android:id="@+id/num_events_per_hour"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_centerInParent="true"
+	    android:src="@drawable/task" />
+
 </RelativeLayout>

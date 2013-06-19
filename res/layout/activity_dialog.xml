@@ -22,26 +22,31 @@
         android:paddingLeft="5sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/detail"
-        style="@style/fondoBordeClaro"
+    <ScrollView
+        android:id="@+id/activity_detail_scroll"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/dialogActivityDescription"
         android:layout_marginLeft="23dp"
         android:layout_marginRight="13dp"
-        android:layout_toRightOf="@+id/dialogImageActivity"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical" >
+        android:layout_toRightOf="@+id/dialogImageActivity" >
 
-        <TextView
-            android:id="@+id/dialogActivityDetail"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/detail"
+            style="@style/fondoBordeClaro"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
+            android:animateLayoutChanges="true"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/dialogActivityDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+        </LinearLayout>
+    </ScrollView>
 
     <ImageButton
         android:id="@+id/imageButtonClose"
